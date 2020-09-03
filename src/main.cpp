@@ -18,8 +18,8 @@ uint16_t read = 0;
 
 // this is a very simplified implementation of the planned cheat system. It will allow overriding
 // the value of a single address
-uint16_t overwrite_addr = 0xFFFF;
-uint16_t overwrite_val = 0xFFFF;
+uint32_t overwrite_addr = 0x8011A604; // rupees (https://cloudmodding.com/zelda/oot)
+uint16_t overwrite_val = 0x0045;      // nice
 
 bool writing = false;
 
@@ -43,17 +43,25 @@ void read_upper()
         init_read();
     }
 
-    // clear upper 8 bits of `read`
-    read &= 0x00FF;
+    // clear upper 16 bits of `read`
+    read &= 0x0000FFFF;
 
-    read |= gpiohs_get_pin(AD8)  << 8;
-    read |= gpiohs_get_pin(AD9)  << 9;
-    read |= gpiohs_get_pin(AD10) << 10;
-    read |= gpiohs_get_pin(AD11) << 11;
-    read |= gpiohs_get_pin(AD12) << 12;
-    read |= gpiohs_get_pin(AD13) << 13;
-    read |= gpiohs_get_pin(AD14) << 14;
-    read |= gpiohs_get_pin(AD15) << 15;
+    read |= gpiohs_get_pin(AD0) << 16;
+    read |= gpiohs_get_pin(AD1) << 17;
+    read |= gpiohs_get_pin(AD2) << 18;
+    read |= gpiohs_get_pin(AD3) << 19;
+    read |= gpiohs_get_pin(AD4) << 20;
+    read |= gpiohs_get_pin(AD5) << 21;
+    read |= gpiohs_get_pin(AD6) << 22;
+    read |= gpiohs_get_pin(AD7) << 23;
+    read |= gpiohs_get_pin(AD8)  << 24;
+    read |= gpiohs_get_pin(AD9)  << 25;
+    read |= gpiohs_get_pin(AD10) << 26;
+    read |= gpiohs_get_pin(AD11) << 27;
+    read |= gpiohs_get_pin(AD12) << 28;
+    read |= gpiohs_get_pin(AD13) << 29;
+    read |= gpiohs_get_pin(AD14) << 30;
+    read |= gpiohs_get_pin(AD15) << 31;
 }
 
 void read_lower()
@@ -63,8 +71,8 @@ void read_lower()
         init_read();
     }
 
-    // clear lower 8 bits of `read`
-    read &= 0xFF00;
+    // clear lower 16 bits of `read`
+    read &= 0xFFFF0000;
 
     read |= gpiohs_get_pin(AD0);
     read |= gpiohs_get_pin(AD1) << 1;
@@ -74,6 +82,14 @@ void read_lower()
     read |= gpiohs_get_pin(AD5) << 5;
     read |= gpiohs_get_pin(AD6) << 6;
     read |= gpiohs_get_pin(AD7) << 7;
+    read |= gpiohs_get_pin(AD8)  << 8;
+    read |= gpiohs_get_pin(AD9)  << 9;
+    read |= gpiohs_get_pin(AD10) << 10;
+    read |= gpiohs_get_pin(AD11) << 11;
+    read |= gpiohs_get_pin(AD12) << 12;
+    read |= gpiohs_get_pin(AD13) << 13;
+    read |= gpiohs_get_pin(AD14) << 14;
+    read |= gpiohs_get_pin(AD15) << 15;
 }
 
 void write_value()
@@ -85,23 +101,36 @@ void write_value()
         init_write();
     }
 
-    // both writes read the same 8 cartridge pins; the cartridge should switch values
+    // both writes read the same 16 cartridge pins; the cartridge should switch values
     // when READ pulses
     // NOTE: if the cartridge is much slower than this MCU,we may need to stall a bit here (60ns?)
-    // first write; write upper 8 bits
     if (read == overwrite_addr)
     {
-        gpiohs_set_pin(AD0_OUT, static_cast<gpio_pin_value_t>((1 << (0 + i*8)) & overwrite_val));
-        gpiohs_set_pin(AD1_OUT, static_cast<gpio_pin_value_t>((1 << (1 + i*8)) & overwrite_val));
-        gpiohs_set_pin(AD2_OUT, static_cast<gpio_pin_value_t>((1 << (2 + i*8)) & overwrite_val));
-        gpiohs_set_pin(AD3_OUT, static_cast<gpio_pin_value_t>((1 << (3 + i*8)) & overwrite_val));
-        gpiohs_set_pin(AD4_OUT, static_cast<gpio_pin_value_t>((1 << (4 + i*8)) & overwrite_val));
-        gpiohs_set_pin(AD5_OUT, static_cast<gpio_pin_value_t>((1 << (5 + i*8)) & overwrite_val));
-        gpiohs_set_pin(AD6_OUT, static_cast<gpio_pin_value_t>((1 << (6 + i*8)) & overwrite_val));
-        gpiohs_set_pin(AD7_OUT, static_cast<gpio_pin_value_t>((1 << (7 + i*8)) & overwrite_val));
-
-        if (--i < 0)
+        if (i == 1)
         {
+            // TODO: this is temporary until I get new hardware. I can only write the bottom
+            // 8 bits in each write operation, so I'm only going to bother with bits 0-7 for now
+            gpiohs_set_pin(AD0_OUT, gpiohs_get_pin(AD0));
+            gpiohs_set_pin(AD1_OUT, gpiohs_get_pin(AD1));
+            gpiohs_set_pin(AD2_OUT, gpiohs_get_pin(AD2));
+            gpiohs_set_pin(AD3_OUT, gpiohs_get_pin(AD3));
+            gpiohs_set_pin(AD4_OUT, gpiohs_get_pin(AD4));
+            gpiohs_set_pin(AD5_OUT, gpiohs_get_pin(AD5));
+            gpiohs_set_pin(AD6_OUT, gpiohs_get_pin(AD6));
+            gpiohs_set_pin(AD7_OUT, gpiohs_get_pin(AD7));
+        }
+
+        else if (i == 0)
+        {
+            gpiohs_set_pin(AD0_OUT, static_cast<gpio_pin_value_t>((1 << (0 + i*8)) & overwrite_val));
+            gpiohs_set_pin(AD1_OUT, static_cast<gpio_pin_value_t>((1 << (1 + i*8)) & overwrite_val));
+            gpiohs_set_pin(AD2_OUT, static_cast<gpio_pin_value_t>((1 << (2 + i*8)) & overwrite_val));
+            gpiohs_set_pin(AD3_OUT, static_cast<gpio_pin_value_t>((1 << (3 + i*8)) & overwrite_val));
+            gpiohs_set_pin(AD4_OUT, static_cast<gpio_pin_value_t>((1 << (4 + i*8)) & overwrite_val));
+            gpiohs_set_pin(AD5_OUT, static_cast<gpio_pin_value_t>((1 << (5 + i*8)) & overwrite_val));
+            gpiohs_set_pin(AD6_OUT, static_cast<gpio_pin_value_t>((1 << (6 + i*8)) & overwrite_val));
+            gpiohs_set_pin(AD7_OUT, static_cast<gpio_pin_value_t>((1 << (7 + i*8)) & overwrite_val));
+
             i = 1;
         }
         printf("%d\n", i);
