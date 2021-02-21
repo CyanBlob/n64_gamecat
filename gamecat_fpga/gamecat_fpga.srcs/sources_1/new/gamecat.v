@@ -30,7 +30,7 @@ module gamecat(
     input ale_l,
     
     input clk
-    );
+);
 
 reg[15:0] address_low = 16'h0000;
 reg[15:0] address_high= 16'h0000;
@@ -41,12 +41,9 @@ reg step = 0;
 reg readLow = 0;
 reg readHigh = 0;
 
-//assign ad_cartridge[15:0] = read ? 16'bZ : address_active[15:0];
-//assign ad_console[15:0] = read ? address_active[15:0] : 16'bZ;
 
-
-assign ad_cartridge[15:0] = read ? address_active[15:0] : 16'bZ;
-assign ad_console[15:0] = read ? 16'bZ : address_active[15:0];
+assign ad_cartridge[15:0] = (read && write) ? address_active[15:0] : 16'bZ;
+assign ad_console[15:0] = (read && write) ? 16'bZ : address_active[15:0];
 
 always @(negedge clk) begin
     if (ale_l && ~ale_h && read && write && ~readHigh && ~step) begin

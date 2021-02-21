@@ -31,24 +31,22 @@ reg write;
 reg clk;
 
 gamecat uut(
-.ad_console (ad_console),
-.ad_cartridge (ad_cartridge),
-.write (write),
-.read (read),
-.ale_h (ale_h),
-.ale_l (ale_l),
-.clk (clk)
+    .ad_console (ad_console),
+    .ad_cartridge (ad_cartridge),
+    .write (write),
+    .read (read),
+    .ale_h (ale_h),
+    .ale_l (ale_l),
+    .clk (clk)
 );
-
-reg test = 1'b1;
 
 integer i = 0;
 
 reg[15:0] cartReturn = 16'h0000;
 reg[15:0] consoleRequest = 16'h0000;
 
-assign ad_cartridge[15:0] = ~read ? cartReturn : 16'bZ;
-assign ad_console[15:0] = ~read ? 16'bZ : consoleRequest;
+assign ad_cartridge[15:0] = (~read || ~write) ? cartReturn : 16'bZ;
+assign ad_console[15:0] = (~read || ~write) ? 16'bZ : consoleRequest;
     
 initial begin
 
@@ -66,6 +64,7 @@ initial begin
             consoleRequest = 16'h0420;
             ale_l = 1;
         end
+        
         if (i == 5 + 23) begin
             consoleRequest = 16'h6969;
             ale_l = 0;
@@ -79,55 +78,17 @@ initial begin
             cartReturn = 16'hF0F0;
             read = 0;
         end
+        
         if (i == 40 + 15) begin
             cartReturn = 16'h0000;
             read = 1;
         end
+        
         if (i == 40 + 20) begin
         cartReturn = 16'h0F0F;
             read = 0;
         end
     end
-    
-    /*for (i = 0; i < 1; i = i + 1) begin
-        clk = 1;
-        #10
-        clk = 0;
-        #10
-        clk = 1;
-        #100
-        i = i + 1;
-        clk = ~clk;
-        ale_l = 1;
-        #50
-        clk = ~clk;
-        #120
-        i = i + 1;
-        clk = ~clk;
-        ale_h = 0;
-        #50
-        clk = ~clk;
-        #110
-        i = i + 1;
-        clk = ~clk;
-        ale_l = 0;
-        #50
-        clk = ~clk;
-        #1040
-        i = i + 1;
-        clk = ~clk;
-        read = 0;
-        #50
-        clk = ~clk;
-        #250
-        i = i + 1;
-        clk = ~clk;
-        read = 1;
-        #60
-        i = i + 1;
-        clk = ~clk;
-        read = 0;
-    end*/
 end
 
 endmodule
