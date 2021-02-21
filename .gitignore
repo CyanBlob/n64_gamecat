@@ -2,6 +2,7 @@
 tags
 *.bak
 *.swp
+*/*.log
 
 #########################################################################################################
 ##	This is an example .gitignore file for Vivado, please treat it as an example as 

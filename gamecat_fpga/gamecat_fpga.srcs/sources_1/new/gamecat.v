@@ -41,7 +41,6 @@ reg step = 0;
 reg readLow = 0;
 reg readHigh = 0;
 
-
 assign ad_cartridge[15:0] = (read && write) ? address_active[15:0] : 16'bZ;
 assign ad_console[15:0] = (read && write) ? 16'bZ : address_active[15:0];
 
