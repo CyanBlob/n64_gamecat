@@ -32,45 +32,49 @@ module gamecat(
     input clk
     );
 
-reg[15:0] address_low;
-reg[15:0] address_high;
-reg[15:0] address_active;
+reg[15:0] address_low = 16'h0000;
+reg[15:0] address_high= 16'h0000;
+reg[15:0] address_active= 16'h0000;
 
 reg step = 0;
 
-reg low;
-reg high;
+reg readLow = 0;
+reg readHigh = 0;
 
-assign ad_cartridge[15:0] = read ? 16'bZ : address_active[15:0];
-assign ad_console[15:0] = read ? address_active[15:0] : 16'bZ;
-//assign ad_cartridge = read ? address_active : ad_console;
-//assign ad_console = read ? 1'bZ : address_active;
+//assign ad_cartridge[15:0] = read ? 16'bZ : address_active[15:0];
+//assign ad_console[15:0] = read ? address_active[15:0] : 16'bZ;
 
-//assign ad_cartridge = read ? 1'bZ : ad_console;
-//assign ad_console = read ? ad_cartridge : 1'bZ;
+
+assign ad_cartridge[15:0] = read ? address_active[15:0] : 16'bZ;
+assign ad_console[15:0] = read ? 16'bZ : address_active[15:0];
 
 always @(negedge clk) begin
-    if (ale_l && ale_h && read) begin
+    if (ale_l && ~ale_h && read && write && ~readHigh && ~step) begin
         address_high <= ad_console;
         address_active <= ad_console;
+        readHigh = 1;
     end
     
-    else if (ale_l && !ale_h && read) begin
+    else if (~ale_l && ~ale_h && read && write && ~readLow && ~step) begin
         address_low <= ad_console;
         address_active <= ad_console;
+        readLow = 1;
     end
     
-    if (!read) begin
+    if (~read) begin
         if (step) begin
             address_high <= ad_cartridge;
             address_active <= ad_cartridge;
-        end else begin
+            readHigh = 0;
+        end
+        if (~step) begin
             address_low <= ad_cartridge;
             address_active <= ad_cartridge;
+            readLow = 0;
         end
         step <= ~step;
     end
-    if (!write) begin
+    if (~write) begin
         if (step) begin
             address_high <= ad_console;
             address_active <= ad_console;
@@ -81,35 +85,5 @@ always @(negedge clk) begin
         step <= ~step;
     end
 end
-
-/*always @(negedge ale_h) begin
-    address_high <= ad_console;
-end
-
-always @(negedge ale_l) begin
-    address_low <= ad_console;
-end*/
-
-/*always @(negedge read) begin
-    if (~write) begin
-        if (step) begin
-            address_active <= address_low;
-        end else begin
-            address_active <= address_high;
-        end
-        step <= ~step;
-    end
-end*/
-
-/*always @(negedge write or negedge read) begin
-    if (!read || !write) begin
-        if (step) begin
-            address_active <= address_low;
-        end else begin
-            address_active <= address_high;
-        end
-        step <= ~step;
-    end 
-end*/
 
 endmodule

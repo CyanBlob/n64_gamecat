@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="synth_1" LaunchPart="xc7a35ticsg324-1L" LaunchTime="1613844210">
-  <File Type="VDS-TIMING-PB" Name="gamecat_timing_summary_synth.pb"/>
-  <File Type="VDS-TIMINGSUMMARY" Name="gamecat_timing_summary_synth.rpt"/>
-  <File Type="RDS-DCP" Name="gamecat.dcp"/>
-  <File Type="RDS-UTIL-PB" Name="gamecat_utilization_synth.pb"/>
-  <File Type="RDS-UTIL" Name="gamecat_utilization_synth.rpt"/>
-  <File Type="RDS-PROPCONSTRS" Name="gamecat_drc_synth.rpt"/>
-  <File Type="RDS-RDS" Name="gamecat.vds"/>
+<GenRun Id="synth_1" LaunchPart="xc7a35ticsg324-1L" LaunchTime="1613869839">
   <File Type="REPORTS-TCL" Name="gamecat_reports.tcl"/>
   <File Type="PA-TCL" Name="gamecat.tcl"/>
+  <File Type="RDS-DCP" Name="gamecat.dcp"/>
+  <File Type="RDS-RDS" Name="gamecat.vds"/>
+  <File Type="RDS-UTIL" Name="gamecat_utilization_synth.rpt"/>
+  <File Type="RDS-UTIL-PB" Name="gamecat_utilization_synth.pb"/>
   <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1" RelGenDir="$PGENDIR/sources_1">
     <Filter Type="Srcs"/>
     <File Path="$PSRCDIR/sources_1/new/gamecat.v">
@@ -44,9 +41,7 @@
     </Config>
   </FileSet>
   <Strategy Version="1" Minor="2">
-    <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2020">
-      <Desc>Vivado Synthesis Defaults</Desc>
-    </StratHandle>
+    <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2020"/>
     <Step Id="synth_design"/>
   </Strategy>
 </GenRun>
