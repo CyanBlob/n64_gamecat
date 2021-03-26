@@ -80,13 +80,15 @@ initial begin
         end
         
         if (i == 40 + 15) begin
-            cartReturn = 16'h0000;
+            cartReturn = 16'h1234;
             read = 1;
         end
         
         if (i == 40 + 20) begin
-        cartReturn = 16'h0F0F;
             read = 0;
+        end
+         if (i == 40 + 30) begin
+            cartReturn = 16'h0F0F;
         end
     end
 end
