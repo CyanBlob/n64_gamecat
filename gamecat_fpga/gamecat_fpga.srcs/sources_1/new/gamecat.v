@@ -31,9 +31,14 @@ module gamecat(
     
     input clk,
     
-    output readLow,
-    output  readHigh,
-    output step,
+    /*reg readLow,
+    reg readHigh,
+    reg step,
+    
+    reg override,
+    reg[31:0] override_data,
+    
+    reg[31:0] address_full,*/
         
     output [3:0] led,    //lower 4 bits of address_active
     output led3_r, //ale_l
@@ -47,55 +52,127 @@ reg[15:0] address_low = 16'h0000;
 reg[15:0] address_high= 16'h0000;
 reg[15:0] address_active= 16'h0000;
 
-reg[63:0] led_timer = 64'h0000000000000000;
+reg read_state = 0;
 
-reg step = 1'b0;
+reg[63:0] led_timer = 64'h0000000000000000;
 reg led_state = 1'b0;
 
+reg step = 1'b0;
 reg readLow = 0;
 reg readHigh = 0;
+reg override = 0;
+reg[31:0] override_data = 32'h00000000;
+reg[31:0] address_full = 32'h00000000;
 
-assign ad_cartridge[15:0] = (read && write) ? address_active[15:0] : 16'bZ;
-assign ad_console[15:0] = (read && write) ? 16'bZ : address_active[15:0];
+assign ad_cartridge[15:0] = (ale_l) ? address_active : 16'bZ;
+assign ad_console[15:0] = (ale_l || read) ? 16'bZ : address_active;
 
 // LED monitors
 assign led[0] = address_active[0];
 assign led[1] = address_active[1];
-assign led[2] = address_active[2];
-assign led[3] = address_active[3];
-assign led3_r = ale_l;
-assign led2_g = ale_h;
+assign led[2] = read;
+assign led[3] = step;
+assign led3_r = ale_h;
+assign led2_g = ale_l;
 assign led1_b  = read;
 assign led0_b  = write;
 assign led0_g = write;
 
 //always @(negedge clk) begin
 always @* begin
-    if (ale_l && !ale_h && read && write && !readHigh && !step) begin
+
+    // console request high incoming
+    if (ale_h && ale_l) begin
         address_high = ad_console;
         address_active = ad_console;
-        readHigh = 1;
+        address_full[31:16] = ad_console;
+        
+        override = 0;
     end
     
-    else if (!ale_l && !ale_h && read && write && !readLow && !step) begin
+    // console request low incoming
+    if (!ale_h && ale_l && !override) begin
         address_low = ad_console;
         address_active = ad_console;
-        readLow = 1;
+        address_full[15:0] = ad_console;
+        
+        if (address_full == 32'h04206969) begin
+            override = 1;
+            override_data = 32'hDEADBEEF;
+        end
+    end
+
+    
+    if (read) begin
+        read_state = 0;
     end
     
-    if (!read) begin
+    // the if (read_state == 1) and if (!read) blocks were split to create a delay between read going low
+    // and the data being read
+    if (read_state == 1) begin        
         if (step) begin
             address_high = ad_cartridge;
-            address_active = ad_cartridge;
-            readHigh = 0;
+            
+            if (override) begin
+                address_active = override_data[15:0];
+            end
+            else begin
+                address_active = ad_cartridge;
+            end   
+            
+            //readHigh <= 0;
         end
         if (!step) begin
             address_low = ad_cartridge;
-            address_active = ad_cartridge;
-            readLow = 0;
+            
+            if (override) begin
+                address_active = override_data[31:16];
+            end
+            else begin
+                address_active = ad_cartridge;
+            end
+            //readLow <= 0;
         end
         step = !step;
     end
+    
+    if (!read) begin
+        if (read_state == 0) begin
+        
+            read_state = 1;
+        end
+    end 
+   /* if (!read) begin
+        if (read_state == 0) begin
+        
+            read_state = 1;
+            if (step) begin
+                address_high = ad_cartridge;
+                
+                if (override) begin
+                    address_active = override_data[15:0];
+                end
+                else begin
+                    address_active = ad_cartridge;
+                end   
+                
+                //readHigh <= 0;
+            end
+            if (!step) begin
+                address_low = ad_cartridge;
+                
+                if (override) begin
+                    address_active = override_data[31:16];
+                end
+                else begin
+                    address_active = ad_cartridge;
+                end
+                //readLow <= 0;
+            end
+            step = !step;
+        end
+    end*/
+    
     if (!write) begin
         if (step) begin
             address_high = ad_console;

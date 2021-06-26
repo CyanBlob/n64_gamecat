@@ -1,0 +1,15 @@
+Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2021.1 (lin64) Build 3247384 Thu Jun 10 19:36:07 MDT 2021
+| Date         : Sat Jun 26 18:22:17 2021
+| Host         : pop-os running 64-bit Pop!_OS 21.04
+| Command      : report_bus_skew -warn_on_violation -file gamecat_bus_skew_routed.rpt -pb gamecat_bus_skew_routed.pb -rpx gamecat_bus_skew_routed.rpx
+| Design       : gamecat
+| Device       : 7a35ti-csg324
+| Speed File   : -1L  PRODUCTION 1.23 2018-06-13
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Bus Skew Report
+
+No bus skew constraints
+

@@ -1,7 +1,0 @@
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/andrew/Development/n64_gamecat/gamecat_fpga/gamecat_fpga.srcs/sources_1/new/gamecat.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module gamecat
-WARNING: [VRFC 10-3676] redeclaration of ansi port 'step' is not allowed [/home/andrew/Development/n64_gamecat/gamecat_fpga/gamecat_fpga.srcs/sources_1/new/gamecat.v:52]
-WARNING: [VRFC 10-3676] redeclaration of ansi port 'readLow' is not allowed [/home/andrew/Development/n64_gamecat/gamecat_fpga/gamecat_fpga.srcs/sources_1/new/gamecat.v:55]
-WARNING: [VRFC 10-3676] redeclaration of ansi port 'readHigh' is not allowed [/home/andrew/Development/n64_gamecat/gamecat_fpga/gamecat_fpga.srcs/sources_1/new/gamecat.v:56]
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/andrew/Development/n64_gamecat/gamecat_fpga/gamecat_fpga.srcs/sim_1/new/testbench.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module testbench

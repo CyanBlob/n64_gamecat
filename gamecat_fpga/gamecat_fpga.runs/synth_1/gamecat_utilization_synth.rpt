@@ -1,7 +1,7 @@
 Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2021.1 (lin64) Build 3247384 Thu Jun 10 19:36:07 MDT 2021
-| Date         : Fri Jun 25 18:43:25 2021
+| Date         : Sat Jun 26 18:21:30 2021
 | Host         : pop-os running 64-bit Pop!_OS 21.04
 | Command      : report_utilization -file gamecat_utilization_synth.rpt -pb gamecat_utilization_synth.pb
 | Design       : gamecat
@@ -30,12 +30,12 @@ Table of Contents
 +-------------------------+------+-------+------------+-----------+-------+
 |        Site Type        | Used | Fixed | Prohibited | Available | Util% |
 +-------------------------+------+-------+------------+-----------+-------+
-| Slice LUTs*             |   24 |     0 |          0 |     20800 |  0.12 |
-|   LUT as Logic          |   24 |     0 |          0 |     20800 |  0.12 |
+| Slice LUTs*             |   46 |     0 |          0 |     20800 |  0.22 |
+|   LUT as Logic          |   46 |     0 |          0 |     20800 |  0.22 |
 |   LUT as Memory         |    0 |     0 |          0 |      9600 |  0.00 |
-| Slice Registers         |   19 |     0 |          0 |     41600 |  0.05 |
+| Slice Registers         |   36 |     0 |          0 |     41600 |  0.09 |
 |   Register as Flip Flop |    0 |     0 |          0 |     41600 |  0.00 |
-|   Register as Latch     |   19 |     0 |          0 |     41600 |  0.05 |
+|   Register as Latch     |   36 |     0 |          0 |     41600 |  0.09 |
 | F7 Muxes                |    0 |     0 |          0 |     16300 |  0.00 |
 | F8 Muxes                |    0 |     0 |          0 |      8150 |  0.00 |
 +-------------------------+------+-------+------------+-----------+-------+
@@ -48,14 +48,14 @@ Table of Contents
 +-------+--------------+-------------+--------------+
 | Total | Clock Enable | Synchronous | Asynchronous |
 +-------+--------------+-------------+--------------+
-| 0     |            _ |           - |            - |
+| 1     |            _ |           - |            - |
 | 0     |            _ |           - |          Set |
 | 0     |            _ |           - |        Reset |
 | 0     |            _ |         Set |            - |
 | 0     |            _ |       Reset |            - |
 | 0     |          Yes |           - |            - |
 | 0     |          Yes |           - |          Set |
-| 19    |          Yes |           - |        Reset |
+| 35    |          Yes |           - |        Reset |
 | 0     |          Yes |         Set |            - |
 | 0     |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
@@ -90,7 +90,7 @@ Table of Contents
 +-----------------------------+------+-------+------------+-----------+-------+
 |          Site Type          | Used | Fixed | Prohibited | Available | Util% |
 +-----------------------------+------+-------+------------+-----------+-------+
-| Bonded IOB                  |   48 |     0 |          0 |       210 | 22.86 |
+| Bonded IOB                  |   45 |     0 |          0 |       210 | 21.43 |
 | Bonded IPADs                |    0 |     0 |          0 |         2 |  0.00 |
 | PHY_CONTROL                 |    0 |     0 |          0 |         5 |  0.00 |
 | PHASER_REF                  |    0 |     0 |          0 |         5 |  0.00 |
@@ -146,14 +146,15 @@ Table of Contents
 +----------+------+---------------------+
 | Ref Name | Used | Functional Category |
 +----------+------+---------------------+
+| LDCE     |   36 |        Flop & Latch |
 | IBUF     |   36 |                  IO |
 | OBUFT    |   32 |                  IO |
-| LDCE     |   19 |        Flop & Latch |
-| LUT4     |   16 |                 LUT |
-| OBUF     |   12 |                  IO |
+| LUT5     |   27 |                 LUT |
+| LUT6     |   11 |                 LUT |
+| OBUF     |    9 |                  IO |
+| LUT3     |    7 |                 LUT |
 | LUT2     |    4 |                 LUT |
-| LUT6     |    3 |                 LUT |
-| LUT3     |    2 |                 LUT |
+| LUT4     |    2 |                 LUT |
 | LUT1     |    2 |                 LUT |
 +----------+------+---------------------+
 

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenRun Id="impl_1" LaunchPart="xc7a35ticsg324-1L" LaunchTime="1624749653">
+  <File Type="WBT-USG" Name="usage_statistics_webtalk.html"/>
+  <File Type="BITSTR-SYSDEF" Name="gamecat.sysdef"/>
+  <File Type="BITSTR-LTX" Name="debug_nets.ltx"/>
+  <File Type="BITSTR-LTX" Name="gamecat.ltx"/>
+  <File Type="BG-BGN" Name="gamecat.bgn"/>
+  <File Type="RNPI_FILE" Name="gamecat.rnpi"/>
+  <File Type="BG-DRC" Name="gamecat.drc"/>
+  <File Type="CFI_FILE" Name="gamecat.cfi"/>
+  <File Type="RCFI_FILE" Name="gamecat.rcfi"/>
+  <File Type="BITSTR-MMI" Name="gamecat.mmi"/>
+  <File Type="BITSTR-BMM" Name="gamecat_bd.bmm"/>
+  <File Type="BITSTR-NKY" Name="gamecat.nky"/>
+  <File Type="BITSTR-RBT" Name="gamecat.rbt"/>
+  <File Type="RBD_FILE" Name="gamecat.rbd"/>
+  <File Type="BITSTR-MSK" Name="gamecat.msk"/>
+  <File Type="NPI_FILE" Name="gamecat.npi"/>
+  <File Type="BG-BIN" Name="gamecat.bin"/>
+  <File Type="PDI-FILE" Name="gamecat.pdi"/>
+  <File Type="BG-BIT" Name="gamecat.bit"/>
+  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW-RPX" Name="gamecat_bus_skew_postroute_physopted.rpx"/>
+  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW-PB" Name="gamecat_bus_skew_postroute_physopted.pb"/>
+  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW" Name="gamecat_bus_skew_postroute_physopted.rpt"/>
+  <File Type="POSTROUTE-PHYSOPT-TIMING-RPX" Name="gamecat_timing_summary_postroute_physopted.rpx"/>
+  <File Type="RDI-RDI" Name="gamecat.vdi"/>
+  <File Type="POSTROUTE-PHYSOPT-TIMING-PB" Name="gamecat_timing_summary_postroute_physopted.pb"/>
+  <File Type="POSTROUTE-PHYSOPT-TIMING" Name="gamecat_timing_summary_postroute_physopted.rpt"/>
+  <File Type="POSTROUTE-PHYSOPT-BLACKBOX-DCP" Name="gamecat_postroute_physopt_bb.dcp"/>
+  <File Type="POSTROUTE-PHYSOPT-DCP" Name="gamecat_postroute_physopt.dcp"/>
+  <File Type="ROUTE-BUS-SKEW" Name="gamecat_bus_skew_routed.rpt"/>
+  <File Type="ROUTE-CLK" Name="gamecat_clock_utilization_routed.rpt"/>
+  <File Type="ROUTE-SIMILARITY" Name="gamecat_incremental_reuse_routed.rpt"/>
+  <File Type="ROUTE-TIMING-RPX" Name="gamecat_timing_summary_routed.rpx"/>
+  <File Type="ROUTE-TIMING-PB" Name="gamecat_timing_summary_routed.pb"/>
+  <File Type="ROUTE-TIMINGSUMMARY" Name="gamecat_timing_summary_routed.rpt"/>
+  <File Type="ROUTE-STATUS-PB" Name="gamecat_route_status.pb"/>
+  <File Type="ROUTE-STATUS" Name="gamecat_route_status.rpt"/>
+  <File Type="ROUTE-PWR-RPX" Name="gamecat_power_routed.rpx"/>
+  <File Type="ROUTE-PWR-SUM" Name="gamecat_power_summary_routed.pb"/>
+  <File Type="ROUTE-PWR" Name="gamecat_power_routed.rpt"/>
+  <File Type="ROUTE-METHODOLOGY-DRC-PB" Name="gamecat_methodology_drc_routed.pb"/>
+  <File Type="ROUTE-METHODOLOGY-DRC-RPX" Name="gamecat_methodology_drc_routed.rpx"/>
+  <File Type="ROUTE-METHODOLOGY-DRC" Name="gamecat_methodology_drc_routed.rpt"/>
+  <File Type="ROUTE-DRC-RPX" Name="gamecat_drc_routed.rpx"/>
+  <File Type="ROUTE-DRC-PB" Name="gamecat_drc_routed.pb"/>
+  <File Type="ROUTE-DRC" Name="gamecat_drc_routed.rpt"/>
+  <File Type="ROUTE-BLACKBOX-DCP" Name="gamecat_routed_bb.dcp"/>
+  <File Type="ROUTE-DCP" Name="gamecat_routed.dcp"/>
+  <File Type="ROUTE-ERROR-DCP" Name="gamecat_routed_error.dcp"/>
+  <File Type="PHYSOPT-TIMING" Name="gamecat_timing_summary_physopted.rpt"/>
+  <File Type="PHYSOPT-DRC" Name="gamecat_drc_physopted.rpt"/>
+  <File Type="PHYSOPT-DCP" Name="gamecat_physopt.dcp"/>
+  <File Type="POSTPLACE-PWROPT-TIMING" Name="gamecat_timing_summary_postplace_pwropted.rpt"/>
+  <File Type="POSTPLACE-PWROPT-DCP" Name="gamecat_postplace_pwropt.dcp"/>
+  <File Type="PLACE-TIMING" Name="gamecat_timing_summary_placed.rpt"/>
+  <File Type="PLACE-PRE-SIMILARITY" Name="gamecat_incremental_reuse_pre_placed.rpt"/>
+  <File Type="PLACE-SIMILARITY" Name="gamecat_incremental_reuse_placed.rpt"/>
+  <File Type="PLACE-CTRL" Name="gamecat_control_sets_placed.rpt"/>
+  <File Type="PLACE-UTIL-PB" Name="gamecat_utilization_placed.pb"/>
+  <File Type="PLACE-UTIL" Name="gamecat_utilization_placed.rpt"/>
+  <File Type="PLACE-CLK" Name="gamecat_clock_utilization_placed.rpt"/>
+  <File Type="PLACE-IO" Name="gamecat_io_placed.rpt"/>
+  <File Type="PLACE-DCP" Name="gamecat_placed.dcp"/>
+  <File Type="PWROPT-TIMING" Name="gamecat_timing_summary_pwropted.rpt"/>
+  <File Type="PWROPT-DRC" Name="gamecat_drc_pwropted.rpt"/>
+  <File Type="PWROPT-DCP" Name="gamecat_pwropt.dcp"/>
+  <File Type="OPT-TIMING" Name="gamecat_timing_summary_opted.rpt"/>
+  <File Type="OPT-HWDEF" Name="gamecat.hwdef"/>
+  <File Type="OPT-METHODOLOGY-DRC" Name="gamecat_methodology_drc_opted.rpt"/>
+  <File Type="OPT-DRC" Name="gamecat_drc_opted.rpt"/>
+  <File Type="OPT-DCP" Name="gamecat_opt.dcp"/>
+  <File Type="INIT-TIMING" Name="gamecat_timing_summary_init.rpt"/>
+  <File Type="ROUTE-BUS-SKEW-RPX" Name="gamecat_bus_skew_routed.rpx"/>
+  <File Type="REPORTS-TCL" Name="gamecat_reports.tcl"/>
+  <File Type="ROUTE-BUS-SKEW-PB" Name="gamecat_bus_skew_routed.pb"/>
+  <File Type="PA-TCL" Name="gamecat.tcl"/>
+  <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1" RelGenDir="$PGENDIR/sources_1">
+    <Filter Type="Srcs"/>
+    <File Path="$PSRCDIR/sources_1/new/gamecat.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <Config>
+      <Option Name="DesignMode" Val="RTL"/>
+      <Option Name="TopModule" Val="gamecat"/>
+      <Option Name="TopAutoSet" Val="TRUE"/>
+    </Config>
+  </FileSet>
+  <FileSet Name="constrs_in" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1">
+    <Filter Type="Constrs"/>
+    <File Path="$PSRCDIR/constrs_1/new/arty_a7_35_gamecat.xdc">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+      </FileInfo>
+    </File>
+    <Config>
+      <Option Name="TargetConstrsFile" Val="$PSRCDIR/constrs_1/new/arty_a7_35_gamecat.xdc"/>
+      <Option Name="ConstrsType" Val="XDC"/>
+    </Config>
+  </FileSet>
+  <FileSet Name="utils" Type="Utils" RelSrcDir="$PSRCDIR/utils_1">
+    <Filter Type="Utils"/>
+    <Config>
+      <Option Name="TopAutoSet" Val="TRUE"/>
+    </Config>
+  </FileSet>
+  <Strategy Version="1" Minor="2">
+    <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2020"/>
+    <Step Id="init_design"/>
+    <Step Id="opt_design"/>
+    <Step Id="power_opt_design"/>
+    <Step Id="place_design"/>
+    <Step Id="post_place_power_opt_design"/>
+    <Step Id="phys_opt_design"/>
+    <Step Id="route_design"/>
+    <Step Id="post_route_phys_opt_design"/>
+    <Step Id="write_bitstream">
+      <Option Id="BinFile">1</Option>
+    </Step>
+  </Strategy>
+</GenRun>

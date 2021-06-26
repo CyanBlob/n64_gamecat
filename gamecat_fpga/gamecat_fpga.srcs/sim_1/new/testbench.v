@@ -30,9 +30,14 @@ wire[15:0] ad_cartridge;
 reg write;
 reg clk;
 
-wire readLow;
+/*wire readLow;
 wire readHigh;
 wire step;
+
+wire override;
+wire[31:0] override_data;
+
+wire[31:0] address_full;*/
 
 gamecat uut(
     .ad_console (ad_console),
@@ -41,10 +46,13 @@ gamecat uut(
     .read (read),
     .ale_h (ale_h),
     .ale_l (ale_l),
-    .clk (clk),
-    .readLow (readLow),
+    .clk (clk)
+    /*.readLow (readLow),
     .readHigh (readHigh),
-    .step (step)
+    .step (step),
+    .override (override),
+    .override_data (override_data),
+    .address_full (address_full)*/
 );
 
 integer i = 0;
@@ -52,8 +60,12 @@ integer i = 0;
 reg[15:0] cartReturn = 16'h0000;
 reg[15:0] consoleRequest = 16'h0000;
 
-assign ad_cartridge[15:0] = (~read || ~write) ? cartReturn : 16'bZ;
-assign ad_console[15:0] = (~read || ~write) ? 16'bZ : consoleRequest;
+//assign ad_cartridge[15:0] = (~read || ~write) ? cartReturn : 16'bZ;
+//assign ad_console[15:0] = (~read || ~write) ? 16'bZ : consoleRequest;
+
+assign ad_cartridge[15:0] = (!ale_l) ? cartReturn : 16'bZ;
+assign ad_console[15:0] = (!ale_l && !read) ?  16'bZ : consoleRequest;
+//assign ad_console[15:0] = (override) ?  16'bZ : consoleRequest;
     
 initial begin
 
@@ -68,11 +80,11 @@ initial begin
         clk = ~clk;
         
         if (i == 5) begin
-            consoleRequest = 16'h0420;
+            consoleRequest = 16'h3420;
             ale_l = 1;
         end
         
-        if (i == 5 + 18) begin
+        if (i == 5 + 19) begin
             consoleRequest = 16'h6969;
         end
         
@@ -85,20 +97,35 @@ initial begin
         end
         
         if (i == 40) begin
-            cartReturn = 16'hF0F0;
             read = 0;
         end
         
+        if (i == 41) begin
+            cartReturn = 16'hF0F0;
+        end
+        
         if (i == 40 + 15) begin
-            cartReturn = 16'h1234;
             read = 1;
         end
         
         if (i == 40 + 20) begin
             read = 0;
         end
-         if (i == 40 + 30) begin
-            cartReturn = 16'h0F0F;
+        
+        if (i == 40 + 21) begin
+            cartReturn = 16'h1234;
+        end
+        
+        if (i == 40 + 35) begin
+            read = 1;
+        end
+        
+        if (i == 40 + 40) begin
+            read = 0;
+        end
+        
+        if (i == 40 + 45) begin
+            read = 1;
         end
     end
 end
