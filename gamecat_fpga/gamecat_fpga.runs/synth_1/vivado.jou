@@ -1,9 +1,9 @@
 #-----------------------------------------------------------
-# Vivado v2020.2 (64-bit)
-# SW Build 3064766 on Wed Nov 18 09:12:47 MST 2020
-# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
-# Start of session at: Sat Feb 20 21:31:04 2021
-# Process ID: 455132
+# Vivado v2021.1 (64-bit)
+# SW Build 3247384 on Thu Jun 10 19:36:07 MDT 2021
+# IP Build 3246043 on Fri Jun 11 00:30:35 MDT 2021
+# Start of session at: Fri Jun 25 18:42:53 2021
+# Process ID: 97222
 # Current directory: /home/andrew/Development/n64_gamecat/gamecat_fpga/gamecat_fpga.runs/synth_1
 # Command line: vivado -log gamecat.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source gamecat.tcl
 # Log file: /home/andrew/Development/n64_gamecat/gamecat_fpga/gamecat_fpga.runs/synth_1/gamecat.vds

@@ -71,6 +71,7 @@ proc create_report { reportName command } {
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
 set_param chipscope.maxJobs 4
+set_param xicom.use_bs_reader 1
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7a35ticsg324-1L
 
@@ -81,7 +82,6 @@ set_property webtalk.parent_dir /home/andrew/Development/n64_gamecat/gamecat_fpg
 set_property parent.project_path /home/andrew/Development/n64_gamecat/gamecat_fpga/gamecat_fpga.xpr [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
-set_property board_part digilentinc.com:arty-a7-35:part0:1.0 [current_project]
 set_property ip_output_repo /home/andrew/Development/n64_gamecat/gamecat_fpga/gamecat_fpga.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }

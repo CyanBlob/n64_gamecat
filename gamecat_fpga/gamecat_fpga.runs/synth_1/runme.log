@@ -3,10 +3,10 @@
     with args -log gamecat.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source gamecat.tcl
 
 
-****** Vivado v2020.2 (64-bit)
-  **** SW Build 3064766 on Wed Nov 18 09:12:47 MST 2020
-  **** IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
-    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+****** Vivado v2021.1 (64-bit)
+  **** SW Build 3247384 on Thu Jun 10 19:36:07 MDT 2021
+  **** IP Build 3246043 on Fri Jun 11 00:30:35 MDT 2021
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
 
 source gamecat.tcl -notrace
 Command: synth_design -top gamecat -part xc7a35ticsg324-1L
@@ -16,25 +16,28 @@ INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t
 INFO: [Device 21-403] Loading part xc7a35ticsg324-1L
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 4 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 455225
+INFO: [Synth 8-7075] Helper process launched with PID 97274
+WARNING: [Synth 8-2611] redeclaration of ansi port step is not allowed [/home/andrew/Development/n64_gamecat/gamecat_fpga/gamecat_fpga.srcs/sources_1/new/gamecat.v:52]
+WARNING: [Synth 8-2611] redeclaration of ansi port readLow is not allowed [/home/andrew/Development/n64_gamecat/gamecat_fpga/gamecat_fpga.srcs/sources_1/new/gamecat.v:55]
+WARNING: [Synth 8-2611] redeclaration of ansi port readHigh is not allowed [/home/andrew/Development/n64_gamecat/gamecat_fpga/gamecat_fpga.srcs/sources_1/new/gamecat.v:56]
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 2299.926 ; gain = 0.000 ; free physical = 167 ; free virtual = 20139
+Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 2460.480 ; gain = 0.000 ; free physical = 1147 ; free virtual = 23580
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-6157] synthesizing module 'gamecat' [/home/andrew/Development/n64_gamecat/gamecat_fpga/gamecat_fpga.srcs/sources_1/new/gamecat.v:23]
 INFO: [Synth 8-6155] done synthesizing module 'gamecat' (1#1) [/home/andrew/Development/n64_gamecat/gamecat_fpga/gamecat_fpga.srcs/sources_1/new/gamecat.v:23]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 2299.926 ; gain = 0.000 ; free physical = 968 ; free virtual = 20909
+Finished RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 2460.480 ; gain = 0.000 ; free physical = 304 ; free virtual = 22738
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 2299.926 ; gain = 0.000 ; free physical = 986 ; free virtual = 20927
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 2460.480 ; gain = 0.000 ; free physical = 299 ; free virtual = 22733
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 2299.926 ; gain = 0.000 ; free physical = 986 ; free virtual = 20927
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 2460.480 ; gain = 0.000 ; free physical = 299 ; free virtual = 22733
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2299.926 ; gain = 0.000 ; free physical = 980 ; free virtual = 20921
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2460.480 ; gain = 0.000 ; free physical = 292 ; free virtual = 22726
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
@@ -45,41 +48,42 @@ INFO: [Project 1-236] Implementation specific constraints were found while readi
 Resolution: To avoid this warning, move constraints listed in [.Xil/gamecat_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2363.824 ; gain = 0.000 ; free physical = 923 ; free virtual = 20864
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2524.383 ; gain = 0.000 ; free physical = 1046 ; free virtual = 23480
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2363.824 ; gain = 0.000 ; free physical = 923 ; free virtual = 20865
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2524.383 ; gain = 0.000 ; free physical = 1046 ; free virtual = 23480
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:10 ; elapsed = 00:00:12 . Memory (MB): peak = 2363.824 ; gain = 63.898 ; free physical = 985 ; free virtual = 20928
+Finished Constraint Validation : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 2524.383 ; gain = 63.902 ; free physical = 1119 ; free virtual = 23553
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a35ticsg324-1L
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:10 ; elapsed = 00:00:12 . Memory (MB): peak = 2363.824 ; gain = 63.898 ; free physical = 985 ; free virtual = 20928
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 2524.383 ; gain = 63.902 ; free physical = 1119 ; free virtual = 23553
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:10 ; elapsed = 00:00:12 . Memory (MB): peak = 2363.824 ; gain = 63.898 ; free physical = 985 ; free virtual = 20928
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 2524.383 ; gain = 63.902 ; free physical = 1119 ; free virtual = 23553
 ---------------------------------------------------------------------------------
+WARNING: [Synth 8-327] inferring latch for variable 'readHigh_reg' [/home/andrew/Development/n64_gamecat/gamecat_fpga/gamecat_fpga.srcs/sources_1/new/gamecat.v:74]
+WARNING: [Synth 8-327] inferring latch for variable 'readLow_reg' [/home/andrew/Development/n64_gamecat/gamecat_fpga/gamecat_fpga.srcs/sources_1/new/gamecat.v:80]
+WARNING: [Synth 8-327] inferring latch for variable 'step_reg' [/home/andrew/Development/n64_gamecat/gamecat_fpga/gamecat_fpga.srcs/sources_1/new/gamecat.v:74]
+WARNING: [Synth 8-327] inferring latch for variable 'address_active_reg' [/home/andrew/Development/n64_gamecat/gamecat_fpga/gamecat_fpga.srcs/sources_1/new/gamecat.v:58]
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 2363.824 ; gain = 63.898 ; free physical = 976 ; free virtual = 20920
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 2524.383 ; gain = 63.902 ; free physical = 1110 ; free virtual = 23544
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
 ---------------------------------------------------------------------------------
 Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-	                1 Bit    Registers := 3     
 +---Muxes : 
 	   2 Input   16 Bit        Muxes := 3     
 	   3 Input   16 Bit        Muxes := 1     
-	   2 Input    1 Bit        Muxes := 4     
+	   2 Input    1 Bit        Muxes := 6     
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
 ---------------------------------------------------------------------------------
@@ -96,25 +100,25 @@ Finished Part Resource Summary
 Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:11 ; elapsed = 00:00:13 . Memory (MB): peak = 2363.824 ; gain = 63.898 ; free physical = 963 ; free virtual = 20909
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:10 ; elapsed = 00:00:11 . Memory (MB): peak = 2524.383 ; gain = 63.902 ; free physical = 1098 ; free virtual = 23535
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:17 ; elapsed = 00:00:19 . Memory (MB): peak = 2363.824 ; gain = 63.898 ; free physical = 844 ; free virtual = 20789
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:16 ; elapsed = 00:00:16 . Memory (MB): peak = 2524.383 ; gain = 63.902 ; free physical = 976 ; free virtual = 23414
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:17 ; elapsed = 00:00:19 . Memory (MB): peak = 2363.824 ; gain = 63.898 ; free physical = 842 ; free virtual = 20787
+Finished Timing Optimization : Time (s): cpu = 00:00:16 ; elapsed = 00:00:16 . Memory (MB): peak = 2524.383 ; gain = 63.902 ; free physical = 976 ; free virtual = 23414
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:17 ; elapsed = 00:00:19 . Memory (MB): peak = 2363.824 ; gain = 63.898 ; free physical = 842 ; free virtual = 20787
+Finished Technology Mapping : Time (s): cpu = 00:00:16 ; elapsed = 00:00:16 . Memory (MB): peak = 2524.383 ; gain = 63.902 ; free physical = 975 ; free virtual = 23412
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -132,37 +136,37 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:20 ; elapsed = 00:00:22 . Memory (MB): peak = 2363.824 ; gain = 63.898 ; free physical = 830 ; free virtual = 20776
+Finished IO Insertion : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 2524.383 ; gain = 63.902 ; free physical = 975 ; free virtual = 23412
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:20 ; elapsed = 00:00:22 . Memory (MB): peak = 2363.824 ; gain = 63.898 ; free physical = 830 ; free virtual = 20776
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 2524.383 ; gain = 63.902 ; free physical = 975 ; free virtual = 23412
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:20 ; elapsed = 00:00:22 . Memory (MB): peak = 2363.824 ; gain = 63.898 ; free physical = 830 ; free virtual = 20776
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 2524.383 ; gain = 63.902 ; free physical = 975 ; free virtual = 23412
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:20 ; elapsed = 00:00:22 . Memory (MB): peak = 2363.824 ; gain = 63.898 ; free physical = 830 ; free virtual = 20776
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 2524.383 ; gain = 63.902 ; free physical = 975 ; free virtual = 23412
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:20 ; elapsed = 00:00:22 . Memory (MB): peak = 2363.824 ; gain = 63.898 ; free physical = 830 ; free virtual = 20775
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 2524.383 ; gain = 63.902 ; free physical = 975 ; free virtual = 23412
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:20 ; elapsed = 00:00:22 . Memory (MB): peak = 2363.824 ; gain = 63.898 ; free physical = 830 ; free virtual = 20775
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 2524.383 ; gain = 63.902 ; free physical = 975 ; free virtual = 23412
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -178,37 +182,41 @@ Report Cell Usage:
 +------+------+------+
 |      |Cell  |Count |
 +------+------+------+
-|1     |BUFG  |     1|
-|2     |LUT1  |     2|
-|3     |LUT2  |     3|
-|4     |LUT3  |     1|
-|5     |LUT4  |    16|
-|6     |LUT6  |     3|
-|7     |FDRE  |    19|
-|8     |IBUF  |     5|
+|1     |LUT1  |     2|
+|2     |LUT2  |     4|
+|3     |LUT3  |     2|
+|4     |LUT4  |    16|
+|5     |LUT6  |     3|
+|6     |LD    |    17|
+|7     |LDC   |     2|
+|8     |IBUF  |     4|
 |9     |IOBUF |    32|
+|10    |OBUF  |    12|
 +------+------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:20 ; elapsed = 00:00:22 . Memory (MB): peak = 2363.824 ; gain = 63.898 ; free physical = 830 ; free virtual = 20775
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 2524.383 ; gain = 63.902 ; free physical = 975 ; free virtual = 23412
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:18 ; elapsed = 00:00:20 . Memory (MB): peak = 2363.824 ; gain = 0.000 ; free physical = 879 ; free virtual = 20824
-Synthesis Optimization Complete : Time (s): cpu = 00:00:20 ; elapsed = 00:00:22 . Memory (MB): peak = 2363.824 ; gain = 63.898 ; free physical = 879 ; free virtual = 20824
+Synthesis finished with 0 errors, 0 critical warnings and 4 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:17 ; elapsed = 00:00:17 . Memory (MB): peak = 2524.383 ; gain = 0.000 ; free physical = 1023 ; free virtual = 23461
+Synthesis Optimization Complete : Time (s): cpu = 00:00:19 ; elapsed = 00:00:19 . Memory (MB): peak = 2524.383 ; gain = 63.902 ; free physical = 1023 ; free virtual = 23461
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2363.824 ; gain = 0.000 ; free physical = 964 ; free virtual = 20910
-INFO: [Netlist 29-17] Analyzing 32 Unisim elements for replacement
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2524.383 ; gain = 0.000 ; free physical = 1110 ; free virtual = 23548
+INFO: [Netlist 29-17] Analyzing 51 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2363.824 ; gain = 0.000 ; free physical = 913 ; free virtual = 20858
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2524.383 ; gain = 0.000 ; free physical = 1054 ; free virtual = 23491
 INFO: [Project 1-111] Unisim Transformation Summary:
-  A total of 32 instances were transformed.
+  A total of 51 instances were transformed.
   IOBUF => IOBUF (IBUF, OBUFT): 32 instances
+  LD => LDCE: 17 instances
+  LDC => LDCE: 2 instances
 
+Synth Design complete, checksum: 5e584e1b
 INFO: [Common 17-83] Releasing license: Synthesis
-17 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+17 Infos, 7 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:29 ; elapsed = 00:00:27 . Memory (MB): peak = 2363.824 ; gain = 64.031 ; free physical = 1057 ; free virtual = 21003
+synth_design: Time (s): cpu = 00:00:27 ; elapsed = 00:00:23 . Memory (MB): peak = 2524.383 ; gain = 64.031 ; free physical = 1203 ; free virtual = 23641
 INFO: [Common 17-1381] The checkpoint '/home/andrew/Development/n64_gamecat/gamecat_fpga/gamecat_fpga.runs/synth_1/gamecat.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file gamecat_utilization_synth.rpt -pb gamecat_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Sat Feb 20 21:31:42 2021...
+INFO: [Common 17-206] Exiting Vivado at Fri Jun 25 18:43:25 2021...

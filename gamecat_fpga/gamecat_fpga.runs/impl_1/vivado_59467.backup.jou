@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2021.1 (64-bit)
+# SW Build 3247384 on Thu Jun 10 19:36:07 MDT 2021
+# IP Build 3246043 on Fri Jun 11 00:30:35 MDT 2021
+# Start of session at: Fri Jun 25 16:57:28 2021
+# Process ID: 59467
+# Current directory: /home/andrew/Development/n64_gamecat/gamecat_fpga/gamecat_fpga.runs/impl_1
+# Command line: vivado -log gamecat.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source gamecat.tcl -notrace
+# Log file: /home/andrew/Development/n64_gamecat/gamecat_fpga/gamecat_fpga.runs/impl_1/gamecat.vdi
+# Journal file: /home/andrew/Development/n64_gamecat/gamecat_fpga/gamecat_fpga.runs/impl_1/vivado.jou
+#-----------------------------------------------------------
+source gamecat.tcl -notrace

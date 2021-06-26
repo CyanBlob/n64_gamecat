@@ -31,7 +31,16 @@ module gamecat(
     
     input clk,
     
-    output led0_r
+    output readLow,
+    output  readHigh,
+    output step,
+        
+    output [3:0] led,    //lower 4 bits of address_active
+    output led3_r, //ale_l
+    output led2_g, //ale_h
+    output led1_b, //read
+    output led0_b, //write
+    output  led0_g  //write
 );
 
 reg[15:0] address_low = 16'h0000;
@@ -40,8 +49,8 @@ reg[15:0] address_active= 16'h0000;
 
 reg[63:0] led_timer = 64'h0000000000000000;
 
-reg step = 0;
-reg led_state = 0;
+reg step = 1'b0;
+reg led_state = 1'b0;
 
 reg readLow = 0;
 reg readHigh = 0;
@@ -49,36 +58,45 @@ reg readHigh = 0;
 assign ad_cartridge[15:0] = (read && write) ? address_active[15:0] : 16'bZ;
 assign ad_console[15:0] = (read && write) ? 16'bZ : address_active[15:0];
 
-assign led0_r = led_state;
+// LED monitors
+assign led[0] = address_active[0];
+assign led[1] = address_active[1];
+assign led[2] = address_active[2];
+assign led[3] = address_active[3];
+assign led3_r = ale_l;
+assign led2_g = ale_h;
+assign led1_b  = read;
+assign led0_b  = write;
+assign led0_g = write;
 
 //always @(negedge clk) begin
-always @(read || ale_l || ale_h || write) begin
-    if (ale_l && ~ale_h && read && write && ~readHigh && ~step) begin
+always @* begin
+    if (ale_l && !ale_h && read && write && !readHigh && !step) begin
         address_high = ad_console;
         address_active = ad_console;
         readHigh = 1;
     end
     
-    else if (~ale_l && ~ale_h && read && write && ~readLow && ~step) begin
+    else if (!ale_l && !ale_h && read && write && !readLow && !step) begin
         address_low = ad_console;
         address_active = ad_console;
         readLow = 1;
     end
     
-    if (~read) begin
+    if (!read) begin
         if (step) begin
             address_high = ad_cartridge;
             address_active = ad_cartridge;
             readHigh = 0;
         end
-        if (~step) begin
+        if (!step) begin
             address_low = ad_cartridge;
             address_active = ad_cartridge;
             readLow = 0;
         end
-        step = ~step;
+        step = !step;
     end
-    if (~write) begin
+    if (!write) begin
         if (step) begin
             address_high = ad_console;
             address_active = ad_console;
@@ -86,15 +104,16 @@ always @(read || ale_l || ale_h || write) begin
             address_low = ad_console;
             address_active = ad_console;
         end
-        step = ~step;
-    end
-    
+        step = !step;
+    end    
+end
+
+always @(negedge clk) begin
     led_timer = led_timer + 1;
     if (led_timer == 100000000) begin
         led_state = !led_state;
         led_timer = 0;
     end
-    
 end
 
 endmodule

@@ -30,6 +30,10 @@ wire[15:0] ad_cartridge;
 reg write;
 reg clk;
 
+wire readLow;
+wire readHigh;
+wire step;
+
 gamecat uut(
     .ad_console (ad_console),
     .ad_cartridge (ad_cartridge),
@@ -37,7 +41,10 @@ gamecat uut(
     .read (read),
     .ale_h (ale_h),
     .ale_l (ale_l),
-    .clk (clk)
+    .clk (clk),
+    .readLow (readLow),
+    .readHigh (readHigh),
+    .step (step)
 );
 
 integer i = 0;
@@ -65,8 +72,11 @@ initial begin
             ale_l = 1;
         end
         
-        if (i == 5 + 23) begin
+        if (i == 5 + 18) begin
             consoleRequest = 16'h6969;
+        end
+        
+        if (i == 5 + 23) begin
             ale_l = 0;
         end
         
