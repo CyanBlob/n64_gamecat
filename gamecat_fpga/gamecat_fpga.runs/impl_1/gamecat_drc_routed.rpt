@@ -1,14 +1,14 @@
-Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
----------------------------------------------------------------------------------------------------------------
-| Tool Version : Vivado v.2021.1 (lin64) Build 3247384 Thu Jun 10 19:36:07 MDT 2021
-| Date         : Sat Jun 26 18:22:15 2021
-| Host         : pop-os running 64-bit Pop!_OS 21.04
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2023.2 (win64) Build 4029153 Fri Oct 13 20:14:34 MDT 2023
+| Date         : Fri Mar 15 23:13:55 2024
+| Host         : ANDREWTHOMA7F28 running 64-bit major release  (build 9200)
 | Command      : report_drc -file gamecat_drc_routed.rpt -pb gamecat_drc_routed.pb -rpx gamecat_drc_routed.rpx
 | Design       : gamecat
 | Device       : xc7a35ticsg324-1L
 | Speed File   : -1L
 | Design State : Fully Routed
----------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------
 
 Report DRC
 
@@ -24,43 +24,12 @@ Table of Contents
       Design limits: <entire design considered>
            Ruledeck: default
              Max violations: <unlimited>
-             Violations found: 6
-+----------+----------+-------------------+------------+
-| Rule     | Severity | Description       | Violations |
-+----------+----------+-------------------+------------+
-| PDRC-153 | Warning  | Gated clock check | 6          |
-+----------+----------+-------------------+------------+
+             Violations found: 0
++------+----------+-------------+------------+
+| Rule | Severity | Description | Violations |
++------+----------+-------------+------------+
++------+----------+-------------+------------+
 
 2. REPORT DETAILS
 -----------------
-PDRC-153#1 Warning
-Gated clock check  
-Net address_active_reg[15]_i_2_n_0 is a gated clock net sourced by a combinational pin address_active_reg[15]_i_2/O, cell address_active_reg[15]_i_2. This is not good design practice and will likely impact performance. For SLICE registers, for example, use the CE pin to control the loading of data.
-Related violations: <none>
-
-PDRC-153#2 Warning
-Gated clock check  
-Net override1 is a gated clock net sourced by a combinational pin address_full_reg[31]_i_1/O, cell address_full_reg[31]_i_1. This is not good design practice and will likely impact performance. For SLICE registers, for example, use the CE pin to control the loading of data.
-Related violations: <none>
-
-PDRC-153#3 Warning
-Gated clock check  
-Net override7_out is a gated clock net sourced by a combinational pin override_reg_i_3/O, cell override_reg_i_3. This is not good design practice and will likely impact performance. For SLICE registers, for example, use the CE pin to control the loading of data.
-Related violations: <none>
-
-PDRC-153#4 Warning
-Gated clock check  
-Net override_reg/G0 is a gated clock net sourced by a combinational pin override_reg/L3_2/O, cell override_reg/L3_2 (in override_reg macro). This is not good design practice and will likely impact performance. For SLICE registers, for example, use the CE pin to control the loading of data.
-Related violations: <none>
-
-PDRC-153#5 Warning
-Gated clock check  
-Net read_state_reg_i_2_n_0 is a gated clock net sourced by a combinational pin read_state_reg_i_2/O, cell read_state_reg_i_2. This is not good design practice and will likely impact performance. For SLICE registers, for example, use the CE pin to control the loading of data.
-Related violations: <none>
-
-PDRC-153#6 Warning
-Gated clock check  
-Net step_reg_i_2_n_0 is a gated clock net sourced by a combinational pin step_reg_i_2/O, cell step_reg_i_2. This is not good design practice and will likely impact performance. For SLICE registers, for example, use the CE pin to control the loading of data.
-Related violations: <none>
-
 

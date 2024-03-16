@@ -29,6 +29,7 @@ wire[15:0] ad_console;
 wire[15:0] ad_cartridge;
 reg write;
 reg clk;
+reg override;
 
 /*wire readLow;
 wire readHigh;
@@ -75,12 +76,12 @@ initial begin
     ale_l = 0;
     ale_h = 1;
     
-    for (i = 0; i < 70; i = i + 1) begin
+    for (i = 0; i < 90; i = i + 1) begin
         #10
         clk = ~clk;
         
         if (i == 5) begin
-            consoleRequest = 16'h3420;
+            consoleRequest = 16'h0420;
             ale_l = 1;
         end
         

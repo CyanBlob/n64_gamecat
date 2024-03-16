@@ -1,8 +1,8 @@
-Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
--------------------------------------------------------------------------------------------------
-| Tool Version              : Vivado v.2021.1 (lin64) Build 3247384 Thu Jun 10 19:36:07 MDT 2021
-| Date                      : Sat Jun 26 18:22:02 2021
-| Host                      : pop-os running 64-bit Pop!_OS 21.04
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version              : Vivado v.2023.2 (win64) Build 4029153 Fri Oct 13 20:14:34 MDT 2023
+| Date                      : Fri Mar 15 23:13:01 2024
+| Host                      : ANDREWTHOMA7F28 running 64-bit major release  (build 9200)
 | Command                   : report_io -file gamecat_io_placed.rpt
 | Design                    : gamecat
 | Device                    : xc7a35ti
@@ -10,7 +10,7 @@ Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
 | Package                   : csg324
 | Package Version           : FINAL 2013-12-19
 | Package Pin Delay Version : VERS. 2.0 2013-12-19
--------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 IO Information
 

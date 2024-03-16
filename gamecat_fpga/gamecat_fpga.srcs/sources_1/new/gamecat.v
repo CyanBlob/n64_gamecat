@@ -52,7 +52,7 @@ reg[15:0] address_low = 16'h0000;
 reg[15:0] address_high= 16'h0000;
 reg[15:0] address_active= 16'h0000;
 
-reg read_state = 0;
+reg[15:0] read_state = 0;
 
 reg[63:0] led_timer = 64'h0000000000000000;
 reg led_state = 1'b0;
@@ -78,108 +78,91 @@ assign led1_b  = read;
 assign led0_b  = write;
 assign led0_g = write;
 
-//always @(negedge clk) begin
-always @* begin
+always @(negedge clk) begin
+//always @* begin
 
     // console request high incoming
     if (ale_h && ale_l) begin
-        address_high = ad_console;
-        address_active = ad_console;
-        address_full[31:16] = ad_console;
+        address_high <= ad_console;
+        address_active <= ad_console;
+        address_full[31:16] <= ad_console;
         
-        override = 0;
-    end
+        override <= 0;
+     end
     
     // console request low incoming
     if (!ale_h && ale_l && !override) begin
-        address_low = ad_console;
-        address_active = ad_console;
-        address_full[15:0] = ad_console;
+        address_low <= ad_console;
+        address_active <= ad_console;
+        address_full[15:0] <= ad_console;
         
         if (address_full == 32'h04206969) begin
-            override = 1;
-            override_data = 32'hDEADBEEF;
+            override <= 1;
+            override_data <= 32'hDEADBEEF;
         end
     end
 
     
-    if (read) begin
-        read_state = 0;
-    end
+    // update read states
+    // new read
+     if (ale_h && ale_l && read) begin
+        read_state <= 0;
+     end
+     
+     // ready to read upper bytes
+     if (read_state == 0 && read == 0) begin
+        read_state <= 1;
+     end
+     
+     // read set high; no reading
+     if (read_state == 1 && read == 1) begin
+        read_state <= 2;
+     end
+     
+     // read goes back low; ready to read lower bytes
+     if (read_state == 2 && read == 0) begin
+        read_state <= 3;
+     end
+     
+      // read goes low again; consecutive reads don't need a new ALE round
+      // TODO: Need to handle overrides occuring during this period
+     if (read_state == 3 && read == 1) begin
+        read_state <= 4;
+     end
     
-    // the if (read_state == 1) and if (!read) blocks were split to create a delay between read going low
-    // and the data being read
-    if (read_state == 1) begin        
-        if (step) begin
-            address_high = ad_cartridge;
-            
-            if (override) begin
-                address_active = override_data[15:0];
-            end
-            else begin
-                address_active = ad_cartridge;
-            end   
-            
-            //readHigh <= 0;
-        end
-        if (!step) begin
-            address_low = ad_cartridge;
-            
-            if (override) begin
-                address_active = override_data[31:16];
-            end
-            else begin
-                address_active = ad_cartridge;
-            end
-            //readLow <= 0;
-        end
-        step = !step;
-    end
     
-    if (!read) begin
-        if (read_state == 0) begin
+    if (read == 0 && read_state == 3) begin        
+
+        address_high <= ad_cartridge;
         
-            read_state = 1;
+        if (override) begin
+            address_active <= override_data[15:0];
         end
-    end 
-   /* if (!read) begin
-        if (read_state == 0) begin
+        else begin
+            address_active <= ad_cartridge;
+        end   
+
+    end else if (read == 0 && read_state == 1) begin
+        address_low <= ad_cartridge;
         
-            read_state = 1;
-            if (step) begin
-                address_high = ad_cartridge;
-                
-                if (override) begin
-                    address_active = override_data[15:0];
-                end
-                else begin
-                    address_active = ad_cartridge;
-                end   
-                
-                //readHigh <= 0;
-            end
-            if (!step) begin
-                address_low = ad_cartridge;
-                
-                if (override) begin
-                    address_active = override_data[31:16];
-                end
-                else begin
-                    address_active = ad_cartridge;
-                end
-                //readLow <= 0;
-            end
-            step = !step;
+        if (override) begin
+            address_active <= override_data[31:16];
         end
-    end*/
+        else begin
+            address_active <= ad_cartridge;
+        end
+        
+    end else if (read == 0 && read_state == 4) begin
+       address_active <= ad_cartridge;
+    end
     
     if (!write) begin
         if (step) begin
-            address_high = ad_console;
-            address_active = ad_console;
+            address_high <= ad_console;
+            address_active <= ad_console;
         end else begin
-            address_low = ad_console;
-            address_active = ad_console;
+            address_low <= ad_console;
+            address_active <= ad_console;
         end
         step = !step;
     end    
@@ -188,8 +171,8 @@ end
 always @(negedge clk) begin
     led_timer = led_timer + 1;
     if (led_timer == 100000000) begin
-        led_state = !led_state;
-        led_timer = 0;
+        led_state <= !led_state;
+        led_timer <= 0;
     end
 end
 

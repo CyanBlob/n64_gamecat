@@ -1,12 +1,13 @@
-Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ------------------------------------------------------------------------------------------------------------------------------------------------------
-| Tool Version : Vivado v.2021.1 (lin64) Build 3247384 Thu Jun 10 19:36:07 MDT 2021
-| Date         : Sat Jun 26 18:22:17 2021
-| Host         : pop-os running 64-bit Pop!_OS 21.04
+| Tool Version : Vivado v.2023.2 (win64) Build 4029153 Fri Oct 13 20:14:34 MDT 2023
+| Date         : Fri Mar 15 23:14:00 2024
+| Host         : ANDREWTHOMA7F28 running 64-bit major release  (build 9200)
 | Command      : report_bus_skew -warn_on_violation -file gamecat_bus_skew_routed.rpt -pb gamecat_bus_skew_routed.pb -rpx gamecat_bus_skew_routed.rpx
 | Design       : gamecat
 | Device       : 7a35ti-csg324
 | Speed File   : -1L  PRODUCTION 1.23 2018-06-13
+| Design State : Routed
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Bus Skew Report

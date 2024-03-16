@@ -122,6 +122,7 @@ extern SYSTEMCLIB_IMP_DLLSPEC char** xsim_argv_copy ;
 int main(int argc, char **argv)
 {
     iki_heap_initialize("ms", "isimmm", 0, 2147483648) ;
+    iki_set_xsimdir_location_if_remapped(argc, argv)  ;
     iki_set_sv_type_file_path_name("xsim.dir/testbench_behav/xsim.svtype");
     iki_set_crvs_dump_file_path_name("xsim.dir/testbench_behav/xsim.crvsdump");
     void* design_handle = iki_create_design("xsim.dir/testbench_behav/xsim.mem", (void *)relocate, (void *)sensitize, (void *)simulate, (void*)0, 0, isimBridge_getWdbWriter(), 0, argc, argv);
