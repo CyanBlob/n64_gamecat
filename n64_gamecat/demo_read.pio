@@ -1,0 +1,31 @@
+;
+; Copyright (c) 2020 Raspberry Pi (Trading) Ltd.
+;
+; SPDX-License-Identifier: BSD-3-Clause
+;
+
+; SET pin 0 should be mapped to your LED GPIO
+
+.pio_version 0 // only requires PIO version 0
+
+.program demo_read
+.wrap_target
+    pull block
+    out PINS, 16
+.wrap
+
+
+% c-sdk {
+// this is a raw helper function for use by the user which sets up the GPIO output, and configures the SM to output on a particular pin
+
+void demo_read_program_init(PIO pio, uint sm, uint offset, uint pin) {
+    for (int i = 0; i <= 16; ++i)
+    {
+       pio_gpio_init(pio, pin + i);
+    }
+   pio_sm_set_consecutive_pindirs(pio, sm, pin, 16, true);
+   pio_sm_config c = demo_read_program_get_default_config(offset);
+   sm_config_set_out_pins(&c, pin, 16);
+   pio_sm_init(pio, sm, offset, &c);
+}
+%}

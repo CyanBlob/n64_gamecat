@@ -1,0 +1,87 @@
+
+(rules PCB n64_gamecat_rp2350b
+  (snap_angle 
+    fortyfive_degree
+  )
+  (autoroute_settings
+    (fanout off)
+    (autoroute on)
+    (postroute on)
+    (vias on)
+    (via_costs 50)
+    (plane_via_costs 5)
+    (start_ripup_costs 100)
+    (start_pass_no 4984)
+    (layer_rule F.Cu
+      (active on)
+      (preferred_direction vertical)
+      (preferred_direction_trace_costs 1.0)
+      (against_preferred_direction_trace_costs 2.4)
+    )
+    (layer_rule B.Cu
+      (active on)
+      (preferred_direction horizontal)
+      (preferred_direction_trace_costs 1.0)
+      (against_preferred_direction_trace_costs 1.7)
+    )
+  )
+  (rule
+    (width 200.0)
+    (clearance 200.0)
+    (clearance 100.0 (type smd_to_turn_gap))
+    (clearance 200.0 (type smd))
+    (clearance 200.0 (type "kicad_default"))
+    (clearance 200.0 (type kicad))
+  )
+  (padstack "Via[0-1]_600:300_um"
+    (shape
+      (circle F.Cu 600.0 0.0 0.0)
+    )
+    (shape
+      (circle B.Cu 600.0 0.0 0.0)
+    )
+    (attach off)
+  )
+  (via 
+    "Via[0-1]_600:300_um" "Via[0-1]_600:300_um" default
+  )
+  (via 
+    "Via[0-1]_600:300_um-kicad_default" "Via[0-1]_600:300_um" "kicad_default"
+  )
+  (via_rule
+    default "Via[0-1]_600:300_um"
+  )
+  (via_rule
+    "kicad_default" "Via[0-1]_600:300_um-kicad_default"
+  )
+  (class default
+    (clearance_class default)
+    (via_rule default)
+    (rule
+      (width 200.0)
+    )
+    (circuit 
+      (use_layer F.Cu B.Cu)
+    )
+  )
+  (class "kicad_default"
+    "Net-(U2-PIF_CIC)" "Net-(U2-NC-Pad14)" "CA_AD8" GND "Net-(U2-NC-Pad38)" "Net-(U2-NC-Pad13)" +3V3 "CA_AD0"
+    READ "Net-(U2-LAUDIO)" "Net-(U2-R_AUDIO)" "Net-(U2-COLD_RST)" "CA_AD7" "ALE_H" "CA_AD3" "Net-(U2-CLK_PIF)"
+    "Net-(U2-JTAG_CLK)" "ALE_L" "CA_AD2" "CA_AD5" "CA_AD11" "Net-(U2-NC-Pad39)" "CA_AD1" "CA_AD4"
+    "Net-(U2-CIC_PIF)" "Net-(U2-NMI_R4300)" "CA_AD9" "Net-(U2-VIDEO_CLK)" "CA_AD6" "Net-(U2-S_DAT)" "CA_AD10" "CO_AD1"
+    "CO_AD7" "CO_AD2" "CO_AD9" "CO_AD4" "CO_AD10" "CO_AD8" "CO_AD11" "CO_AD0"
+    "CO_AD5" "CO_AD6" "CO_AD3" "CO_AD12" "CA_AD14" "CO_AD13" "CA_AD15" "CO_AD14"
+    "CO_AD15" "CA_AD12" "CA_AD13" WRITE "unconnected-(U4-GPIO39-Pad40)" "unconnected-(U4-GPIO30-Pad31)" "unconnected-(U4-GPIO13-Pad14)" "unconnected-(U4-GPIO8-Pad9)"
+    "unconnected-(U4-GPIO7-Pad8)" "unconnected-(U4-GPIO2-Pad3)" "unconnected-(U4-GPIO4-Pad5)" "unconnected-(U4-GPIO59-Pad60)" "unconnected-(U4-GPIO6-Pad7)" "unconnected-(U4-GPIO12-Pad13)" "unconnected-(U4-GPIO57-Pad58)" "unconnected-(U4-GPIO56-Pad57)"
+    "unconnected-(U4-GPIO3-Pad4)" "unconnected-(U4-GPIO58-Pad59)" "unconnected-(U4-GPIO11-Pad12)" "unconnected-(U4-GPIO10-Pad11)" "unconnected-(U4-GPIO1-Pad2)" "unconnected-(U4-GPIO37-Pad38)" "unconnected-(U4-GPIO35-Pad36)" "unconnected-(U4-GPIO36-Pad37)"
+    "unconnected-(U4-GPIO9-Pad10)" "unconnected-(U4-GPIO38-Pad39)" "unconnected-(U4-GPIO5-Pad6)" "unconnected-(U4-GPIO0-Pad1)"
+    (clearance_class "kicad_default")
+    (via_rule "kicad_default")
+    (rule
+      (width 200.0)
+    )
+    (circuit 
+      (use_layer F.Cu B.Cu)
+    )
+  )
+)

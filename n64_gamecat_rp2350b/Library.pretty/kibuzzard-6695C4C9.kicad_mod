@@ -1,0 +1,98 @@
+(footprint "kibuzzard-6695C4C9"
+	(version 20240108)
+	(generator "pcbnew")
+	(generator_version "8.0")
+	(layer "F.Cu")
+	(descr "Generated with KiBuzzard")
+	(tags "kb_params=eyJBbGlnbm1lbnRDaG9pY2UiOiAiUmlnaHQiLCAiQ2FwTGVmdENob2ljZSI6ICJbIiwgIkNhcFJpZ2h0Q2hvaWNlIjogIl0iLCAiRm9udENvbWJvQm94IjogIkZyZWRkeVNwYXJrLVJlZ3VsYXIiLCAiSGVpZ2h0Q3RybCI6IDAuOSwgIkxheWVyQ29tYm9Cb3giOiAiRi5TaWxrUyIsICJMaW5lU3BhY2luZ0N0cmwiOiAxLjUsICJNdWx0aUxpbmVUZXh0IjogIjQ3IiwgIlBhZGRpbmdCb3R0b21DdHJsIjogMC4wLCAiUGFkZGluZ0xlZnRDdHJsIjogMC4wLCAiUGFkZGluZ1JpZ2h0Q3RybCI6IDAuMCwgIlBhZGRpbmdUb3BDdHJsIjogMC4wLCAiV2lkdGhDdHJsIjogMC4wLCAiYWR2YW5jZWRDaGVja2JveCI6IGZhbHNlLCAiaW5saW5lRm9ybWF0VGV4dGJveCI6IGZhbHNlLCAibGluZW92ZXJTdHlsZUNob2ljZSI6ICJTcXVhcmUiLCAibGluZW92ZXJUaGlja25lc3NDdHJsIjogMX0=")
+	(property "Reference" "REF**"
+		(at 0 -3.505833 360)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "be0afaeb-7ed3-4606-bfe0-2e27dd9d1352")
+		(effects
+			(font
+				(size 0.001 0.001)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "G***"
+		(at 0 3.505833 360)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "047661d9-2fd5-49d1-ac01-85ce7fb89272")
+		(effects
+			(font
+				(size 0.001 0.001)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Footprint" ""
+		(at 0 0 360)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "ad2e474a-2ac9-4284-a70a-b890b5ffab77")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 360)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "4a36a7ab-7014-491f-b545-5556345cf4ad")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 360)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "3459c208-cac4-44b6-9c12-02b0ffe432e2")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr board_only exclude_from_pos_files exclude_from_bom)
+	(fp_poly
+		(pts
+			(xy -0.684335 -0.457833) (xy -0.684442 -0.457833) (xy -0.684442 0.457833) (xy -0.684335 0.457833)
+			(xy -0.137124 0.457833) (xy -0.137124 0.456438) (xy -0.204077 0.447425) (xy -0.240129 0.417811) (xy -0.252361 0.382403)
+			(xy -0.254292 0.337983) (xy -0.254292 0.204077) (xy -0.567167 0.204077) (xy -0.63412 0.195064) (xy -0.670172 0.165451)
+			(xy -0.682403 0.130043) (xy -0.684335 0.085622) (xy -0.680472 0.044421) (xy -0.58133 -0.356009) (xy -0.533047 -0.440987)
+			(xy -0.435837 -0.4397) (xy -0.361159 -0.402361) (xy -0.343133 -0.345708) (xy -0.422961 -0.017382)
+			(xy -0.254292 -0.017382) (xy -0.254292 -0.332833) (xy -0.252361 -0.375322) (xy -0.240129 -0.408798)
+			(xy -0.203433 -0.436481) (xy -0.134549 -0.44485) (xy -0.067597 -0.435837) (xy -0.032189 -0.406223)
+			(xy -0.019957 -0.370172) (xy -0.017382 -0.326395) (xy -0.017382 0.33927) (xy -0.019957 0.383691)
+			(xy -0.032833 0.419099) (xy -0.068884 0.447425) (xy -0.137124 0.456438) (xy -0.137124 0.457833) (xy 0.267167 0.457833)
+			(xy 0.267167 0.457725) (xy 0.199571 0.451288) (xy 0.164163 0.428112) (xy 0.151288 0.39721) (xy 0.148712 0.354721)
+			(xy 0.157725 0.261534) (xy 0.184764 0.164807) (xy 0.222586 0.074517) (xy 0.263948 0.000644) (xy 0.307082 -0.064056)
+			(xy 0.350215 -0.126824) (xy 0.399785 -0.206652) (xy 0.142275 -0.206652) (xy 0.098498 -0.209227) (xy 0.06309 -0.222103)
+			(xy 0.03412 -0.258155) (xy 0.025107 -0.325107) (xy 0.03412 -0.391416) (xy 0.061159 -0.426824) (xy 0.094635 -0.4397)
+			(xy 0.135837 -0.442275) (xy 0.567167 -0.442275) (xy 0.63412 -0.433262) (xy 0.670172 -0.403648) (xy 0.682403 -0.36824)
+			(xy 0.684335 -0.32382) (xy 0.672586 -0.24882) (xy 0.637339 -0.1603) (xy 0.588251 -0.068723) (xy 0.534979 0.015451)
+			(xy 0.481706 0.099946) (xy 0.432618 0.192489) (xy 0.397371 0.281974) (xy 0.385622 0.357296) (xy 0.383047 0.397854)
+			(xy 0.369528 0.428112) (xy 0.333476 0.450644) (xy 0.267167 0.457725) (xy 0.267167 0.457833) (xy 0.684335 0.457833)
+			(xy 0.684442 0.457833) (xy 0.684442 -0.457833) (xy 0.684335 -0.457833) (xy -0.684335 -0.457833)
+		)
+		(stroke
+			(width 0)
+			(type solid)
+		)
+		(fill solid)
+		(layer "F.SilkS")
+		(uuid "476a4d2e-8537-4892-b790-4795073d22b2")
+	)
+)
