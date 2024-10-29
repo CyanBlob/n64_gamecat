@@ -11,7 +11,7 @@
     (via_costs 50)
     (plane_via_costs 5)
     (start_ripup_costs 100)
-    (start_pass_no 4984)
+    (start_pass_no 8840)
     (layer_rule F.Cu
       (active on)
       (preferred_direction vertical)
@@ -71,10 +71,10 @@
     "Net-(U2-CIC_PIF)" "Net-(U2-NMI_R4300)" "CA_AD9" "Net-(U2-VIDEO_CLK)" "CA_AD6" "Net-(U2-S_DAT)" "CA_AD10" "CO_AD1"
     "CO_AD7" "CO_AD2" "CO_AD9" "CO_AD4" "CO_AD10" "CO_AD8" "CO_AD11" "CO_AD0"
     "CO_AD5" "CO_AD6" "CO_AD3" "CO_AD12" "CA_AD14" "CO_AD13" "CA_AD15" "CO_AD14"
-    "CO_AD15" "CA_AD12" "CA_AD13" WRITE "unconnected-(U4-GPIO39-Pad40)" "unconnected-(U4-GPIO30-Pad31)" "unconnected-(U4-GPIO13-Pad14)" "unconnected-(U4-GPIO8-Pad9)"
-    "unconnected-(U4-GPIO7-Pad8)" "unconnected-(U4-GPIO2-Pad3)" "unconnected-(U4-GPIO4-Pad5)" "unconnected-(U4-GPIO59-Pad60)" "unconnected-(U4-GPIO6-Pad7)" "unconnected-(U4-GPIO12-Pad13)" "unconnected-(U4-GPIO57-Pad58)" "unconnected-(U4-GPIO56-Pad57)"
-    "unconnected-(U4-GPIO3-Pad4)" "unconnected-(U4-GPIO58-Pad59)" "unconnected-(U4-GPIO11-Pad12)" "unconnected-(U4-GPIO10-Pad11)" "unconnected-(U4-GPIO1-Pad2)" "unconnected-(U4-GPIO37-Pad38)" "unconnected-(U4-GPIO35-Pad36)" "unconnected-(U4-GPIO36-Pad37)"
-    "unconnected-(U4-GPIO9-Pad10)" "unconnected-(U4-GPIO38-Pad39)" "unconnected-(U4-GPIO5-Pad6)" "unconnected-(U4-GPIO0-Pad1)"
+    "CO_AD15" "CA_AD12" "CA_AD13" WRITE "unconnected-(U4-GPIO59-Pad60)" "unconnected-(U4-GPIO57-Pad58)" "unconnected-(U4-GPIO56-Pad57)" "unconnected-(U4-GPIO58-Pad59)"
+    "unconnected-(U4-GPIO10-Pad11)" "unconnected-(U4-GPIO11-Pad12)" "unconnected-(U4-GPIO12-Pad13)" "unconnected-(U4-GPIO13-Pad14)" "unconnected-(U4-GPIO45-Pad46)" "unconnected-(U4-GPIO51-Pad52)" "unconnected-(U4-GPIO52-Pad53)" "unconnected-(U4-GPIO54-Pad55)"
+    "unconnected-(U4-GPIO48-Pad49)" "unconnected-(U4-GPIO40-Pad41)" "unconnected-(U4-GPIO49-Pad50)" "unconnected-(U4-GPIO50-Pad51)" "unconnected-(U4-GPIO55-Pad56)" "unconnected-(U4-GPIO44-Pad45)" "unconnected-(U4-GPIO41-Pad42)" "unconnected-(U4-GPIO47-Pad48)"
+    "unconnected-(U4-GPIO42-Pad43)" "unconnected-(U4-GPIO46-Pad47)" "unconnected-(U4-GPIO43-Pad44)" "unconnected-(U4-GPIO53-Pad54)"
     (clearance_class "kicad_default")
     (via_rule "kicad_default")
     (rule

@@ -26,8 +26,6 @@ void Wire::Reset() {
 }
 
 void Wire::Tick(uint32_t num) {
-    time += num;
-
     for (int i = 0; i < num; ++i) {
         Tick();
     }

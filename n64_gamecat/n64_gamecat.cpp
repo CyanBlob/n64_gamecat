@@ -10,9 +10,12 @@
 #include "hardware/pio.h"
 #include "hardware/clocks.h"
 #include "blink.pio.h"
-#include "cmake-build-debug/blink.pio.h"
-#include "cmake-build-debug/demo.pio.h"
-#include "cmake-build-debug/demo_read.pio.h"
+#include "cmake-build-release/blink.pio.h"
+#include "cmake-build-release/demo.pio.h"
+#include "cmake-build-release/demo_read.pio.h"
+//#include "cmake-build-debug/blink.pio.h"
+//#include "cmake-build-debug/demo.pio.h"
+//#include "cmake-build-debug/demo_read.pio.h"
 #include "Wire.h"
 
 void blink_pin_forever(PIO pio, uint sm, uint offset, uint pin, uint freq);
@@ -37,6 +40,7 @@ std::vector<Wire> InitWires();
 
 int main() {
     set_sys_clock_khz(266000, true);
+    //set_sys_clock_khz(266000 / 8, true);
 
     setup_default_uart();
 
@@ -51,7 +55,7 @@ int main() {
 
     offset = pio_add_program(pio1, &demo_program);
     demo_read_program_init(pio1, 0, offset, READ_LED_START);
-    pio_sm_set_enabled(pio1, 0, true);
+    //pio_sm_set_enabled(pio1, 0, true);
 
     printf("Done setting up second PIO\n");
 
@@ -63,39 +67,48 @@ int main() {
     //gpio_set_dir(28, true);
     //gpio_put(28, true);
 
-    uint32_t max_time = 2500;
+    uint32_t max_time = 5000;
 
     gpio_pull_up(28);
 
-    for (uint32_t i = 0; i < UINT32_MAX; ++i) {
-        while (pio_sm_is_tx_fifo_full(pio0, 0)) {
+    uint16_t values[100] = {0};
+    uint32_t val_index = 0;
+
+    for (uint32_t i = 0; i < 2500; i += 1) {
+        /*while (pio_sm_is_tx_fifo_full(pio0, 0)) {
             printf("FULL 0\n");
         }
         while (pio_sm_is_tx_fifo_full(pio1, 0)) {
             printf("FULL 1\n");
-        }
-        pio_sm_put(pio0, 0, i);
+        }*/
+        //pio_sm_put(pio0, 0, i);
 
         for(auto &wire : wires)
         {
             wire.Tick();
         }
 
-        uint32_t data = 0;
-        uint8_t index = 0;
+        uint16_t data = 0;
+        uint16_t index = 0;
         for(auto &wire : wires)
         {
             data |= wire.GetState() << index++;
         }
 
-        uint32_t val = 0xFFFF;
+        uint16_t val = 0xFFFF;
         data |= (val << 4);
 
         //printf("%lu: %lu\n", i, data);
 
-        pio_sm_put(pio1, 0, data);
+        //pio_sm_put(pio1, 0, data);
+        //printf("Data: %hu, val_index data: %hu, (index: %lu)\n", data, values[val_index], val_index);
+        if (val_index == 0 || data != values[val_index - 1])
+        {
+            values[val_index] = data;
+            ++val_index;
+        }
 
-        if (i > max_time)
+        /*if (i > max_time)
         {
             printf("RESET\n");
             i = 0;
@@ -103,9 +116,18 @@ int main() {
             {
                 wire.Reset();
             }
-        }
+        }*/
 
-        sleep_ms(10);
+        //sleep_ms(1);
+    }
+
+    printf("START\n");
+    while (true) {
+        for (unsigned long value : values) {
+            pio_sm_put(pio1, 0, value);
+            pio_sm_put(pio0, 0, value);
+            //pio1->txf[0] = value;
+        }
     }
 }
 
