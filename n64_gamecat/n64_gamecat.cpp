@@ -10,12 +10,12 @@
 #include "hardware/pio.h"
 #include "hardware/clocks.h"
 #include "blink.pio.h"
-#include "cmake-build-release/blink.pio.h"
-#include "cmake-build-release/demo.pio.h"
-#include "cmake-build-release/demo_read.pio.h"
-//#include "cmake-build-debug/blink.pio.h"
-//#include "cmake-build-debug/demo.pio.h"
-//#include "cmake-build-debug/demo_read.pio.h"
+//#include "cmake-build-release/blink.pio.h"
+//#include "cmake-build-release/demo.pio.h"
+//#include "cmake-build-release/demo_read.pio.h"
+#include "cmake-build-debug/blink.pio.h"
+#include "cmake-build-debug/demo.pio.h"
+#include "cmake-build-debug/demo_read.pio.h"
 #include "Wire.h"
 
 void blink_pin_forever(PIO pio, uint sm, uint offset, uint pin, uint freq);

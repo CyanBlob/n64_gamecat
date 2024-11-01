@@ -3,6 +3,10 @@ tags
 *.bak
 *.swp
 */*.log
+*/cmake-build-release/
+*/cmake-build-debug/
+n64_gamecat/cmake-build-release/
+n64_gamecat/cmake-build-debug/
 
 #########################################################################################################
 ##	This is an example .gitignore file for Vivado, please treat it as an example as 

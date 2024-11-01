@@ -1,5 +1,0 @@
-/Users/andrew/Development/n64_gamecat/n64_gamecat/cmake-build-release/pioasm-install/pioasm/pioasm
-/Users/andrew/Development/n64_gamecat/n64_gamecat/cmake-build-release/pioasm-install/pioasm/pioasmTargets.cmake
-/Users/andrew/Development/n64_gamecat/n64_gamecat/cmake-build-release/pioasm-install/pioasm/pioasmTargets-release.cmake
-/Users/andrew/Development/n64_gamecat/n64_gamecat/cmake-build-release/pioasm-install/pioasm/pioasmConfig.cmake
-/Users/andrew/Development/n64_gamecat/n64_gamecat/cmake-build-release/pioasm-install/pioasm/pioasmConfigVersion.cmake
