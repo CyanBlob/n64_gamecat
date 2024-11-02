@@ -28,7 +28,8 @@ pico_sdk_init()
 add_executable(n64_gamecat n64_gamecat.cpp
         Wire.cpp
         Wire.h
-        gpio_cfg.h)
+        gpio_cfg.h
+        state.h)
 
 pico_set_program_name(n64_gamecat "n64_gamecat")
 pico_set_program_version(n64_gamecat "0.1")

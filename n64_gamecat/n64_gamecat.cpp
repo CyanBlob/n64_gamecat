@@ -18,7 +18,8 @@
 #include "cmake-build-debug/demo_read.pio.h"
 #include "Wire.h"
 #include "gpio_cfg.h"
-#include "inttypes.h"
+#include <cinttypes>
+#include "state.h"
 
 void blink_pin_forever(PIO pio, uint sm, uint offset, uint pin, uint freq);
 
@@ -38,9 +39,24 @@ void blink_pin_forever(PIO pio, uint sm, uint offset, uint pin, uint freq);
 #endif
 #endif
 
+typedef struct {
+    uint16_t val_h;
+    uint16_t val_l;
+} val_parts_t;
+
+typedef union {
+    val_parts_t valParts;
+    uint32_t val;
+
+} val_t;
+
 static uint64_t console_mask = 0;
 static uint64_t cartridge_mask = 0;
 static uint64_t control_mask = 0;
+
+static State state = State::IDLE;
+static val_t addr  = {0};
+static val_t data = {0};
 
 std::vector<Wire> InitWires();
 
@@ -64,8 +80,8 @@ void init_gpio() {
         gpio_init(console_pins[i]);
         gpio_init(cartridge_pins[i]);
 
-        gpio_set_pulls(console_pins[i], false, true);
-        gpio_set_pulls(cartridge_pins[i], false, true);
+        gpio_set_pulls(console_pins[i], true, false);
+        gpio_set_pulls(cartridge_pins[i], true, false);
     }
 
     control_mask |= (uint64_t) 1 << ALE_H;
@@ -87,21 +103,73 @@ void init_gpio() {
     gpio_set_dir_in_masked64(control_mask);
     set_console();
 
-    gpio_set_pulls(ALE_H, false, true);
-    gpio_set_pulls(ALE_L, false, true);
-    gpio_set_pulls(READ, false, true);
-    gpio_set_pulls(WRITE, false, true);
+    gpio_set_pulls(ALE_H, true, false);
+    gpio_set_pulls(ALE_L, true, false);
+    gpio_set_pulls(READ, true, false);
+    gpio_set_pulls(WRITE, true, false);
 
     gpio_set_mask64(console_mask);
 }
 
 int main() {
     set_sys_clock_khz(300000, true);
-    //set_sys_clock_khz(266000 / 8, true);
 
     setup_default_uart();
 
     init_gpio();
+
+    uint32_t control_signals = 0;
+    while(true) {
+        control_signals = (gpio_get_all64() >> ALE_H) & control_mask;
+
+        switch (state) {
+
+            case IDLE:
+                if ((control_signals & 0b1110) == 0) {
+                    set_console();
+                    sleep_us(10);
+                    state = ADDR_H;
+                    addr.valParts.val_h = (gpio_get_all64() & console_mask) >> 2; // TODO: Update for v0.8
+                }
+                else if ((control_signals & 0b0111) == 0) {
+                    state = READ_H;
+                }
+            case ADDR_H:
+                if ((control_signals & 0b1101) > 0) {
+                    state = ADDR_L;
+                    addr.valParts.val_l = (gpio_get_all64() & console_mask) >> 2; // TODO: Update for v0.8
+
+                    set_cartridge();
+                }
+                break;
+            case ADDR_L:
+                if ((control_signals & 0b0111) == 0) {
+                    state = READ_H;
+                }
+                break;
+            case READ_H:
+                if ((control_signals & 0b1111) == 0) {
+                    state = READ_IDLE;
+                    data.valParts.val_h = (gpio_get_all64() & cartridge_mask) >> 14; // TODO: Update for v0.8
+                }
+                break;
+            case READ_IDLE:
+                if ((control_signals & 0b0111) == 0) {
+                    state = READ_L;
+                }
+                break;
+            case READ_L:
+                if ((control_signals & 0b1111) == 0) {
+                    state = IDLE;
+                    data.valParts.val_l = (gpio_get_all64() & cartridge_mask) >> 14; // TODO: Update for v0.8
+                }
+                break;
+            case WRITE_H:
+                break;
+            case WRITE_L:
+                break;
+        }
+    }
 
     while(true) {
         set_console();
@@ -113,92 +181,6 @@ int main() {
     }
 
     return 0;
-
-    assert(PIO_BLINK_LED1_GPIO < 31);
-    assert(PIO_BLINK_LED3_GPIO < 31 || PIO_BLINK_LED3_GPIO >= 32);
-
-    uint offset = pio_add_program(pio0, &demo_program);
-    demo_program_init(pio0, 0, offset, PIO_BLINK_LED1_GPIO);
-    pio_sm_set_enabled(pio0, 0, true);
-
-    printf("Done setting up first PIO\n");
-
-    offset = pio_add_program(pio1, &demo_program);
-    demo_read_program_init(pio1, 0, offset, READ_LED_START);
-    //pio_sm_set_enabled(pio1, 0, true);
-
-    printf("Done setting up second PIO\n");
-
-    printf("Init complete\n");
-
-    auto wires = InitWires();
-
-    //gpio_init(28);
-    //gpio_set_dir(28, true);
-    //gpio_put(28, true);
-
-    uint32_t max_time = 5000;
-
-    gpio_pull_up(28);
-
-    uint16_t values[100] = {0};
-    uint32_t val_index = 0;
-
-    for (uint32_t i = 0; i < 2500; i += 1) {
-        /*while (pio_sm_is_tx_fifo_full(pio0, 0)) {
-            printf("FULL 0\n");
-        }
-        while (pio_sm_is_tx_fifo_full(pio1, 0)) {
-            printf("FULL 1\n");
-        }*/
-        //pio_sm_put(pio0, 0, i);
-
-        for(auto &wire : wires)
-        {
-            wire.Tick();
-        }
-
-        uint16_t data = 0;
-        uint16_t index = 0;
-        for(auto &wire : wires)
-        {
-            data |= wire.GetState() << index++;
-        }
-
-        uint16_t val = 0xFFFF;
-        data |= (val << 4);
-
-        //printf("%lu: %lu\n", i, data);
-
-        //pio_sm_put(pio1, 0, data);
-        //printf("Data: %hu, val_index data: %hu, (index: %lu)\n", data, values[val_index], val_index);
-        if (val_index == 0 || data != values[val_index - 1])
-        {
-            values[val_index] = data;
-            ++val_index;
-        }
-
-        /*if (i > max_time)
-        {
-            printf("RESET\n");
-            i = 0;
-            for(auto &wire : wires)
-            {
-                wire.Reset();
-            }
-        }*/
-
-        //sleep_ms(1);
-    }
-
-    printf("START\n");
-    while (true) {
-        for (unsigned long value : values) {
-            pio_sm_put(pio1, 0, value);
-            pio_sm_put(pio0, 0, value);
-            //pio1->txf[0] = value;
-        }
-    }
 }
 
 std::vector<Wire> InitWires()
