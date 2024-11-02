@@ -9,7 +9,7 @@ set(CMAKE_CXX_STANDARD 17)
 # (note this can come from environment, CMake cache etc)
 set(PICO_SDK_PATH "/Users/andrew/Development/pico-sdk")
 
-set(PICO_BOARD pico2 CACHE STRING "Board type")
+set(PICO_BOARD solderparty_rp2350_stamp_xl CACHE STRING "Board type")
 
 # Pull in Raspberry Pi Pico SDK (must be before project)
 include(pico_sdk_import.cmake)
@@ -27,7 +27,8 @@ pico_sdk_init()
 
 add_executable(n64_gamecat n64_gamecat.cpp
         Wire.cpp
-        Wire.h)
+        Wire.h
+        gpio_cfg.h)
 
 pico_set_program_name(n64_gamecat "n64_gamecat")
 pico_set_program_version(n64_gamecat "0.1")

@@ -17,6 +17,8 @@
 #include "cmake-build-debug/demo.pio.h"
 #include "cmake-build-debug/demo_read.pio.h"
 #include "Wire.h"
+#include "gpio_cfg.h"
+#include "inttypes.h"
 
 void blink_pin_forever(PIO pio, uint sm, uint offset, uint pin, uint freq);
 
@@ -36,13 +38,81 @@ void blink_pin_forever(PIO pio, uint sm, uint offset, uint pin, uint freq);
 #endif
 #endif
 
+static uint64_t console_mask = 0;
+static uint64_t cartridge_mask = 0;
+static uint64_t control_mask = 0;
+
 std::vector<Wire> InitWires();
 
+// console "talking"
+void set_console() {
+    gpio_set_dir_in_masked64(control_mask);
+    gpio_set_dir_out_masked64(cartridge_mask);
+}
+
+// cartridge "talking"
+void set_cartridge() {
+    gpio_set_dir_out_masked64(control_mask);
+    gpio_set_dir_in_masked64(cartridge_mask);
+}
+
+void init_gpio() {
+    for (uint i = 0; i < 16; ++i) {
+        console_mask   |= (uint64_t) 1 << (uint64_t)console_pins[i];
+        cartridge_mask |= (uint64_t) 1 << (uint64_t)cartridge_pins[i];
+
+        gpio_init(console_pins[i]);
+        gpio_init(cartridge_pins[i]);
+
+        gpio_set_pulls(console_pins[i], false, true);
+        gpio_set_pulls(cartridge_pins[i], false, true);
+    }
+
+    control_mask |= (uint64_t) 1 << ALE_H;
+    control_mask |= (uint64_t) 1 << ALE_L;
+    control_mask |= (uint64_t) 1 << READ;
+    control_mask |= (uint64_t) 1 << WRITE;
+
+    gpio_init(ALE_H);
+    gpio_init(ALE_L);
+    gpio_init(READ);
+    gpio_init(WRITE);
+
+    printf("Console   mask: 0x%" PRIx64 "\n", console_mask);
+    printf("Cartridge mask: 0x%" PRIx64 "\n", cartridge_mask);
+    printf("Control   mask: 0x%" PRIx64 "\n", control_mask);
+
+    printf("uint size: %d\n", sizeof(uint));
+
+    gpio_set_dir_in_masked64(control_mask);
+    set_console();
+
+    gpio_set_pulls(ALE_H, false, true);
+    gpio_set_pulls(ALE_L, false, true);
+    gpio_set_pulls(READ, false, true);
+    gpio_set_pulls(WRITE, false, true);
+
+    gpio_set_mask64(console_mask);
+}
+
 int main() {
-    set_sys_clock_khz(266000, true);
+    set_sys_clock_khz(300000, true);
     //set_sys_clock_khz(266000 / 8, true);
 
     setup_default_uart();
+
+    init_gpio();
+
+    while(true) {
+        set_console();
+        sleep_ms(50);
+        printf("GPIOs (CON): 0x%" PRIx64 "\n", gpio_get_all64());
+        set_cartridge();
+        sleep_ms(50);
+        printf("GPIOs (CAR): 0x%" PRIx64 "\n", gpio_get_all64());
+    }
+
+    return 0;
 
     assert(PIO_BLINK_LED1_GPIO < 31);
     assert(PIO_BLINK_LED3_GPIO < 31 || PIO_BLINK_LED3_GPIO >= 32);
