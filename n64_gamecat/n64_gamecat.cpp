@@ -3,6 +3,8 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
+// IMPORTANT
+// PICO_USE_GPIO_COPROCESSOR from gpio.h in the pico sdk should be set to 0
 
 #include <stdio.h>
 
