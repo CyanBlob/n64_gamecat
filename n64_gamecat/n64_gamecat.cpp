@@ -10,13 +10,6 @@
 #include "pico/multicore.h"
 #include "hardware/pio.h"
 #include "hardware/clocks.h"
-#include "blink.pio.h"
-//#include "cmake-build-release/blink.pio.h"
-//#include "cmake-build-release/demo.pio.h"
-//#include "cmake-build-release/demo_read.pio.h"
-//#include "cmake-build-debug/blink.pio.h"
-//#include "cmake-build-debug/demo.pio.h"
-//#include "cmake-build-debug/demo_read.pio.h"
 #include "Wire.h"
 #include "gpio_cfg.h"
 #include <cinttypes>
@@ -24,23 +17,27 @@
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "EndlessLoop"
-void blink_pin_forever(PIO pio, uint sm, uint offset, uint pin, uint freq);
 
-// by default flash leds on gpios 3-4
-#ifndef PIO_BLINK_LED1_GPIO
-#define PIO_BLINK_LED1_GPIO 2
-#endif
-#define READ_LED_START 16
+//#define SIO_BASE            0xD0000000
+#define GPIO_IN_OFFSET      0x04
+#define GPIO_OUT_OFFSET     0x10
+#define GPIO_OE_OFFSET      0x30
 
-// and flash leds on gpios 5-6
-// or if the device supports more than 32 gpios, flash leds on 32-33
-#ifndef PIO_BLINK_LED3_GPIO
-#if NUM_BANK0_GPIOS <= 32
-#define PIO_BLINK_LED3_GPIO 20
-#else
-#define PIO_BLINK_LED3_GPIO 32
-#endif
-#endif
+#define GPIO_IN             (*(volatile uint32_t *)(SIO_BASE + GPIO_IN_OFFSET))
+#define GPIO_OUT            (*(volatile uint32_t *)(SIO_BASE + GPIO_OUT_OFFSET))
+#define GPIO_OE             (*(volatile uint32_t *)(SIO_BASE + GPIO_OE_OFFSET))
+
+#define GPIO_OE_BANK0   (*(volatile uint32_t *)(SIO_BASE + GPIO_OE_OFFSET))
+#define GPIO_OE_BANK1   (*(volatile uint32_t *)(SIO_BASE + GPIO_OE_OFFSET + 0x04))
+
+#define GPIO_IN_BANK0   (*(volatile uint32_t *)(SIO_BASE + GPIO_IN_OFFSET))
+#define GPIO_IN_BANK1   (*(volatile uint32_t *)(SIO_BASE + GPIO_IN_OFFSET + 0x04)) // Adjust the offset as per the datasheet
+
+#define GPIO_OUT_BANK0   (*(volatile uint32_t *)(SIO_BASE + GPIO_OUT_OFFSET))
+#define GPIO_OUT_BANK1   (*(volatile uint32_t *)(SIO_BASE + GPIO_OUT_OFFSET + 0x04)) // Adjust the offset as per the datasheet
+
+#define NUM_SAMPLES 1000
+
 
 typedef struct {
     uint16_t val_h;
@@ -56,12 +53,37 @@ typedef union {
 static uint64_t console_mask = 0;
 static uint64_t cartridge_mask = 0;
 static uint64_t control_mask = 0;
+static uint64_t full_mask_co = 0;
+static uint64_t full_mask_ca = 0;
 
 static State state = State::IDLE;
 static val_t addr  = {0};
 static val_t data = {0};
+static uint32_t regs_low = 0;
+static uint32_t regs_high = 0;
 
-std::vector<Wire> InitWires();
+volatile bool timer_fired = false;
+
+int64_t alarm_callback(alarm_id_t id, __unused void *user_data) {
+    timer_fired = true;
+    return 0;
+}
+
+void set_gpio_function(uint8_t pin, uint8_t function) {
+    volatile auto *gpio_ctrl = (volatile uint32_t *)(IO_BANK0_BASE + 0x04 + (pin * 8));
+    *gpio_ctrl = (*gpio_ctrl & ~0x1F) | (function & 0x1F);
+}
+
+void configure_gpio_pins() {
+    for (uint8_t pin = 2; pin <= 40; pin++) {
+        set_gpio_function(pin, 5); // 5 corresponds to SIO function
+    }
+}
+
+void read_all_gpio_pins(uint32_t *bank0, uint32_t *bank1) {
+    *bank0 = GPIO_IN_BANK0;
+    *bank1 = GPIO_IN_BANK1;
+}
 
 void core1_uart_entry() {
     printf("CORE1 entry\n");
@@ -70,10 +92,10 @@ void core1_uart_entry() {
 
     while (true) {
         auto val = multicore_fifo_pop_blocking();
-        if (val != lastVal) {
+        //if (val != lastVal) {
             printf("%lu\n", val);
-            lastVal = val;
-        }
+            //lastVal = val;
+        //}
     }
 }
 
@@ -82,6 +104,12 @@ void set_console() {
     gpio_set_dir_in_masked64(console_mask);
     gpio_set_dir_out_masked64(cartridge_mask);
     gpio_set_dir_in_masked64(control_mask);
+
+    //GPIO_OE_BANK0 = full_mask_co;
+    //GPIO_OE_BANK1 = full_mask_co >> 32;
+
+    //printf("Output mask 0: 0x%" PRIx32 "\n", GPIO_OE_BANK0);
+    //printf("Output mask 1: 0x%" PRIx32 "\n", GPIO_OE_BANK1);
 }
 
 // cartridge "talking"
@@ -89,9 +117,16 @@ void set_cartridge() {
     gpio_set_dir_out_masked64(console_mask);
     gpio_set_dir_in_masked64(cartridge_mask);
     gpio_set_dir_in_masked64(control_mask);
+
+    //GPIO_OE_BANK0 = full_mask_ca;
+    //GPIO_OE_BANK1 = full_mask_ca >> 32;
+
+    //printf("Output mask 0: 0x%" PRIx32 "\n", GPIO_OE_BANK0);
+    //printf("Output mask 1: 0x%" PRIx32 "\n", GPIO_OE_BANK1);
 }
 
 void init_gpio() {
+    //configure_gpio_pins();
     for (uint i = 0; i < 16; ++i) {
         console_mask   |= (uint64_t) 1 << (uint64_t)console_pins[i];
         cartridge_mask |= (uint64_t) 1 << (uint64_t)cartridge_pins[i];
@@ -113,6 +148,8 @@ void init_gpio() {
     gpio_init(READ);
     gpio_init(WRITE);
 
+    gpio_init(GPIO_FLAG);
+
     printf("Console   mask: 0x%" PRIx64 "\n", console_mask);
     printf("Cartridge mask: 0x%" PRIx64 "\n", cartridge_mask);
     printf("Control   mask: 0x%" PRIx64 "\n", control_mask);
@@ -120,23 +157,34 @@ void init_gpio() {
     printf("uint size: %d\n", sizeof(uint));
 
     gpio_set_dir_in_masked64(control_mask);
-    set_console();
+
+    full_mask_co = cartridge_mask | control_mask;
+    full_mask_ca = console_mask   | control_mask;
+
+    full_mask_co |= ((uint64_t)1 << GPIO_FLAG);
+    full_mask_ca |= ((uint64_t)1 << GPIO_FLAG);
+
+    printf("Full CO   mask: 0x%" PRIx64 "\n", full_mask_co);
+    printf("Full CA   mask: 0x%" PRIx64 "\n", full_mask_ca);
 
     gpio_set_pulls(ALE_H, true, false);
     gpio_set_pulls(ALE_L, true, false);
     gpio_set_pulls(READ, true, false);
     gpio_set_pulls(WRITE, true, false);
 
+    gpio_set_pulls(GPIO_FLAG, true, false);
+    gpio_set_dir(GPIO_FLAG, true);
+
     //gpio_set_mask64(console_mask);
 }
 
 int main() {
     //set_sys_clock_khz(300000, true);
-    set_sys_clock_khz(280000, true);
+    set_sys_clock_khz(300000, true);
 
     stdio_init_all();
 
-    multicore_reset_core1();
+    //multicore_reset_core1();
 
     init_gpio();
 
@@ -144,13 +192,13 @@ int main() {
 
     stdio_flush();
 
-    multicore_launch_core1(core1_uart_entry);
+    //multicore_launch_core1(core1_uart_entry);
 
-    multicore_fifo_push_blocking(0xDEADBEEF);
-    multicore_fifo_push_blocking(0xDEADBABE);
-    multicore_fifo_push_blocking(0xFFFFFFFF);
-    multicore_fifo_push_blocking(0x00000000);
-    multicore_fifo_push_blocking(1234);
+    //multicore_fifo_push_blocking(0xDEADBEEF);
+    //multicore_fifo_push_blocking(0xDEADBABE);
+    //multicore_fifo_push_blocking(0xFFFFFFFF);
+    //multicore_fifo_push_blocking(0x00000000);
+    //multicore_fifo_push_blocking(1234);
 
     set_console();
     uint64_t tmp_data = 0;
@@ -158,22 +206,50 @@ int main() {
     uint32_t lastUpper = UINT32_MAX;
     uint32_t lastLower = UINT32_MAX;
 
+    bool flag = false;
+
+    uint32_t buff[NUM_SAMPLES] = {0};
+    uint32_t sample = 0;
+
+    add_alarm_in_ms(5000, alarm_callback, NULL, false);
+
     while(true) {
         //control_signals = (gpio_get_all64() >> ALE_H) & control_mask;
         //control_signals = gpio_get_all64();
-        uint64_t val = gpio_get_all64() & 0xFFFFFFFFFFFFFFFC; // discard lowest 2 bits (UART)
+        uint64_t val = gpio_get_all64() & 0xFFFFFEFFFFFFFFFC; // discard lowest 2 bits (UART) and bit 40 (flag)
 
-        uint32_t lower = (val & 0xFFFFFFFC);
-        uint32_t upper = (val >> 32);
+        regs_low = (val & 0xFFFFFFFC);
+        regs_high = (val >> 32);
 
-        if (lower != lastLower || upper != lastUpper) {
-            multicore_fifo_push_blocking(lower);
-            multicore_fifo_push_blocking(upper);
+        if (regs_low != lastLower || regs_high != lastUpper) {
+            buff[sample++] = regs_low;
+            buff[sample++] = regs_high;
+            //multicore_fifo_push_blocking(regs_low);
+            //multicore_fifo_push_blocking(regs_high);
 
-            lastLower = lower;
-            lastUpper = upper;
+            //printf("%lu\n", regs_low);
+            //printf("%lu\n", regs_high);
+
+            lastLower = regs_low;
+            lastUpper = regs_high;
+            //printf("0x%" PRIx64 "\n", val);
         }
-        //sleep_us(100);
+        flag = !flag;
+        gpio_put(GPIO_FLAG, flag);
+
+        if (timer_fired || sample >= NUM_SAMPLES) {
+            printf("DONE!\n");
+            for (int i = 0; i < sample; ++i) {
+                printf("%lu\n", buff[i]);
+            }
+
+            while(true){
+                flag = !flag;
+                gpio_put(GPIO_FLAG, flag);
+            }
+        }
+
+        //sleep_us(1000);
         continue;
 
         switch (state) {

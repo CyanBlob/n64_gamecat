@@ -81,4 +81,6 @@ uint cartridge_pins[] = {
 #define WRITE 36
 #define READ  37
 
+#define GPIO_FLAG 40
+
 #endif //N64_GAMECAT_GPIO_CFG_H
