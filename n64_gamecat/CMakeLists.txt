@@ -40,6 +40,8 @@ pico_set_program_version(n64_gamecat "0.1")
 pico_enable_stdio_uart(n64_gamecat 1)
 pico_enable_stdio_usb(n64_gamecat 0)
 
+pico_set_binary_type(n64_gamecat copy_to_ram)
+
 # Add the standard library to the build
 target_link_libraries(n64_gamecat
         pico_stdlib)
@@ -54,6 +56,7 @@ target_include_directories(n64_gamecat PRIVATE
 target_link_libraries(n64_gamecat 
         hardware_dma
         hardware_pio
+        pico_multicore
         )
 
 pico_add_extra_outputs(n64_gamecat)

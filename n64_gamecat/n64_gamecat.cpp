@@ -7,20 +7,23 @@
 #include <stdio.h>
 
 #include "pico/stdlib.h"
+#include "pico/multicore.h"
 #include "hardware/pio.h"
 #include "hardware/clocks.h"
 #include "blink.pio.h"
 //#include "cmake-build-release/blink.pio.h"
 //#include "cmake-build-release/demo.pio.h"
 //#include "cmake-build-release/demo_read.pio.h"
-#include "cmake-build-debug/blink.pio.h"
-#include "cmake-build-debug/demo.pio.h"
-#include "cmake-build-debug/demo_read.pio.h"
+//#include "cmake-build-debug/blink.pio.h"
+//#include "cmake-build-debug/demo.pio.h"
+//#include "cmake-build-debug/demo_read.pio.h"
 #include "Wire.h"
 #include "gpio_cfg.h"
 #include <cinttypes>
 #include "state.h"
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "EndlessLoop"
 void blink_pin_forever(PIO pio, uint sm, uint offset, uint pin, uint freq);
 
 // by default flash leds on gpios 3-4
@@ -60,16 +63,32 @@ static val_t data = {0};
 
 std::vector<Wire> InitWires();
 
+void core1_uart_entry() {
+    printf("CORE1 entry\n");
+
+    uint32_t lastVal = UINT32_MAX;
+
+    while (true) {
+        auto val = multicore_fifo_pop_blocking();
+        if (val != lastVal) {
+            printf("%lu\n", val);
+            lastVal = val;
+        }
+    }
+}
+
 // console "talking"
 void set_console() {
-    gpio_set_dir_in_masked64(control_mask);
+    gpio_set_dir_in_masked64(console_mask);
     gpio_set_dir_out_masked64(cartridge_mask);
+    gpio_set_dir_in_masked64(control_mask);
 }
 
 // cartridge "talking"
 void set_cartridge() {
-    gpio_set_dir_out_masked64(control_mask);
+    gpio_set_dir_out_masked64(console_mask);
     gpio_set_dir_in_masked64(cartridge_mask);
+    gpio_set_dir_in_masked64(control_mask);
 }
 
 void init_gpio() {
@@ -108,58 +127,105 @@ void init_gpio() {
     gpio_set_pulls(READ, true, false);
     gpio_set_pulls(WRITE, true, false);
 
-    gpio_set_mask64(console_mask);
+    //gpio_set_mask64(console_mask);
 }
 
 int main() {
-    set_sys_clock_khz(300000, true);
+    //set_sys_clock_khz(300000, true);
+    set_sys_clock_khz(280000, true);
 
-    setup_default_uart();
+    stdio_init_all();
+
+    multicore_reset_core1();
 
     init_gpio();
 
     uint32_t control_signals = 0;
+
+    stdio_flush();
+
+    multicore_launch_core1(core1_uart_entry);
+
+    multicore_fifo_push_blocking(0xDEADBEEF);
+    multicore_fifo_push_blocking(0xDEADBABE);
+    multicore_fifo_push_blocking(0xFFFFFFFF);
+    multicore_fifo_push_blocking(0x00000000);
+    multicore_fifo_push_blocking(1234);
+
+    set_console();
+    uint64_t tmp_data = 0;
+
+    uint32_t lastUpper = UINT32_MAX;
+    uint32_t lastLower = UINT32_MAX;
+
     while(true) {
-        control_signals = (gpio_get_all64() >> ALE_H) & control_mask;
+        //control_signals = (gpio_get_all64() >> ALE_H) & control_mask;
+        //control_signals = gpio_get_all64();
+        uint64_t val = gpio_get_all64() & 0xFFFFFFFFFFFFFFFC; // discard lowest 2 bits (UART)
+
+        uint32_t lower = (val & 0xFFFFFFFC);
+        uint32_t upper = (val >> 32);
+
+        if (lower != lastLower || upper != lastUpper) {
+            multicore_fifo_push_blocking(lower);
+            multicore_fifo_push_blocking(upper);
+
+            lastLower = lower;
+            lastUpper = upper;
+        }
+        //sleep_us(100);
+        continue;
 
         switch (state) {
 
             case IDLE:
-                if ((control_signals & 0b1110) == 0) {
+                //multicore_fifo_push_blocking(IDLE);
+                if ((control_signals & 0b1110) == 0b1110) {
                     set_console();
                     sleep_us(10);
                     state = ADDR_H;
-                    addr.valParts.val_h = (gpio_get_all64() & console_mask) >> 2; // TODO: Update for v0.8
+                    addr.valParts.val_h = (gpio_get_all64() & console_mask) >> 2;
+                    //multicore_fifo_push_blocking(addr.valParts.val_h);
                 }
-                else if ((control_signals & 0b0111) == 0) {
+                else if ((control_signals & 0b0111) == 0b0111) {
+                    set_cartridge();
                     state = READ_H;
                 }
+                break;
             case ADDR_H:
-                if ((control_signals & 0b1101) > 0) {
+                multicore_fifo_push_blocking(ADDR_H);
+                if ((control_signals & 0b1101) == 0b1101) {
                     state = ADDR_L;
-                    addr.valParts.val_l = (gpio_get_all64() & console_mask) >> 2; // TODO: Update for v0.8
+                    addr.valParts.val_l = (gpio_get_all64() & console_mask) >> 2;
 
-                    set_cartridge();
+                    //multicore_fifo_push_blocking(addr.valParts.val_l);
                 }
                 break;
             case ADDR_L:
-                if ((control_signals & 0b0111) == 0) {
+                multicore_fifo_push_blocking(ADDR_L);
+                if ((control_signals & 0b0111) == 0b0111) {
+
+                    set_cartridge();
                     state = READ_H;
                 }
                 break;
             case READ_H:
-                if ((control_signals & 0b1111) == 0) {
+                multicore_fifo_push_blocking(READ_H);
+                if ((control_signals & 0b1111) == 0b1111) {
                     state = READ_IDLE;
                     data.valParts.val_h = (gpio_get_all64() & cartridge_mask) >> 14; // TODO: Update for v0.8
                 }
                 break;
             case READ_IDLE:
-                if ((control_signals & 0b0111) == 0) {
+                multicore_fifo_push_blocking(READ_IDLE);
+                if ((control_signals & 0b0111) == 0b0111) {
+                    set_cartridge();
                     state = READ_L;
                 }
                 break;
             case READ_L:
-                if ((control_signals & 0b1111) == 0) {
+                multicore_fifo_push_blocking(READ_L);
+                if ((control_signals & 0b1111) == 0b1111) {
                     state = IDLE;
                     data.valParts.val_l = (gpio_get_all64() & cartridge_mask) >> 14; // TODO: Update for v0.8
                 }
@@ -219,3 +285,5 @@ std::vector<Wire> InitWires()
     wires.push_back(read);
     return wires;
 }
+
+#pragma clang diagnostic pop

@@ -1,5 +1,0 @@
-/Users/andrew/Development/n64_gamecat_src/n64_gamecat/build/_deps/picotool/picotool
-/Users/andrew/Development/n64_gamecat_src/n64_gamecat/build/_deps/picotool/picotoolTargets.cmake
-/Users/andrew/Development/n64_gamecat_src/n64_gamecat/build/_deps/picotool/picotoolTargets-release.cmake
-/Users/andrew/Development/n64_gamecat_src/n64_gamecat/build/_deps/picotool/picotoolConfig.cmake
-/Users/andrew/Development/n64_gamecat_src/n64_gamecat/build/_deps/picotool/picotoolConfigVersion.cmake
