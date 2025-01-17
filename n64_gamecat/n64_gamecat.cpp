@@ -38,7 +38,7 @@
 #define GPIO_OUT_BANK0   (*(volatile uint32_t *)(SIO_BASE + GPIO_OUT_OFFSET))
 #define GPIO_OUT_BANK1   (*(volatile uint32_t *)(SIO_BASE + GPIO_OUT_OFFSET + 0x04)) // Adjust the offset as per the datasheet
 
-#define NUM_SAMPLES 1000
+#define NUM_SAMPLES 5000
 
 
 typedef struct {
@@ -57,6 +57,7 @@ static uint64_t cartridge_mask = 0;
 static uint64_t control_mask = 0;
 static uint64_t full_mask_co = 0;
 static uint64_t full_mask_ca = 0;
+static uint64_t flag_mask = 0;
 
 static State state = State::IDLE;
 static val_t addr  = {0};
@@ -64,67 +65,36 @@ static val_t data = {0};
 static uint32_t regs_low = 0;
 static uint32_t regs_high = 0;
 
-volatile bool timer_fired = false;
+volatile uint64_t curr_val = 0;
 
-int64_t alarm_callback(alarm_id_t id, __unused void *user_data) {
-    timer_fired = true;
-    return 0;
-}
-
-void set_gpio_function(uint8_t pin, uint8_t function) {
-    volatile auto *gpio_ctrl = (volatile uint32_t *)(IO_BANK0_BASE + 0x04 + (pin * 8));
-    *gpio_ctrl = (*gpio_ctrl & ~0x1F) | (function & 0x1F);
-}
-
-void configure_gpio_pins() {
-    for (uint8_t pin = 2; pin <= 40; pin++) {
-        set_gpio_function(pin, 5); // 5 corresponds to SIO function
-    }
-}
-
-void read_all_gpio_pins(uint32_t *bank0, uint32_t *bank1) {
-    *bank0 = GPIO_IN_BANK0;
-    *bank1 = GPIO_IN_BANK1;
-}
-
-void core1_uart_entry() {
-    printf("CORE1 entry\n");
-
-    uint32_t lastVal = UINT32_MAX;
-
-    while (true) {
-        auto val = multicore_fifo_pop_blocking();
-        //if (val != lastVal) {
-            printf("%lu\n", val);
-            //lastVal = val;
-        //}
-    }
-}
+static bool console_talking = true;
 
 // console "talking"
-void set_console() {
+__attribute__((always_inline))
+inline void set_console() {
     gpio_set_dir_in_masked64(console_mask);
     gpio_set_dir_out_masked64(cartridge_mask);
-    gpio_set_dir_in_masked64(control_mask);
-
-    //GPIO_OE_BANK0 = full_mask_co;
-    //GPIO_OE_BANK1 = full_mask_co >> 32;
-
-    //printf("Output mask 0: 0x%" PRIx32 "\n", GPIO_OE_BANK0);
-    //printf("Output mask 1: 0x%" PRIx32 "\n", GPIO_OE_BANK1);
+    console_talking = true;
 }
 
 // cartridge "talking"
-void set_cartridge() {
+__attribute__((always_inline))
+inline void set_cartridge() {
     gpio_set_dir_out_masked64(console_mask);
     gpio_set_dir_in_masked64(cartridge_mask);
-    gpio_set_dir_in_masked64(control_mask);
+    console_talking = false;
+}
 
-    //GPIO_OE_BANK0 = full_mask_ca;
-    //GPIO_OE_BANK1 = full_mask_ca >> 32;
+__attribute__((always_inline))
+inline void dump_to_console(uint64_t val) {
+    gpio_put_masked64(console_mask, (val & cartridge_mask) << 16);
+    gpio_put_masked64(flag_mask, (val & control_mask) << 6);
+}
 
-    //printf("Output mask 0: 0x%" PRIx32 "\n", GPIO_OE_BANK0);
-    //printf("Output mask 1: 0x%" PRIx32 "\n", GPIO_OE_BANK1);
+__attribute__((always_inline))
+inline void dump_to_cartridge(uint64_t val) {
+    gpio_put_masked64(flag_mask, (val & control_mask) << 6);
+
 }
 
 void init_gpio() {
@@ -145,12 +115,20 @@ void init_gpio() {
     control_mask |= (uint64_t) 1 << READ;
     control_mask |= (uint64_t) 1 << WRITE;
 
+    flag_mask |= (uint64_t) 1 << FLAG_ALE_H;
+    flag_mask |= (uint64_t) 1 << FLAG_ALE_L;
+    flag_mask |= (uint64_t) 1 << FLAG_READ;
+    flag_mask |= (uint64_t) 1 << FLAG_WRITE;
+
     gpio_init(ALE_H);
     gpio_init(ALE_L);
     gpio_init(READ);
     gpio_init(WRITE);
 
-    gpio_init(GPIO_FLAG);
+    gpio_init(FLAG_ALE_H);
+    gpio_init(FLAG_ALE_L);
+    gpio_init(FLAG_WRITE);
+    gpio_init(FLAG_READ);
 
     printf("Console   mask: 0x%" PRIx64 "\n", console_mask);
     printf("Cartridge mask: 0x%" PRIx64 "\n", cartridge_mask);
@@ -160,11 +138,11 @@ void init_gpio() {
 
     gpio_set_dir_in_masked64(control_mask);
 
-    full_mask_co = cartridge_mask | control_mask;
-    full_mask_ca = console_mask   | control_mask;
+    //full_mask_co = cartridge_mask | control_mask;
+    //full_mask_ca = console_mask   | control_mask;
 
-    full_mask_co |= ((uint64_t)1 << GPIO_FLAG);
-    full_mask_ca |= ((uint64_t)1 << GPIO_FLAG);
+    //full_mask_co |= ((uint64_t)1 << GPIO_FLAG);
+    //full_mask_ca |= ((uint64_t)1 << GPIO_FLAG);
 
     printf("Full CO   mask: 0x%" PRIx64 "\n", full_mask_co);
     printf("Full CA   mask: 0x%" PRIx64 "\n", full_mask_ca);
@@ -174,138 +152,102 @@ void init_gpio() {
     gpio_set_pulls(READ, true, false);
     gpio_set_pulls(WRITE, true, false);
 
-    gpio_set_pulls(GPIO_FLAG, true, false);
-    gpio_set_dir(GPIO_FLAG, true);
+    gpio_set_pulls(FLAG_ALE_H, true, false);
+    gpio_set_pulls(FLAG_ALE_L, true, false);
+    gpio_set_pulls(FLAG_WRITE, true, false);
+    gpio_set_pulls(FLAG_READ, true, false);
+
+    gpio_set_dir(FLAG_ALE_H, true);
+    gpio_set_dir(FLAG_ALE_L, true);
+    gpio_set_dir(FLAG_WRITE, true);
+    gpio_set_dir(FLAG_READ, true);
 
     //gpio_set_mask64(console_mask);
 }
 
+void core1_loop() {
+    printf("CORE1\n");
+    while (true) {
+        //if (console_talking) {
+            dump_to_cartridge(curr_val);
+        //} else {
+            //dump_to_console(curr_val);
+        //}
+    }
+}
+
 int main() {
-    //set_sys_clock_khz(300000, true);
-    set_sys_clock_khz(300000, true);
+    //set_sys_clock_khz(320000, true);
+    set_sys_clock_khz(280000, true);
 
     stdio_init_all();
-
-    //multicore_reset_core1();
 
     init_gpio();
 
     uint32_t control_signals = 0;
 
-    stdio_flush();
-
-    //multicore_launch_core1(core1_uart_entry);
-
-    //multicore_fifo_push_blocking(0xDEADBEEF);
-    //multicore_fifo_push_blocking(0xDEADBABE);
-    //multicore_fifo_push_blocking(0xFFFFFFFF);
-    //multicore_fifo_push_blocking(0x00000000);
-    //multicore_fifo_push_blocking(1234);
+    multicore_reset_core1();
+    multicore_launch_core1(core1_loop);
 
     set_console();
-    uint64_t tmp_data = 0;
-
-    uint32_t lastUpper = UINT32_MAX;
-    uint32_t lastLower = UINT32_MAX;
-
-    bool flag = false;
-
-    uint32_t buff[NUM_SAMPLES] = {0};
-    uint32_t sample = 0;
-
-    add_alarm_in_ms(5000, alarm_callback, NULL, false);
 
     while(true) {
-        //control_signals = (gpio_get_all64() >> ALE_H) & control_mask;
-        //control_signals = gpio_get_all64();
-        uint64_t val = gpio_get_all64() & 0xFFFFFEFFFFFFFFFC; // discard lowest 2 bits (UART) and bit 40 (flag)
+        curr_val = gpio_get_all64() /*& 0xFFFFFEFFFFFFFFFC*/; // discard lowest 2 bits (UART) and bit 40 (flag)
+        //control_signals = (val & control_mask) >> ALE_H;
+        //dump_to_cartridge(val);
 
-        regs_low = (val & 0xFFFFFFFC);
-        regs_high = (val >> 32);
-
-        if (regs_low != lastLower || regs_high != lastUpper) {
-            buff[sample++] = regs_low;
-            buff[sample++] = regs_high;
-            //multicore_fifo_push_blocking(regs_low);
-            //multicore_fifo_push_blocking(regs_high);
-
-            //printf("%lu\n", regs_low);
-            //printf("%lu\n", regs_high);
-
-            lastLower = regs_low;
-            lastUpper = regs_high;
-            //printf("0x%" PRIx64 "\n", val);
-        }
-        flag = !flag;
-        gpio_put(GPIO_FLAG, flag);
-
-        if (timer_fired || sample >= NUM_SAMPLES) {
-            printf("DONE!\n");
-            for (int i = 0; i < sample; ++i) {
-                printf("%lu\n", buff[i]);
-            }
-
-            while(true){
-                flag = !flag;
-                gpio_put(GPIO_FLAG, flag);
-            }
-        }
-
-        //sleep_us(1000);
+        //control_signals = (val & control_mask) >> ALE_H;
+        //dump_to_cartridge(val);
         continue;
 
         switch (state) {
-
             case IDLE:
-                //multicore_fifo_push_blocking(IDLE);
+                dump_to_cartridge(curr_val);
                 if ((control_signals & 0b1110) == 0b1110) {
-                    set_console();
-                    sleep_us(10);
+                    //set_console();
                     state = ADDR_H;
-                    addr.valParts.val_h = (gpio_get_all64() & console_mask) >> 2;
-                    //multicore_fifo_push_blocking(addr.valParts.val_h);
                 }
                 else if ((control_signals & 0b0111) == 0b0111) {
-                    set_cartridge();
+                    //set_cartridge();
                     state = READ_H;
+                    //dump_to_console(val);
                 }
                 break;
             case ADDR_H:
-                multicore_fifo_push_blocking(ADDR_H);
+                //printf("1");
+                dump_to_cartridge(curr_val);
                 if ((control_signals & 0b1101) == 0b1101) {
                     state = ADDR_L;
-                    addr.valParts.val_l = (gpio_get_all64() & console_mask) >> 2;
-
-                    //multicore_fifo_push_blocking(addr.valParts.val_l);
                 }
                 break;
             case ADDR_L:
-                multicore_fifo_push_blocking(ADDR_L);
+                //printf("2");
+                dump_to_cartridge(curr_val);
                 if ((control_signals & 0b0111) == 0b0111) {
-
-                    set_cartridge();
+                    //set_cartridge();
                     state = READ_H;
                 }
                 break;
             case READ_H:
-                multicore_fifo_push_blocking(READ_H);
+                //printf("3");
+                dump_to_console(curr_val);
                 if ((control_signals & 0b1111) == 0b1111) {
                     state = READ_IDLE;
-                    data.valParts.val_h = (gpio_get_all64() & cartridge_mask) >> 14; // TODO: Update for v0.8
                 }
                 break;
             case READ_IDLE:
-                multicore_fifo_push_blocking(READ_IDLE);
+                //printf("4");
+                dump_to_console(curr_val);
                 if ((control_signals & 0b0111) == 0b0111) {
-                    set_cartridge();
+                    //set_cartridge();
                     state = READ_L;
                 }
                 break;
             case READ_L:
-                multicore_fifo_push_blocking(READ_L);
+                //printf("5");
+                dump_to_console(curr_val);
                 if ((control_signals & 0b1111) == 0b1111) {
                     state = IDLE;
-                    data.valParts.val_l = (gpio_get_all64() & cartridge_mask) >> 14; // TODO: Update for v0.8
                 }
                 break;
             case WRITE_H:
@@ -314,54 +256,5 @@ int main() {
                 break;
         }
     }
-
-    while(true) {
-        set_console();
-        sleep_ms(50);
-        printf("GPIOs (CON): 0x%" PRIx64 "\n", gpio_get_all64());
-        set_cartridge();
-        sleep_ms(50);
-        printf("GPIOs (CAR): 0x%" PRIx64 "\n", gpio_get_all64());
-    }
-
-    return 0;
 }
-
-std::vector<Wire> InitWires()
-{
-    std::vector<Wire> wires;
-
-    Wire ale_l;
-    auto ale_l_timings = std::vector<uint32_t>();
-
-    ale_l_timings.push_back(0);
-    ale_l_timings.push_back(300);
-    ale_l_timings.push_back(550);
-    ale_l.SetTimings(ale_l_timings);
-
-    wires.push_back(ale_l);
-
-    Wire ale_h;
-    auto ale_h_timings = std::vector<uint32_t>();
-
-    ale_h_timings.push_back(425);
-    ale_h.SetTimings(ale_h_timings);
-
-    wires.push_back(ale_h);
-
-    Wire read;
-    auto read_timings = std::vector<uint32_t>();
-
-    read_timings.push_back(1600);
-    read_timings.push_back(1900);
-    read_timings.push_back(1960);
-    read_timings.push_back(2260);
-    read_timings.push_back(2320);
-    read_timings.push_back(2620);
-    read.SetTimings(read_timings);
-
-    wires.push_back(read);
-    return wires;
-}
-
 #pragma clang diagnostic pop

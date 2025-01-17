@@ -3,11 +3,12 @@
 cmake_minimum_required(VERSION 3.13)
 
 set(CMAKE_C_STANDARD 11)
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 # Initialise pico_sdk from installed location
 # (note this can come from environment, CMake cache etc)
 set(PICO_SDK_PATH "/Users/andrew/Development/pico-sdk")
+
 
 set(PICO_BOARD solderparty_rp2350_stamp_xl CACHE STRING "Board type")
 
@@ -18,7 +19,7 @@ if (PICO_SDK_VERSION_STRING VERSION_LESS "1.4.0")
   message(FATAL_ERROR "Raspberry Pi Pico SDK version 1.4.0 (or later) required. Your version is ${PICO_SDK_VERSION_STRING}")
 endif()
 
-project(n64_gamecat C CXX ASM)
+project(n64_gamecat C CXX)
 
 # Initialise the Raspberry Pi Pico SDK
 pico_sdk_init()
