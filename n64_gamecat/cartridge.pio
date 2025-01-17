@@ -1,0 +1,31 @@
+.program cartridge
+
+; WRITE
+.wrap_target
+    out PINS, 16
+.wrap
+
+
+% c-sdk {
+// this is a raw helper function for use by the user which sets up the GPIO output, and configures the SM to output on a particular pin
+
+void cartridge_program_init(PIO pio, uint sm, uint offset, uint pin, uint count) {
+    for (int i = 0; i < count; ++i)
+    {
+       pio_gpio_init(pio, pin + i);
+    }
+    pio_sm_set_consecutive_pindirs(pio, sm, pin, count, true);
+    pio_sm_config c = cartridge_program_get_default_config(offset);
+
+    // Configure side-set options: 1 bit, not optional, does not affect pindirs
+    //sm_config_set_sideset(&c, 1, false, false);
+    //sm_config_set_sideset_pins(&c, pin + 3);
+    sm_config_set_out_pins(&c, pin, count);
+
+    // TODO: Shift left or right? (arg 2 == shift_right)
+    sm_config_set_out_shift(&c, true, true, 16);
+
+    pio_sm_init(pio, sm, offset, &c);
+    pio_sm_set_enabled(pio, sm, true);
+}
+%}

@@ -32,14 +32,19 @@ add_executable(n64_gamecat n64_gamecat.cpp
         gpio_cfg.h
         state.h)
 
+#target_compile_definitions(n64_gamecat PUBLIC
+        #PICO_DEFAULT_UART_TX_PIN=44
+        #PICO_DEFAULT_UART_RX_PIN=45
+#)
+
 pico_set_program_name(n64_gamecat "n64_gamecat")
 pico_set_program_version(n64_gamecat "0.1")
 
-# no_flash means the target is to run from RAM
-#pico_set_binary_type(n64_gamecat no_flash)
-
 pico_enable_stdio_uart(n64_gamecat 1)
 pico_enable_stdio_usb(n64_gamecat 0)
+
+# no_flash means the target is to run from RAM
+#pico_set_binary_type(n64_gamecat no_flash)
 
 pico_set_binary_type(n64_gamecat copy_to_ram)
 
@@ -62,6 +67,6 @@ target_link_libraries(n64_gamecat
 
 pico_add_extra_outputs(n64_gamecat)
 
-pico_generate_pio_header(n64_gamecat ${CMAKE_CURRENT_LIST_DIR}/blink.pio)
-pico_generate_pio_header(n64_gamecat ${CMAKE_CURRENT_LIST_DIR}/demo.pio)
-pico_generate_pio_header(n64_gamecat ${CMAKE_CURRENT_LIST_DIR}/demo_read.pio)
+pico_generate_pio_header(n64_gamecat ${CMAKE_CURRENT_LIST_DIR}/console.pio)
+pico_generate_pio_header(n64_gamecat ${CMAKE_CURRENT_LIST_DIR}/cartridge.pio)
+pico_generate_pio_header(n64_gamecat ${CMAKE_CURRENT_LIST_DIR}/control.pio)

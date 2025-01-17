@@ -1,0 +1,33 @@
+.program console
+
+; READ
+set x, 0
+.wrap_target
+    in PINS, 16
+    ;in x, 16
+.wrap
+
+
+% c-sdk {
+// this is a raw helper function for use by the user which sets up the GPIO output, and configures the SM to output on a particular pin
+
+void console_program_init(PIO pio, uint sm, uint offset, uint pin, uint count) {
+    for (int i = 0; i < count; ++i)
+    {
+       pio_gpio_init(pio, pin + i);
+    }
+    pio_sm_set_consecutive_pindirs(pio, sm, pin, count, false);
+    pio_sm_config c = console_program_get_default_config(offset);
+
+    // Configure side-set options: 1 bit, not optional, does not affect pindirs
+    //sm_config_set_sideset(&c, 1, false, false);
+    //sm_config_set_sideset_pins(&c, pin + 3);
+    sm_config_set_in_pins(&c, pin);
+
+    // TODO: Shift left or right? (arg 2 == shift_right)
+    sm_config_set_in_shift(&c, false, true, 16);
+
+    pio_sm_init(pio, sm, offset, &c);
+    pio_sm_set_enabled(pio, sm, true);
+}
+%}

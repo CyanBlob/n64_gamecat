@@ -5,8 +5,11 @@
  */
 // IMPORTANT
 // PICO_USE_GPIO_COPROCESSOR from gpio.h in the pico sdk should be set to 0
-
 #include <stdio.h>
+
+#define UART        0
+#define PIN_UART_TX 44
+#define PIN_UART_RX 45
 
 #include "pico/stdlib.h"
 #include "pico/multicore.h"
@@ -15,7 +18,13 @@
 #include "Wire.h"
 #include "gpio_cfg.h"
 #include <cinttypes>
+#include <hardware/dma.h>
+#include <string>
 #include "state.h"
+
+#include "console.pio.h"
+#include "cartridge.pio.h"
+#include "control.pio.h"
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "EndlessLoop"
@@ -60,12 +69,16 @@ static uint64_t full_mask_ca = 0;
 static uint64_t flag_mask = 0;
 
 static State state = State::IDLE;
-static val_t addr  = {0};
+static val_t addr = {0};
 static val_t data = {0};
 static uint32_t regs_low = 0;
 static uint32_t regs_high = 0;
 
 volatile uint64_t curr_val = 0;
+
+volatile uint32_t con_data = 0;
+volatile uint32_t car_data = 0;
+volatile uint8_t sig_data = 72;
 
 static bool console_talking = true;
 
@@ -100,8 +113,8 @@ inline void dump_to_cartridge(uint64_t val) {
 void init_gpio() {
     //configure_gpio_pins();
     for (uint i = 0; i < 16; ++i) {
-        console_mask   |= (uint64_t) 1 << (uint64_t)console_pins[i];
-        cartridge_mask |= (uint64_t) 1 << (uint64_t)cartridge_pins[i];
+        console_mask |= (uint64_t) 1 << (uint64_t) console_pins[i];
+        cartridge_mask |= (uint64_t) 1 << (uint64_t) cartridge_pins[i];
 
         gpio_init(console_pins[i]);
         gpio_init(cartridge_pins[i]);
@@ -169,22 +182,177 @@ void core1_loop() {
     printf("CORE1\n");
     while (true) {
         //if (console_talking) {
-            dump_to_cartridge(curr_val);
+        dump_to_cartridge(curr_val);
         //} else {
-            //dump_to_console(curr_val);
+        //dump_to_console(curr_val);
         //}
     }
 }
 
 int main() {
-    //set_sys_clock_khz(320000, true);
-    set_sys_clock_khz(280000, true);
-
+    set_sys_clock_khz(300000, true);
+    //set_sys_clock_khz(100000, true);
     stdio_init_all();
+    //uart_init(UART, 115200);
+    //gpio_set_function(0, GPIO_FUNC_UART);
+    //gpio_set_function(1, GPIO_FUNC_UART);
 
-    init_gpio();
+    //uart_set_format(UART, 8, 1, UART_PARITY_NONE);
 
-    uint32_t control_signals = 0;
+    printf("DMA Init\n");
+
+    uint dma_chan_a_1 = dma_claim_unused_channel(true);
+    dma_channel_config cA1 = dma_channel_get_default_config(dma_chan_a_1);
+    channel_config_set_transfer_data_size(&cA1, DMA_SIZE_16);
+    channel_config_set_read_increment(&cA1, false);
+    channel_config_set_write_increment(&cA1, false);
+    channel_config_set_dreq(&cA1, DREQ_PIO0_RX0);
+
+    dma_channel_configure(
+            dma_chan_a_1,
+            &cA1,
+            /* dest */   &con_data,                  // pointer to your buffer in RAM
+            /* source */ &pio0->rxf[0],             // PIO0 SM0 RX FIFO register
+            /* count */  UINT32_MAX,      // how many 32-bit words to transfer
+            /* trigger */ false
+    );
+
+    uint dma_chan_a_2 = dma_claim_unused_channel(true);
+    dma_channel_config cA2 = dma_channel_get_default_config(dma_chan_a_2);
+    channel_config_set_transfer_data_size(&cA2, DMA_SIZE_16);
+    channel_config_set_read_increment(&cA2, false);
+    channel_config_set_write_increment(&cA2, false);
+    channel_config_set_dreq(&cA2, DREQ_PIO0_RX0);
+
+    dma_channel_configure(
+            dma_chan_a_2,
+            &cA2,
+            /* dest */   &con_data,                  // pointer to your buffer in RAM
+            /* source */ &pio0->rxf[0],             // PIO0 SM0 RX FIFO register
+            /* count */  UINT32_MAX,      // how many 32-bit words to transfer
+            /* trigger */ false
+    );
+
+    uint dma_chan_b_1 = dma_claim_unused_channel(true);
+    dma_channel_config cB1 = dma_channel_get_default_config(dma_chan_b_1);
+    channel_config_set_transfer_data_size(&cB1, DMA_SIZE_16);
+    channel_config_set_read_increment(&cB1, false);
+    channel_config_set_write_increment(&cB1, false);
+    channel_config_set_dreq(&cB1, DREQ_PIO1_TX0);
+
+    // Configure the channel
+    dma_channel_configure(
+            dma_chan_b_1,
+            &cB1,
+            /* dest */   &pio1->txf[0],
+            /* source */ &con_data,
+            /* count */  UINT32_MAX,
+            /* trigger */ false
+    );
+
+    uint dma_chan_b_2 = dma_claim_unused_channel(true);
+    dma_channel_config cB2 = dma_channel_get_default_config(dma_chan_b_2);
+    channel_config_set_transfer_data_size(&cB2, DMA_SIZE_16);
+    channel_config_set_read_increment(&cB2, false);
+    channel_config_set_write_increment(&cB2, false);
+    channel_config_set_dreq(&cB2, DREQ_PIO1_TX0);
+
+    // Configure the channel
+    dma_channel_configure(
+            dma_chan_b_2,
+            &cB2,
+            /* dest */   &pio1->txf[0],
+            /* source */ &con_data,
+            /* count */  UINT32_MAX,
+            /* trigger */ false
+    );
+
+    uint dma_chan_c_1 = dma_claim_unused_channel(true);
+    dma_channel_config cC1 = dma_channel_get_default_config(dma_chan_c_1);
+    channel_config_set_transfer_data_size(&cC1, DMA_SIZE_8);
+    channel_config_set_read_increment(&cC1, false);
+    channel_config_set_write_increment(&cC1, false);
+    channel_config_set_dreq(&cC1, DREQ_PIO2_RX0);
+
+    // Configure the channel
+    dma_channel_configure(
+            dma_chan_c_1,
+            &cC1,
+            /* dest */   &sig_data,                  // pointer to your buffer in RAM
+            /* source */ &pio2->rxf[0],             // PIO0 SM0 RX FIFO register
+            /* count */  UINT32_MAX,
+            /* trigger */ false
+    );
+
+    uint dma_chan_c_2 = dma_claim_unused_channel(true);
+    dma_channel_config cC2 = dma_channel_get_default_config(dma_chan_c_2);
+    channel_config_set_transfer_data_size(&cC2, DMA_SIZE_8);
+    channel_config_set_read_increment(&cC2, false);
+    channel_config_set_write_increment(&cC2, false);
+    channel_config_set_dreq(&cC2, DREQ_PIO2_RX0);
+
+    // Configure the channel
+    dma_channel_configure(
+            dma_chan_c_2,
+            &cC2,
+            /* dest */   &sig_data,                  // pointer to your buffer in RAM
+            /* source */ &pio2->rxf[0],             // PIO0 SM0 RX FIFO register
+            /* count */  UINT32_MAX,
+            /* trigger */ false
+    );
+
+    // ping-pong DMA channels to get around non-infinite DMA transfers
+    channel_config_set_chain_to(&cA1, dma_chan_a_2);
+    channel_config_set_chain_to(&cA2, dma_chan_a_1);
+    channel_config_set_chain_to(&cB1, dma_chan_b_2);
+    channel_config_set_chain_to(&cB2, dma_chan_b_1);
+    channel_config_set_chain_to(&cC1, dma_chan_c_2);
+    channel_config_set_chain_to(&cC2, dma_chan_c_1);
+
+
+    for (int i = CO_AD0; i < CO_AD15; ++i) {
+        gpio_init(i);
+        gpio_set_pulls(i, false, true);
+    }
+
+    for (int i = ALE_H; i < READ; ++i) {
+        gpio_init(i);
+        gpio_set_pulls(i, false, true);
+    }
+
+
+    printf("PIO Init\n");
+    PIO pio_con = pio0;
+    uint offset = pio_add_program(pio_con, &console_program);
+    uint sm = pio_claim_unused_sm(pio_con, true);
+    console_program_init(pio_con, sm, offset, CO_AD0, 16);
+
+    PIO pio_car = pio1;
+    offset = pio_add_program(pio_car, &cartridge_program);
+    sm = pio_claim_unused_sm(pio_car, true);
+    cartridge_program_init(pio_car, sm, offset, CA_AD0, 16);
+
+    PIO pio_control = pio2;
+    offset = pio_add_program(pio_control, &control_program);
+    sm = pio_claim_unused_sm(pio_control, true);
+    control_program_init(pio_control, sm, offset, ALE_H, 8);
+
+    dma_start_channel_mask((1u << dma_chan_a_1) | (1u << dma_chan_b_1) | (1u << dma_chan_c_1));
+    printf("A: %d\n", dma_chan_a_1);
+    printf("B: %d\n", dma_chan_b_1);
+    printf("C: %d\n", dma_chan_c_1);
+
+    while (true) {
+        //printf("%lu\t - %lu\n", con_data, car_data);
+        printf("%lu \t%hhu\n", con_data, sig_data);
+        //con_data = 0;
+        sleep_ms(1);
+    }
+
+
+    //init_gpio();
+
+    /*uint32_t control_signals = 0;
 
     multicore_reset_core1();
     multicore_launch_core1(core1_loop);
@@ -192,7 +360,7 @@ int main() {
     set_console();
 
     while(true) {
-        curr_val = gpio_get_all64() /*& 0xFFFFFEFFFFFFFFFC*/; // discard lowest 2 bits (UART) and bit 40 (flag)
+        curr_val = gpio_get_all64() ; // discard lowest 2 bits (UART) and bit 40 (flag)
         //control_signals = (val & control_mask) >> ALE_H;
         //dump_to_cartridge(val);
 
@@ -255,6 +423,7 @@ int main() {
             case WRITE_L:
                 break;
         }
-    }
+    }*/
 }
+
 #pragma clang diagnostic pop
