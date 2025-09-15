@@ -15,6 +15,7 @@
 #include "pico/multicore.h"
 #include "hardware/pio.h"
 #include "hardware/clocks.h"
+#include "hardware/gpio.h"
 #include "Wire.h"
 #include "gpio_cfg.h"
 #include <cinttypes>
@@ -78,7 +79,7 @@ volatile uint64_t curr_val = 0;
 
 volatile uint32_t con_data = 0;
 volatile uint32_t car_data = 0;
-volatile uint8_t sig_data = 72;
+volatile uint8_t sig_data = 69;
 
 static bool console_talking = true;
 
@@ -175,6 +176,12 @@ void init_gpio() {
     gpio_set_dir(FLAG_WRITE, true);
     gpio_set_dir(FLAG_READ, true);
 
+    // NEW
+    gpio_set_dir(ALE_H, false);
+    gpio_set_dir(ALE_L, false);
+    gpio_set_dir(WRITE, false);
+    gpio_set_dir(READ, false);
+
     //gpio_set_mask64(console_mask);
 }
 
@@ -206,102 +213,44 @@ int main() {
     channel_config_set_transfer_data_size(&cA1, DMA_SIZE_16);
     channel_config_set_read_increment(&cA1, false);
     channel_config_set_write_increment(&cA1, false);
-    channel_config_set_dreq(&cA1, DREQ_PIO0_RX0);
-
-    dma_channel_configure(
-            dma_chan_a_1,
-            &cA1,
-            /* dest */   &con_data,                  // pointer to your buffer in RAM
-            /* source */ &pio0->rxf[0],             // PIO0 SM0 RX FIFO register
-            /* count */  UINT32_MAX,      // how many 32-bit words to transfer
-            /* trigger */ false
-    );
+    // DREQ for this channel will be set after the PIO SM is claimed
 
     uint dma_chan_a_2 = dma_claim_unused_channel(true);
     dma_channel_config cA2 = dma_channel_get_default_config(dma_chan_a_2);
     channel_config_set_transfer_data_size(&cA2, DMA_SIZE_16);
     channel_config_set_read_increment(&cA2, false);
     channel_config_set_write_increment(&cA2, false);
-    channel_config_set_dreq(&cA2, DREQ_PIO0_RX0);
-
-    dma_channel_configure(
-            dma_chan_a_2,
-            &cA2,
-            /* dest */   &con_data,                  // pointer to your buffer in RAM
-            /* source */ &pio0->rxf[0],             // PIO0 SM0 RX FIFO register
-            /* count */  UINT32_MAX,      // how many 32-bit words to transfer
-            /* trigger */ false
-    );
+    // DREQ set later
 
     uint dma_chan_b_1 = dma_claim_unused_channel(true);
     dma_channel_config cB1 = dma_channel_get_default_config(dma_chan_b_1);
     channel_config_set_transfer_data_size(&cB1, DMA_SIZE_16);
     channel_config_set_read_increment(&cB1, false);
     channel_config_set_write_increment(&cB1, false);
-    channel_config_set_dreq(&cB1, DREQ_PIO1_TX0);
-
-    // Configure the channel
-    dma_channel_configure(
-            dma_chan_b_1,
-            &cB1,
-            /* dest */   &pio1->txf[0],
-            /* source */ &con_data,
-            /* count */  UINT32_MAX,
-            /* trigger */ false
-    );
+    // DREQ set later
 
     uint dma_chan_b_2 = dma_claim_unused_channel(true);
     dma_channel_config cB2 = dma_channel_get_default_config(dma_chan_b_2);
     channel_config_set_transfer_data_size(&cB2, DMA_SIZE_16);
     channel_config_set_read_increment(&cB2, false);
     channel_config_set_write_increment(&cB2, false);
-    channel_config_set_dreq(&cB2, DREQ_PIO1_TX0);
-
-    // Configure the channel
-    dma_channel_configure(
-            dma_chan_b_2,
-            &cB2,
-            /* dest */   &pio1->txf[0],
-            /* source */ &con_data,
-            /* count */  UINT32_MAX,
-            /* trigger */ false
-    );
+    // DREQ set later
 
     uint dma_chan_c_1 = dma_claim_unused_channel(true);
     dma_channel_config cC1 = dma_channel_get_default_config(dma_chan_c_1);
     channel_config_set_transfer_data_size(&cC1, DMA_SIZE_8);
     channel_config_set_read_increment(&cC1, false);
     channel_config_set_write_increment(&cC1, false);
-    channel_config_set_dreq(&cC1, DREQ_PIO2_RX0);
-
-    // Configure the channel
-    dma_channel_configure(
-            dma_chan_c_1,
-            &cC1,
-            /* dest */   &sig_data,                  // pointer to your buffer in RAM
-            /* source */ &pio2->rxf[0],             // PIO0 SM0 RX FIFO register
-            /* count */  UINT32_MAX,
-            /* trigger */ false
-    );
+    // DREQ set later
 
     uint dma_chan_c_2 = dma_claim_unused_channel(true);
     dma_channel_config cC2 = dma_channel_get_default_config(dma_chan_c_2);
     channel_config_set_transfer_data_size(&cC2, DMA_SIZE_8);
     channel_config_set_read_increment(&cC2, false);
     channel_config_set_write_increment(&cC2, false);
-    channel_config_set_dreq(&cC2, DREQ_PIO2_RX0);
+    // DREQ set later
 
-    // Configure the channel
-    dma_channel_configure(
-            dma_chan_c_2,
-            &cC2,
-            /* dest */   &sig_data,                  // pointer to your buffer in RAM
-            /* source */ &pio2->rxf[0],             // PIO0 SM0 RX FIFO register
-            /* count */  UINT32_MAX,
-            /* trigger */ false
-    );
-
-    // ping-pong DMA channels to get around non-infinite DMA transfers
+    // ping-pong DMA channels: set chaining in the channel configs before calling dma_channel_configure
     channel_config_set_chain_to(&cA1, dma_chan_a_2);
     channel_config_set_chain_to(&cA2, dma_chan_a_1);
     channel_config_set_chain_to(&cB1, dma_chan_b_2);
@@ -309,33 +258,110 @@ int main() {
     channel_config_set_chain_to(&cC1, dma_chan_c_2);
     channel_config_set_chain_to(&cC2, dma_chan_c_1);
 
-
     for (int i = CO_AD0; i < CO_AD15; ++i) {
         gpio_init(i);
         gpio_set_pulls(i, false, true);
     }
 
-    for (int i = ALE_H; i < READ; ++i) {
+    /*for (int i = ALE_H; i < READ; ++i) {
         gpio_init(i);
         gpio_set_pulls(i, false, true);
-    }
+    }*/
 
 
     printf("PIO Init\n");
     PIO pio_con = pio0;
-    uint offset = pio_add_program(pio_con, &console_program);
-    uint sm = pio_claim_unused_sm(pio_con, true);
-    console_program_init(pio_con, sm, offset, CO_AD0, 16);
+    uint offset_con = pio_add_program(pio_con, &console_program);
+    uint sm_con = pio_claim_unused_sm(pio_con, true);
+    console_program_init(pio_con, sm_con, offset_con, CO_AD0, 16);
 
     PIO pio_car = pio1;
-    offset = pio_add_program(pio_car, &cartridge_program);
-    sm = pio_claim_unused_sm(pio_car, true);
-    cartridge_program_init(pio_car, sm, offset, CA_AD0, 16);
+    uint offset_car = pio_add_program(pio_car, &cartridge_program);
+    uint sm_car = pio_claim_unused_sm(pio_car, true);
+    cartridge_program_init(pio_car, sm_car, offset_car, CA_AD0, 16);
 
-    PIO pio_control = pio2;
-    offset = pio_add_program(pio_control, &control_program);
-    sm = pio_claim_unused_sm(pio_control, true);
-    control_program_init(pio_control, sm, offset, ALE_H, 8);
+    PIO pio_control;
+    uint offset_ctrl;
+    uint sm_ctrl;
+    bool rc = pio_claim_free_sm_and_add_program_for_gpio_range(&control_program, &pio_control, &sm_ctrl, &offset_ctrl, ALE_H, 8, true);
+    if (!rc) {
+        printf("Failed to claim PIO for control pins\n");
+        return 1;
+    }
+
+    // Ensure control pins have defined pulls so they are not floating while debugging
+    for (int b = 0; b < 8; ++b) {
+        int pin = ALE_H + b;
+        //gpio_init(pin);
+        gpio_set_pulls(pin, true, false); // enable pull-up
+    }
+
+    control_program_init(pio_control, sm_ctrl, offset_ctrl, ALE_H, 8);
+
+    // Now that we know which SMs the PIOs are using, set the DREQs on the channel configs
+    channel_config_set_dreq(&cA1, pio_get_dreq(pio_con, sm_con, false));
+    channel_config_set_dreq(&cA2, pio_get_dreq(pio_con, sm_con, false));
+
+    channel_config_set_dreq(&cB1, pio_get_dreq(pio_car, sm_car, true)); // TX
+    channel_config_set_dreq(&cB2, pio_get_dreq(pio_car, sm_car, true));
+
+    channel_config_set_dreq(&cC1, pio_get_dreq(pio_control, sm_ctrl, false));
+    channel_config_set_dreq(&cC2, pio_get_dreq(pio_control, sm_ctrl, false));
+
+    // Configure the channels now using the actual SM indices (rxf/txf[sm])
+    dma_channel_configure(
+            dma_chan_a_1,
+            &cA1,
+            /* dest */   &con_data,
+            /* source */ &pio_con->rxf[sm_con],
+            /* count */  UINT32_MAX,
+            /* trigger */ false
+    );
+
+    dma_channel_configure(
+            dma_chan_a_2,
+            &cA2,
+            /* dest */   &con_data,
+            /* source */ &pio_con->rxf[sm_con],
+            /* count */  UINT32_MAX,
+            /* trigger */ false
+    );
+
+    dma_channel_configure(
+            dma_chan_b_1,
+            &cB1,
+            /* dest */   &pio_car->txf[sm_car],
+            /* source */ &con_data,
+            /* count */  UINT32_MAX,
+            /* trigger */ false
+    );
+
+    dma_channel_configure(
+            dma_chan_b_2,
+            &cB2,
+            /* dest */   &pio_car->txf[sm_car],
+            /* source */ &con_data,
+            /* count */  UINT32_MAX,
+            /* trigger */ false
+    );
+
+    dma_channel_configure(
+            dma_chan_c_1,
+            &cC1,
+            /* dest */   &sig_data,
+            /* source */ &pio_control->rxf[sm_ctrl],
+            /* count */  UINT32_MAX,
+            /* trigger */ false
+    );
+
+    dma_channel_configure(
+            dma_chan_c_2,
+            &cC2,
+            /* dest */   &sig_data,
+            /* source */ &pio_control->rxf[sm_ctrl],
+            /* count */  UINT32_MAX,
+            /* trigger */ false
+    );
 
     dma_start_channel_mask((1u << dma_chan_a_1) | (1u << dma_chan_b_1) | (1u << dma_chan_c_1));
     printf("A: %d\n", dma_chan_a_1);
@@ -343,10 +369,8 @@ int main() {
     printf("C: %d\n", dma_chan_c_1);
 
     while (true) {
-        //printf("%lu\t - %lu\n", con_data, car_data);
-        printf("%lu \t%hhu\n", con_data, sig_data);
-        //con_data = 0;
-        sleep_ms(1);
+        printf("%u\n", sig_data);
+        //sleep_ms(1);
     }
 
 

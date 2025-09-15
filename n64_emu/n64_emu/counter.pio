@@ -1,0 +1,5 @@
+.program out_byte
+; Pull 32-bit words from TX FIFO (OSR) and output low 8 bits to pins
+; Autopull/OSR handling done by CPU config (we'll use OUT pins, 8)
+out pins, 8
+.wrap

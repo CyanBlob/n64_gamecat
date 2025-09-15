@@ -1,10 +1,8 @@
 .program control
 
 ; READ
-set x, 1
 .wrap_target
     in PINS, 8
-    in x, 8
 .wrap
 
 
@@ -25,7 +23,7 @@ void control_program_init(PIO pio, uint sm, uint offset, uint pin, uint count) {
     sm_config_set_in_pins(&c, pin);
 
     // TODO: Shift left or right? (arg 2 == shift_right)
-    sm_config_set_in_shift(&c, true, true, 8);
+    sm_config_set_in_shift(&c, false, true, 8);
 
     pio_sm_init(pio, sm, offset, &c);
     pio_sm_set_enabled(pio, sm, true);
