@@ -79,7 +79,10 @@ volatile uint64_t curr_val = 0;
 
 volatile uint32_t con_data = 0;
 volatile uint32_t car_data = 0;
-volatile uint8_t sig_data = 69;
+volatile uint32_t sig_data = 69; // widened to 32-bit for DMA transfers (burst-only)
+// Buffer for control PIO samples (DMA writes 8-bit FIFO bytes here)
+static volatile uint8_t control_samples[256];
+static const size_t CONTROL_SAMPLE_COUNT = 256; // number of bytes to capture per burst
 
 static bool console_talking = true;
 
@@ -240,14 +243,14 @@ int main() {
     dma_channel_config cC1 = dma_channel_get_default_config(dma_chan_c_1);
     channel_config_set_transfer_data_size(&cC1, DMA_SIZE_8);
     channel_config_set_read_increment(&cC1, false);
-    channel_config_set_write_increment(&cC1, false);
+    channel_config_set_write_increment(&cC1, true); // write into buffer incrementally (bytes)
     // DREQ set later
 
     uint dma_chan_c_2 = dma_claim_unused_channel(true);
     dma_channel_config cC2 = dma_channel_get_default_config(dma_chan_c_2);
     channel_config_set_transfer_data_size(&cC2, DMA_SIZE_8);
     channel_config_set_read_increment(&cC2, false);
-    channel_config_set_write_increment(&cC2, false);
+    channel_config_set_write_increment(&cC2, true);
     // DREQ set later
 
     // ping-pong DMA channels: set chaining in the channel configs before calling dma_channel_configure
@@ -298,6 +301,15 @@ int main() {
 
     control_program_init(pio_control, sm_ctrl, offset_ctrl, ALE_H, 8);
 
+    // quick runtime sanity prints to verify SM and FIFO state before DMA
+    printf("After PIO init: PIO=%u SM=%u\n", PIO_NUM(pio_control), sm_ctrl);
+    for (int i = 0; i < 10; ++i) {
+        uint32_t pc = pio_sm_get_pc(pio_control, sm_ctrl);
+        int lvl = pio_sm_get_rx_fifo_level(pio_control, sm_ctrl);
+        printf("DBG_PRE DMA PC=0x%03x RXlvl=%d\n", pc, lvl);
+        sleep_ms(20);
+    }
+
     // Now that we know which SMs the PIOs are using, set the DREQs on the channel configs
     channel_config_set_dreq(&cA1, pio_get_dreq(pio_con, sm_con, false));
     channel_config_set_dreq(&cA2, pio_get_dreq(pio_con, sm_con, false));
@@ -345,32 +357,52 @@ int main() {
             /* trigger */ false
     );
 
-    dma_channel_configure(
-            dma_chan_c_1,
-            &cC1,
-            /* dest */   &sig_data,
-            /* source */ &pio_control->rxf[sm_ctrl],
-            /* count */  UINT32_MAX,
-            /* trigger */ false
-    );
+    // Removed continuous control DMA to single sig_data variable —
+    // run burst-only captures in the main loop instead.
+    // Continuous control -> sig_data DMA disabled while running burst-only test.
+    // We'll reconfigure and start dma_chan_c_1 for each burst in the main loop instead of running continuously.
 
-    dma_channel_configure(
-            dma_chan_c_2,
-            &cC2,
-            /* dest */   &sig_data,
-            /* source */ &pio_control->rxf[sm_ctrl],
-            /* count */  UINT32_MAX,
-            /* trigger */ false
-    );
-
-    dma_start_channel_mask((1u << dma_chan_a_1) | (1u << dma_chan_b_1) | (1u << dma_chan_c_1));
+    // Do not start the control DMA continuously; we'll launch 256-sample bursts from the main loop
+    dma_start_channel_mask((1u << dma_chan_a_1) | (1u << dma_chan_b_1));
     printf("A: %d\n", dma_chan_a_1);
     printf("B: %d\n", dma_chan_b_1);
     printf("C: %d\n", dma_chan_c_1);
 
+    // Main loop: repeatedly capture a small burst of words from the control PIO RX FIFO into control_samples
     while (true) {
-        printf("%u\n", sig_data);
-        //sleep_ms(1);
+        printf("LOOP\n");
+         // Configure and start a single DMA transfer of CONTROL_SAMPLE_COUNT bytes from the PIO RX FIFO
+         dma_channel_configure(
+             dma_chan_c_1,
+             &cC1,
+             /* dest */   (void *)control_samples,
+             /* source */ &pio_control->rxf[sm_ctrl],
+             /* count */  CONTROL_SAMPLE_COUNT,
+             /* trigger */ true
+         );
+
+         // Wait for DMA to finish with timeout
+         const uint32_t timeout_ms = 500;
+         uint32_t waited = 0;
+         while (dma_channel_is_busy(dma_chan_c_1) && waited < timeout_ms) {
+             sleep_ms(10);
+             waited += 10;
+         }
+         if (dma_channel_is_busy(dma_chan_c_1)) {
+             printf("DMA timed out after %u ms\n", waited);
+         } else {
+             printf("DMA finished in %u ms\n", waited);
+         }
+
+         // Print all captured bytes
+         for (size_t i = 0; i < CONTROL_SAMPLE_COUNT; ++i) {
+             uint8_t b = control_samples[i];
+             printf("%02x", (unsigned)b);
+             if ((i & 7) == 7) printf("\n");
+             else printf(" ");
+         }
+          printf("\n----\n");
+          sleep_ms(1000);
     }
 
 

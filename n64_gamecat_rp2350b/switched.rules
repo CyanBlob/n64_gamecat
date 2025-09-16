@@ -1,0 +1,94 @@
+
+(rules PCB switched
+  (snap_angle 
+    fortyfive_degree
+  )
+  (autoroute_settings
+    (fanout off)
+    (autoroute on)
+    (postroute on)
+    (vias on)
+    (via_costs 50)
+    (plane_via_costs 5)
+    (start_ripup_costs 100)
+    (start_pass_no 1116)
+    (layer_rule F.Cu
+      (active on)
+      (preferred_direction vertical)
+      (preferred_direction_trace_costs 1.0)
+      (against_preferred_direction_trace_costs 2.3)
+    )
+    (layer_rule B.Cu
+      (active on)
+      (preferred_direction horizontal)
+      (preferred_direction_trace_costs 1.0)
+      (against_preferred_direction_trace_costs 1.8)
+    )
+  )
+  (rule
+    (width 200.0)
+    (clearance 200.0)
+    (clearance 100.0 (type smd_to_turn_gap))
+    (clearance 50.0 (type smd))
+    (clearance 200.0 (type "kicad_default"))
+  )
+  (padstack "Via[0-1]_600:300_um"
+    (shape
+      (circle F.Cu 600.0 0.0 0.0)
+    )
+    (shape
+      (circle B.Cu 600.0 0.0 0.0)
+    )
+    (attach off)
+  )
+  (via 
+    "Via[0-1]_600:300_um" "Via[0-1]_600:300_um" default
+  )
+  (via 
+    "Via[0-1]_600:300_um-kicad_default" "Via[0-1]_600:300_um" "kicad_default"
+  )
+  (via_rule
+    default "Via[0-1]_600:300_um"
+  )
+  (via_rule
+    "kicad_default" "Via[0-1]_600:300_um-kicad_default"
+  )
+  (class default
+    (clearance_class default)
+    (via_rule default)
+    (rule
+      (width 200.0)
+    )
+    (circuit 
+      (use_layer F.Cu B.Cu)
+    )
+  )
+  (class "kicad_default"
+    "CA_6" "CA_22" "CA_2" "CA_18" "CA_24" "CA_14" "CA_21" "CA_20"
+    "CA_10" "CA_3" "CA_4" "CA_11" "CA_16" "CA_12" "CA_19" "CA_1"
+    "CA_13" "CA_5" "CA_15" "CA_23" "CA_25" "CA_8" "CA_7" "CA_9"
+    "CA_17" "CBT_7" "GP_14" "GP_20" "CBT_11" "GP_8" "GP_10" "GP_6"
+    "GP_23" "GP_18" "GP_13" "GP_22" "GP_21" "CBT_12" "CBT_3" "CBT_4"
+    "GP_19" "GP_2" "CBT_16" "GP_17" "CBT_15" "GP_25" "CBT_5" "GP_24"
+    "GP_9" "GP_1" "GP_33" "GP_46" "CBT_40" "CBT_32" "GP_38" "CBT_41"
+    "GP_47" "GP_31" "GP_43" "CBT_36" "GP_27" "GP_39" "GP_34" "GP_48"
+    "CBT_30" "CBT_37" "GP_35" "GP_49" "GP_44" "CBT_29" "GP_50" "GP_45"
+    "CBT_28" "GP_42" "GP_26" "CA_34" "CA_26" "CA_46" "CA_33" "CA_31"
+    "CA_29" "CA_48" "CA_44" "CA_41" "CA_45" "CA_30" "CA_50" "CA_36"
+    "CA_28" "CA_43" "CA_49" "CA_40" "CA_32" "CA_42" "CA_27" "CA_37"
+    "CA_38" "CA_47" "CA_35" "CA_39" "unconnected-(J12-Pin_2-Pad2)" "unconnected-(J12-Pin_1-Pad1)" "OE_2" "OE_1"
+    "GP_5" "GP_12" "GP_4" "GP_32" "GP_36" "GP_7" "GP_3" "GP_29"
+    "GP_37" "GP_30" "GP_11" "GP_40" "GP_28" "GP_41" "GP_16" "GP_15"
+    "unconnected-(U3-2B10-Pad31)" "unconnected-(U3-2A11-Pad27)" "unconnected-(U3-2B11-Pad30)" "unconnected-(U3-2B7-Pad34)" "unconnected-(U3-2A8-Pad24)" "unconnected-(U3-2A10-Pad26)" "unconnected-(U3-2A6-Pad22)" "unconnected-(U3-2B8-Pad33)"
+    "unconnected-(U3-2A12-Pad28)" "unconnected-(U3-2B12-Pad29)" "unconnected-(U3-2A7-Pad23)" "unconnected-(U3-2B5-Pad36)" "unconnected-(U3-2B6-Pad35)" "CBT_CBT" "unconnected-(U3-NC-Pad1)" "unconnected-(U3-2A9-Pad25)"
+    "unconnected-(U3-2B9-Pad32)" "unconnected-(U3-2A5-Pad21)"
+    (clearance_class "kicad_default")
+    (via_rule "kicad_default")
+    (rule
+      (width 200.0)
+    )
+    (circuit 
+      (use_layer F.Cu B.Cu)
+    )
+  )
+)

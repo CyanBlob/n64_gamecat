@@ -1,0 +1,44 @@
+; SPDX-License-Identifier: MIT
+; Token format (32 bits, MSB first due to shift-right OUT):
+;   [31:16] = SKIP count  (number of /READ pulses to ignore)
+;   [15:0]  = DATA        (16-bit halfword to drive on the next /READ low)
+;
+; We push TWO tokens for a 32-bit word: first half then second (usually skip=0 for second).
+; Sideset pin drives cart_en: 1 = cart connected (pass-through), 0 = isolated.
+
+.program n64_respond_tokens
+.side_set 1 opt
+
+; Config (done in C):
+; - OUT_BASE = AD0, OUT_COUNT = 16
+; - SET_BASE = AD0, SET_COUNT = 16
+; - IN_BASE  = AD0 (so /READ pin index is consistent)
+; - SIDESET_BASE = CART_EN_PIN
+; - Shift right, autopull enabled, pull threshold = 32
+; - /READ is pin index 18 relative to IN_BASE
+
+wrap_target:
+    pull        block              side 1     ; 1) get token
+    out         x, 16              side 1     ;    X = SKIP
+    out         y, 16              side 1     ;    Y = DATA
+
+    ; If SKIP == 0, jump straight to drive on the NEXT falling edge.
+    jmp !x      drive_now
+
+skip_loop:
+    ; Consume one full read pulse: low then high, decrement X afterwards.
+    wait 0 pin 18                 side 1
+    wait 1 pin 18                 side 1
+    jmp x-- skip_loop
+
+drive_now:
+    ; Patch THIS read pulse
+    wait 0 pin 18                 side 0     ; isolate cart (cart_en=0)
+    set     pindirs, 1                        ; AD -> outputs
+    mov     osr, y
+    out     pins, 16                           ; drive DATA
+    wait 1 pin 18                 side 0     ; hold until /READ high
+    set     pindirs, 0                        ; release bus
+    nop                          side 1      ; reconnect cart
+    jmp wrap_target
+;wrap

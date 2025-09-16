@@ -1,0 +1,36 @@
+; n64_capture.pio
+; On ALE_L rising edge, push a fixed 16-bit test value (0xABCD) instead of reading AD pins.
+; IN_BASE is still AD0; we only use pin index 16 for ALE_L detection.
+
+.program n64_capture
+; On ALE_L rising edge, push a fixed 16-bit test value (0xABCD) instead of reading AD pins.
+; IN_BASE is still AD0; we only use pin index 16 for ALE_L detection.
+wrap_target:
+    wait 1 pin 16          ; ALE_L high (pin index 16 relative to IN_BASE)
+    mov  isr, null         ; clear ISR
+    set  x, 21             ; 0xABCD bits[15:11] = 10101 (21)
+    in   x, 5
+    set  x, 15             ; bits[10:6] = 01111 (15)
+    in   x, 5
+    set  x, 6              ; bits[5:1] = 00110 (6)
+    in   x, 5
+    set  x, 1              ; bit[0] = 1
+    in   x, 1
+    push block             ; push 0xABCD to RX FIFO
+    wait 0 pin 16          ; wait ALE_L low (edge complete)
+    jmp  wrap_target
+;wrap
+
+; n64_capture.pio
+; Capture a 16-bit AD sample on ALE_L rising edge.
+; Assumes IN_BASE = AD0 (16 pins). We wait on ALE_L using an index relative to IN_BASE.
+
+;.program n64_capture
+; Wait for ALE_L high (pin index 16 relative to IN_BASE)
+;wrap_target:
+    ;wait 1 pin 16
+    ;in   pins, 16          ; shift AD[15:0] into ISR (LSB-first is fine; we read as 16-bit)
+    ;push block             ; push 16 bits to RX FIFO (upper bits 0)
+    ;wait 0 pin 16          ; wait ALE_L low (edge complete)
+    ;jmp  wrap_target
+;wrap
