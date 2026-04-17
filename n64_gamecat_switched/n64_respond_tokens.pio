@@ -1,44 +1,52 @@
-; SPDX-License-Identifier: MIT
-; Token format (32 bits, MSB first due to shift-right OUT):
-;   [31:16] = SKIP count  (number of /READ pulses to ignore)
-;   [15:0]  = DATA        (16-bit halfword to drive on the next /READ low)
+; n64_respond_tokens.pio
+; Override selected halfword reads on the N64 cartridge bus.
 ;
-; We push TWO tokens for a 32-bit word: first half then second (usually skip=0 for second).
-; Sideset pin drives cart_en: 1 = cart connected (pass-through), 0 = isolated.
+; The C side pushes a stream of 32-bit tokens. Each token describes how to
+; handle one halfword /READ pulse:
+;
+;   Token layout (packed for shift-right OUT):
+;     bits [15: 0] = SKIP  (number of /READ pulses to pass through untouched)
+;     bits [31:16] = DATA  (16-bit value to drive on the /READ after those)
+;
+; Behaviour per token: pass SKIP /READ pulses through to the real cart
+; (cart_en = 1), then on the very next /READ pulse isolate the cart
+; (cart_en = 0), drive AD[15:0] = DATA, release, and reconnect.
+;
+; Sideset pin drives the CBT switch /OE directly (active low):
+;   side 0 = /OE low  = cart connected (pass-through)
+;   side 1 = /OE high = cart isolated (we drive AD)
+;
+; Config (done in C):
+;   - OUT_BASE   = AD_BASE, OUT_COUNT = 16  (used for `out pins`/`out pindirs`)
+;   - IN_BASE    = AD_BASE                   (so /READ is pin index 18)
+;   - SIDESET    = CART_EN_PIN, 1 bit, optional
+;   - shift_right, autopull on, threshold 32
+;   - CART_EN pindir = output; AD pindirs = input initially
+;   - External 10 kΩ pull-DOWN on CART_EN so /OE = 0 at boot (cart connected)
 
 .program n64_respond_tokens
 .side_set 1 opt
 
-; Config (done in C):
-; - OUT_BASE = AD0, OUT_COUNT = 16
-; - SET_BASE = AD0, SET_COUNT = 16
-; - IN_BASE  = AD0 (so /READ pin index is consistent)
-; - SIDESET_BASE = CART_EN_PIN
-; - Shift right, autopull enabled, pull threshold = 32
-; - /READ is pin index 18 relative to IN_BASE
-
 wrap_target:
-    pull        block              side 1     ; 1) get token
-    out         x, 16              side 1     ;    X = SKIP
-    out         y, 16              side 1     ;    Y = DATA
+    pull block              side 0     ; wait for next token; cart connected
+    out  x, 16              side 0     ; X = SKIP
+    out  y, 16              side 0     ; Y = DATA
 
-    ; If SKIP == 0, jump straight to drive on the NEXT falling edge.
-    jmp !x      drive_now
+    jmp  !x drive_now       side 0     ; SKIP == 0: drive the very next /READ
+    jmp  x-- skip_loop      side 0     ; pre-decrement so body runs exactly SKIP times
 
 skip_loop:
-    ; Consume one full read pulse: low then high, decrement X afterwards.
-    wait 0 pin 18                 side 1
-    wait 1 pin 18                 side 1
-    jmp x-- skip_loop
+    wait 0 pin 18           side 0     ; /READ falling (cart answers this one)
+    wait 1 pin 18           side 0     ; /READ rising
+    jmp  x-- skip_loop      side 0
 
 drive_now:
-    ; Patch THIS read pulse
-    wait 0 pin 18                 side 0     ; isolate cart (cart_en=0)
-    set     pindirs, 1                        ; AD -> outputs
-    mov     osr, y
-    out     pins, 16                           ; drive DATA
-    wait 1 pin 18                 side 0     ; hold until /READ high
-    set     pindirs, 0                        ; release bus
-    nop                          side 1      ; reconnect cart
-    jmp wrap_target
-;wrap
+    wait 0 pin 18           side 1     ; /READ falling: isolate cart
+    mov  osr, !null         side 1     ; OSR = 0xFFFFFFFF
+    out  pindirs, 16        side 1     ; AD[0..15] -> outputs
+    mov  osr, y             side 1     ; OSR = DATA (low 16)
+    out  pins, 16           side 1     ; drive DATA on AD
+    wait 1 pin 18           side 1     ; hold until /READ rises
+    mov  osr, null          side 1
+    out  pindirs, 16        side 1     ; AD[0..15] -> inputs (release bus)
+    nop                     side 0     ; reconnect cart for subsequent reads

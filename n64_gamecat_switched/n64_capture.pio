@@ -1,36 +1,31 @@
 ; n64_capture.pio
-; On ALE_L rising edge, push a fixed 16-bit test value (0xABCD) instead of reading AD pins.
-; IN_BASE is still AD0; we only use pin index 16 for ALE_L detection.
+; Capture the 32-bit cart bus address on each N64 read burst.
+;
+; Per the en64 wiki, during an address-latch burst:
+;   - ALE_L stays HIGH across both latch phases.
+;   - ALE_H is HIGH during the upper phase, LOW during the lower phase.
+;   - AD is valid on the falling edge of ale_x.
+;
+; We therefore sync on ALE_H (rising = burst start), sample AD on ALE_H
+; falling (upper 16 bits), then sample AD on ALE_L falling (lower 16 bits),
+; and push a single 32-bit word: (upper << 16) | lower.
+;
+; Pin indices relative to IN_BASE (= AD_BASE):
+;   0..15 : AD[0..15]
+;   16    : ALE_L
+;   17    : ALE_H
+;
+; Config (done in C):
+;   - IN_BASE  = AD_BASE
+;   - shift_left, autopush off, threshold 32
 
 .program n64_capture
-; On ALE_L rising edge, push a fixed 16-bit test value (0xABCD) instead of reading AD pins.
-; IN_BASE is still AD0; we only use pin index 16 for ALE_L detection.
+
 wrap_target:
-    wait 1 pin 16          ; ALE_L high (pin index 16 relative to IN_BASE)
-    mov  isr, null         ; clear ISR
-    set  x, 21             ; 0xABCD bits[15:11] = 10101 (21)
-    in   x, 5
-    set  x, 15             ; bits[10:6] = 01111 (15)
-    in   x, 5
-    set  x, 6              ; bits[5:1] = 00110 (6)
-    in   x, 5
-    set  x, 1              ; bit[0] = 1
-    in   x, 1
-    push block             ; push 0xABCD to RX FIFO
-    wait 0 pin 16          ; wait ALE_L low (edge complete)
-    jmp  wrap_target
-;wrap
-
-; n64_capture.pio
-; Capture a 16-bit AD sample on ALE_L rising edge.
-; Assumes IN_BASE = AD0 (16 pins). We wait on ALE_L using an index relative to IN_BASE.
-
-;.program n64_capture
-; Wait for ALE_L high (pin index 16 relative to IN_BASE)
-;wrap_target:
-    ;wait 1 pin 16
-    ;in   pins, 16          ; shift AD[15:0] into ISR (LSB-first is fine; we read as 16-bit)
-    ;push block             ; push 16 bits to RX FIFO (upper bits 0)
-    ;wait 0 pin 16          ; wait ALE_L low (edge complete)
-    ;jmp  wrap_target
-;wrap
+    wait 0 pin 17          ; ensure ALE_H low (between bursts / lower phase)
+    wait 1 pin 17          ; ALE_H rising: upper phase started
+    wait 0 pin 17          ; ALE_H falling: upper AD valid
+    in   pins, 16          ; ISR = upper (low 16)
+    wait 0 pin 16          ; ALE_L falling: lower AD valid
+    in   pins, 16          ; ISR = (upper << 16) | lower
+    push block             ; hand 32-bit address to the CPU
