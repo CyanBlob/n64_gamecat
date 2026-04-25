@@ -23,7 +23,7 @@ if (EXISTS ${picoVscode})
     include(${picoVscode})
 endif()
 # ====================================================================================
-set(PICO_BOARD solderparty_rp2350_stamp_xl CACHE STRING "Board type")
+set(PICO_BOARD pico2 CACHE STRING "Board type")
 
 # Pull in Raspberry Pi Pico SDK (must be before project)
 include(pico_sdk_import.cmake)
@@ -62,7 +62,7 @@ target_include_directories(n64_gamecat_switched PRIVATE
 )
 
 # Add any user requested libraries
-target_link_libraries(n64_gamecat_switched 
+target_link_libraries(n64_gamecat_switched
         hardware_spi
         hardware_i2c
         hardware_dma
@@ -70,3 +70,10 @@ target_link_libraries(n64_gamecat_switched
         )
 
 pico_add_extra_outputs(n64_gamecat_switched)
+
+add_custom_target(check_rules ALL
+    COMMAND python3 ${CMAKE_CURRENT_LIST_DIR}/sim/check_rules.py
+                    ${CMAKE_CURRENT_LIST_DIR}/n64_gamecat_switched.cpp
+    COMMENT "Validating cheat rules vs CRC window"
+    VERBATIM)
+add_dependencies(n64_gamecat_switched check_rules)

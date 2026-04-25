@@ -1,0 +1,12 @@
+Comment,Designator,Footprint,LCSC,Quantity
+100nF,"C2,C3,C4,C5",C_0402_1005Metric,C1525,4
+10K,"R1,R2,R3,R4",R_0402_1005Metric,C25744,4
+10uF,C1,C_0805_2012Metric,C15850,1
+1K,R5,R_0402_1005Metric,C11702,1
+Conn_01x02_Pin,J4,PinHeader_1x02_P2.54mm_Vertical,C32713268,1
+LED,D1,LED_0402_1005Metric,C71911,1
+RaspberryPi_Pico,A1,RaspberryPi_Pico_Common_Unspecified,C41407547,1
+SN74CBTLV3245ADW,"U3,U4",DW20,C2863417,2
+SW_SPDT,SW1,PinSocket_1x03_P2.54mm_Vertical,C92655,1
+~,U1,N64_cartridge_connecter_2.5mm,,1
+~,U2,N64_cartridge_pins_2.5mm,,1

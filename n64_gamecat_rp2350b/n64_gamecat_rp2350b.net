@@ -1,0 +1,4165 @@
+(export
+	(version "E")
+	(design
+		(source "/Users/andrew/Development/n64_gamecat/n64_gamecat_rp2350b/n64_gamecat_rp2350b.kicad_sch")
+		(date "2026-04-17T15:02:04")
+		(tool "Eeschema 10.0.1")
+		(sheet
+			(number "1")
+			(name "/")
+			(tstamps "/")
+			(title_block
+				(title)
+				(company)
+				(rev)
+				(date)
+				(source "n64_gamecat_rp2350b.kicad_sch")
+				(comment
+					(number "1")
+					(value "")
+				)
+				(comment
+					(number "2")
+					(value "")
+				)
+				(comment
+					(number "3")
+					(value "")
+				)
+				(comment
+					(number "4")
+					(value "")
+				)
+				(comment
+					(number "5")
+					(value "")
+				)
+				(comment
+					(number "6")
+					(value "")
+				)
+				(comment
+					(number "7")
+					(value "")
+				)
+				(comment
+					(number "8")
+					(value "")
+				)
+				(comment
+					(number "9")
+					(value "")
+				)
+			)
+		)
+	)
+	(components
+		(comp
+			(ref "A1")
+			(value "RaspberryPi_Pico")
+			(footprint "Module:RaspberryPi_Pico_Common_Unspecified")
+			(datasheet "https://datasheets.raspberrypi.com/pico/pico-datasheet.pdf")
+			(description "Versatile and inexpensive microcontroller module powered by RP2040 dual-core Arm Cortex-M0+ processor up to 133 MHz, 264kB SRAM, 2MB QSPI flash; also supports Raspberry Pi Pico 2")
+			(fields
+				(field
+					(name "Footprint") "Module:RaspberryPi_Pico_Common_Unspecified")
+				(field
+					(name "Datasheet") "https://datasheets.raspberrypi.com/pico/pico-datasheet.pdf")
+				(field
+					(name "Description") "Versatile and inexpensive microcontroller module powered by RP2040 dual-core Arm Cortex-M0+ processor up to 133 MHz, 264kB SRAM, 2MB QSPI flash; also supports Raspberry Pi Pico 2")
+			)
+			(libsource
+				(lib "MCU_Module")
+				(part "RaspberryPi_Pico")
+				(description "Versatile and inexpensive microcontroller module powered by RP2040 dual-core Arm Cortex-M0+ processor up to 133 MHz, 264kB SRAM, 2MB QSPI flash; also supports Raspberry Pi Pico 2")
+			)
+			(property
+				(name "Sheetname")
+				(value "n64_gamecat_rp2350b")
+			)
+			(property
+				(name "Sheetfile")
+				(value "n64_gamecat_rp2350b.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "RP2350A M33 RISC-V Hazard3 usb")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "RaspberryPi?Pico?Common* RaspberryPi?Pico?SMD*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "ccefc6f9-e931-4279-988a-5805233bdd17")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "30")
+						)
+						(pin
+							(num "37")
+						)
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "6")
+						)
+						(pin
+							(num "7")
+						)
+						(pin
+							(num "9")
+						)
+						(pin
+							(num "10")
+						)
+						(pin
+							(num "11")
+						)
+						(pin
+							(num "12")
+						)
+						(pin
+							(num "14")
+						)
+						(pin
+							(num "15")
+						)
+						(pin
+							(num "16")
+						)
+						(pin
+							(num "17")
+						)
+						(pin
+							(num "19")
+						)
+						(pin
+							(num "20")
+						)
+						(pin
+							(num "39")
+						)
+						(pin
+							(num "40")
+						)
+						(pin
+							(num "18")
+						)
+						(pin
+							(num "23")
+						)
+						(pin
+							(num "28")
+						)
+						(pin
+							(num "13")
+						)
+						(pin
+							(num "8")
+						)
+						(pin
+							(num "38")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "36")
+						)
+						(pin
+							(num "21")
+						)
+						(pin
+							(num "22")
+						)
+						(pin
+							(num "24")
+						)
+						(pin
+							(num "25")
+						)
+						(pin
+							(num "26")
+						)
+						(pin
+							(num "27")
+						)
+						(pin
+							(num "29")
+						)
+						(pin
+							(num "35")
+						)
+						(pin
+							(num "31")
+						)
+						(pin
+							(num "32")
+						)
+						(pin
+							(num "34")
+						)
+						(pin
+							(num "33")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C1")
+			(value "10uF")
+			(footprint "Capacitor_SMD:C_0805_2012Metric")
+			(description "capacitor, US symbol")
+			(fields
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0805_2012Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "capacitor, US symbol")
+			)
+			(libsource
+				(lib "Device")
+				(part "C_US")
+				(description "capacitor, US symbol")
+			)
+			(property
+				(name "Sheetname")
+				(value "n64_gamecat_rp2350b")
+			)
+			(property
+				(name "Sheetfile")
+				(value "n64_gamecat_rp2350b.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "6b7ac2f8-59ad-4ec9-80f0-6328f4aacfc8")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C2")
+			(value "100nF")
+			(footprint "Capacitor_SMD:C_0402_1005Metric")
+			(description "capacitor, US symbol")
+			(fields
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "capacitor, US symbol")
+			)
+			(libsource
+				(lib "Device")
+				(part "C_US")
+				(description "capacitor, US symbol")
+			)
+			(property
+				(name "Sheetname")
+				(value "n64_gamecat_rp2350b")
+			)
+			(property
+				(name "Sheetfile")
+				(value "n64_gamecat_rp2350b.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "8042ddd3-015f-4fa6-9ea6-53cd5fb77a3a")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C3")
+			(value "100nF")
+			(footprint "Capacitor_SMD:C_0402_1005Metric")
+			(description "capacitor, US symbol")
+			(fields
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "capacitor, US symbol")
+			)
+			(libsource
+				(lib "Device")
+				(part "C_US")
+				(description "capacitor, US symbol")
+			)
+			(property
+				(name "Sheetname")
+				(value "n64_gamecat_rp2350b")
+			)
+			(property
+				(name "Sheetfile")
+				(value "n64_gamecat_rp2350b.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "22b425af-a9a4-4854-91b1-50dc67a8aa13")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C4")
+			(value "100nF")
+			(footprint "Capacitor_SMD:C_0402_1005Metric")
+			(description "capacitor, US symbol")
+			(fields
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "capacitor, US symbol")
+			)
+			(libsource
+				(lib "Device")
+				(part "C_US")
+				(description "capacitor, US symbol")
+			)
+			(property
+				(name "Sheetname")
+				(value "n64_gamecat_rp2350b")
+			)
+			(property
+				(name "Sheetfile")
+				(value "n64_gamecat_rp2350b.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "671aea35-b47d-4874-9cac-52d1f991adaa")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C5")
+			(value "100nF")
+			(footprint "Capacitor_SMD:C_0402_1005Metric")
+			(description "capacitor, US symbol")
+			(fields
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "capacitor, US symbol")
+			)
+			(libsource
+				(lib "Device")
+				(part "C_US")
+				(description "capacitor, US symbol")
+			)
+			(property
+				(name "Sheetname")
+				(value "n64_gamecat_rp2350b")
+			)
+			(property
+				(name "Sheetfile")
+				(value "n64_gamecat_rp2350b.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "a90a8c42-8771-4069-871a-39d71d9e7b2a")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "D1")
+			(value "LED")
+			(footprint "LED_SMD:LED_0402_1005Metric")
+			(description "Light emitting diode")
+			(fields
+				(field
+					(name "Sim.Pins") "1=K 2=A")
+				(field
+					(name "Footprint") "LED_SMD:LED_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Light emitting diode")
+			)
+			(libsource
+				(lib "Device")
+				(part "LED")
+				(description "Light emitting diode")
+			)
+			(property
+				(name "Sim.Pins")
+				(value "1=K 2=A")
+			)
+			(property
+				(name "Sheetname")
+				(value "n64_gamecat_rp2350b")
+			)
+			(property
+				(name "Sheetfile")
+				(value "n64_gamecat_rp2350b.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "LED diode")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "LED* LED_SMD:* LED_THT:*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "9cf8bc58-4f4a-4770-85f4-05685f83c194")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J4")
+			(value "Conn_01x02_Pin")
+			(footprint "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical")
+			(description "Generic connector, single row, 01x02, script generated")
+			(fields
+				(field
+					(name "Footprint") "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Generic connector, single row, 01x02, script generated")
+			)
+			(libsource
+				(lib "Connector")
+				(part "Conn_01x02_Pin")
+				(description "Generic connector, single row, 01x02, script generated")
+			)
+			(property
+				(name "Sheetname")
+				(value "n64_gamecat_rp2350b")
+			)
+			(property
+				(name "Sheetfile")
+				(value "n64_gamecat_rp2350b.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "connector")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Connector*:*_1x??_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "59bba2c9-4407-40d2-ba25-a16e299218be")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R1")
+			(value "10K")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(description "Resistor")
+			(fields
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "Sheetname")
+				(value "n64_gamecat_rp2350b")
+			)
+			(property
+				(name "Sheetfile")
+				(value "n64_gamecat_rp2350b.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "b3e894b8-b6be-4309-a2ae-bb258309db15")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R2")
+			(value "10K")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(description "Resistor")
+			(fields
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "Sheetname")
+				(value "n64_gamecat_rp2350b")
+			)
+			(property
+				(name "Sheetfile")
+				(value "n64_gamecat_rp2350b.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "21e8855d-5eb4-450f-bb5e-39728d12a990")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R3")
+			(value "10K")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(description "Resistor")
+			(fields
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "Sheetname")
+				(value "n64_gamecat_rp2350b")
+			)
+			(property
+				(name "Sheetfile")
+				(value "n64_gamecat_rp2350b.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "14fc9566-02e2-473f-a83b-18c2ca5a4302")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R4")
+			(value "10K")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(description "Resistor")
+			(fields
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "Sheetname")
+				(value "n64_gamecat_rp2350b")
+			)
+			(property
+				(name "Sheetfile")
+				(value "n64_gamecat_rp2350b.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "b8d0f758-ae03-4c0b-b2ff-ee880d01d66a")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R5")
+			(value "1K")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(description "Resistor")
+			(fields
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "Sheetname")
+				(value "n64_gamecat_rp2350b")
+			)
+			(property
+				(name "Sheetfile")
+				(value "n64_gamecat_rp2350b.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "a46dee70-3b9d-4398-b28f-76fcf302b24e")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "SW1")
+			(value "SW_SPDT")
+			(footprint "Connector_PinSocket_2.54mm:PinSocket_1x03_P2.54mm_Vertical")
+			(description "Switch, single pole double throw")
+			(fields
+				(field
+					(name "Footprint") "Connector_PinSocket_2.54mm:PinSocket_1x03_P2.54mm_Vertical")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Switch, single pole double throw")
+			)
+			(libsource
+				(lib "Switch")
+				(part "SW_SPDT")
+				(description "Switch, single pole double throw")
+			)
+			(property
+				(name "Sheetname")
+				(value "n64_gamecat_rp2350b")
+			)
+			(property
+				(name "Sheetfile")
+				(value "n64_gamecat_rp2350b.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "switch single-pole double-throw spdt ON-ON")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "a64e9843-13fa-4681-8a26-d8531593f268")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "3")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "U1")
+			(value "~")
+			(footprint "n64_library:N64_cartridge_connecter_2.5mm")
+			(description "CARTRIDGE")
+			(fields
+				(field
+					(name "Footprint") "n64_library:N64_cartridge_connecter_2.5mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "CARTRIDGE")
+			)
+			(libsource
+				(lib "n64")
+				(part "cartridge_connector")
+				(description "")
+			)
+			(property
+				(name "Sheetname")
+				(value "n64_gamecat_rp2350b")
+			)
+			(property
+				(name "Sheetfile")
+				(value "n64_gamecat_rp2350b.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "04b3476e-e00a-4297-8c0c-ec9489089b9b")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "6")
+						)
+						(pin
+							(num "7")
+						)
+						(pin
+							(num "8")
+						)
+						(pin
+							(num "9")
+						)
+						(pin
+							(num "10")
+						)
+						(pin
+							(num "11")
+						)
+						(pin
+							(num "12")
+						)
+						(pin
+							(num "13")
+						)
+						(pin
+							(num "14")
+						)
+						(pin
+							(num "15")
+						)
+						(pin
+							(num "16")
+						)
+						(pin
+							(num "17")
+						)
+						(pin
+							(num "18")
+						)
+						(pin
+							(num "19")
+						)
+						(pin
+							(num "20")
+						)
+						(pin
+							(num "21")
+						)
+						(pin
+							(num "22")
+						)
+						(pin
+							(num "23")
+						)
+						(pin
+							(num "24")
+						)
+						(pin
+							(num "25")
+						)
+						(pin
+							(num "26")
+						)
+						(pin
+							(num "27")
+						)
+						(pin
+							(num "28")
+						)
+						(pin
+							(num "29")
+						)
+						(pin
+							(num "30")
+						)
+						(pin
+							(num "31")
+						)
+						(pin
+							(num "32")
+						)
+						(pin
+							(num "33")
+						)
+						(pin
+							(num "34")
+						)
+						(pin
+							(num "35")
+						)
+						(pin
+							(num "36")
+						)
+						(pin
+							(num "37")
+						)
+						(pin
+							(num "38")
+						)
+						(pin
+							(num "39")
+						)
+						(pin
+							(num "40")
+						)
+						(pin
+							(num "41")
+						)
+						(pin
+							(num "42")
+						)
+						(pin
+							(num "43")
+						)
+						(pin
+							(num "44")
+						)
+						(pin
+							(num "45")
+						)
+						(pin
+							(num "46")
+						)
+						(pin
+							(num "47")
+						)
+						(pin
+							(num "48")
+						)
+						(pin
+							(num "49")
+						)
+						(pin
+							(num "50")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "U2")
+			(value "~")
+			(footprint "n64_library:N64_cartridge_pins_2.5mm")
+			(description "CONSOLE")
+			(fields
+				(field
+					(name "Footprint") "n64_library:N64_cartridge_pins_2.5mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "CONSOLE")
+			)
+			(libsource
+				(lib "n64")
+				(part "console_connector")
+				(description "")
+			)
+			(property
+				(name "Sheetname")
+				(value "n64_gamecat_rp2350b")
+			)
+			(property
+				(name "Sheetfile")
+				(value "n64_gamecat_rp2350b.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "61987a8c-18c6-4673-b8a5-f44c43969246")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "6")
+						)
+						(pin
+							(num "7")
+						)
+						(pin
+							(num "8")
+						)
+						(pin
+							(num "9")
+						)
+						(pin
+							(num "10")
+						)
+						(pin
+							(num "11")
+						)
+						(pin
+							(num "12")
+						)
+						(pin
+							(num "13")
+						)
+						(pin
+							(num "14")
+						)
+						(pin
+							(num "15")
+						)
+						(pin
+							(num "16")
+						)
+						(pin
+							(num "17")
+						)
+						(pin
+							(num "18")
+						)
+						(pin
+							(num "19")
+						)
+						(pin
+							(num "20")
+						)
+						(pin
+							(num "21")
+						)
+						(pin
+							(num "22")
+						)
+						(pin
+							(num "23")
+						)
+						(pin
+							(num "24")
+						)
+						(pin
+							(num "25")
+						)
+						(pin
+							(num "26")
+						)
+						(pin
+							(num "27")
+						)
+						(pin
+							(num "28")
+						)
+						(pin
+							(num "29")
+						)
+						(pin
+							(num "30")
+						)
+						(pin
+							(num "31")
+						)
+						(pin
+							(num "32")
+						)
+						(pin
+							(num "33")
+						)
+						(pin
+							(num "34")
+						)
+						(pin
+							(num "35")
+						)
+						(pin
+							(num "36")
+						)
+						(pin
+							(num "37")
+						)
+						(pin
+							(num "38")
+						)
+						(pin
+							(num "39")
+						)
+						(pin
+							(num "40")
+						)
+						(pin
+							(num "41")
+						)
+						(pin
+							(num "42")
+						)
+						(pin
+							(num "43")
+						)
+						(pin
+							(num "44")
+						)
+						(pin
+							(num "45")
+						)
+						(pin
+							(num "46")
+						)
+						(pin
+							(num "47")
+						)
+						(pin
+							(num "48")
+						)
+						(pin
+							(num "49")
+						)
+						(pin
+							(num "50")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "U3")
+			(value "SN74CBTLV3245ADW")
+			(footprint "footprints:DW20")
+			(datasheet "https://www.ti.com/lit/gpn/sn74cbtlv3245a")
+			(fields
+				(field
+					(name "Footprint") "footprints:DW20")
+				(field
+					(name "Datasheet") "https://www.ti.com/lit/gpn/sn74cbtlv3245a")
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "2026-04-17_18-55-28")
+				(part "SN74CBTLV3245ADW")
+				(description "")
+			)
+			(property
+				(name "Sheetname")
+				(value "n64_gamecat_rp2350b")
+			)
+			(property
+				(name "Sheetfile")
+				(value "n64_gamecat_rp2350b.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "SN74CBTLV3245ADW")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "DW20 DW20-M DW20-L")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "e2d22b66-91d5-4219-b3ff-3a3b6824b817")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "6")
+						)
+						(pin
+							(num "7")
+						)
+						(pin
+							(num "8")
+						)
+						(pin
+							(num "9")
+						)
+						(pin
+							(num "10")
+						)
+						(pin
+							(num "20")
+						)
+						(pin
+							(num "19")
+						)
+						(pin
+							(num "18")
+						)
+						(pin
+							(num "17")
+						)
+						(pin
+							(num "16")
+						)
+						(pin
+							(num "15")
+						)
+						(pin
+							(num "14")
+						)
+						(pin
+							(num "13")
+						)
+						(pin
+							(num "12")
+						)
+						(pin
+							(num "11")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "U4")
+			(value "SN74CBTLV3245ADW")
+			(footprint "footprints:DW20")
+			(datasheet "https://www.ti.com/lit/gpn/sn74cbtlv3245a")
+			(fields
+				(field
+					(name "Footprint") "footprints:DW20")
+				(field
+					(name "Datasheet") "https://www.ti.com/lit/gpn/sn74cbtlv3245a")
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "2026-04-17_18-55-28")
+				(part "SN74CBTLV3245ADW")
+				(description "")
+			)
+			(property
+				(name "Sheetname")
+				(value "n64_gamecat_rp2350b")
+			)
+			(property
+				(name "Sheetfile")
+				(value "n64_gamecat_rp2350b.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "SN74CBTLV3245ADW")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "DW20 DW20-M DW20-L")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "cf275942-c2d6-4792-8fc1-2b8640fcba78")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "6")
+						)
+						(pin
+							(num "7")
+						)
+						(pin
+							(num "8")
+						)
+						(pin
+							(num "9")
+						)
+						(pin
+							(num "10")
+						)
+						(pin
+							(num "20")
+						)
+						(pin
+							(num "19")
+						)
+						(pin
+							(num "18")
+						)
+						(pin
+							(num "17")
+						)
+						(pin
+							(num "16")
+						)
+						(pin
+							(num "15")
+						)
+						(pin
+							(num "14")
+						)
+						(pin
+							(num "13")
+						)
+						(pin
+							(num "12")
+						)
+						(pin
+							(num "11")
+						)
+					)
+				)
+			)
+		)
+	)
+	(groups)
+	(variants)
+	(libparts
+		(libpart
+			(lib "2026-04-17_18-55-28")
+			(part "SN74CBTLV3245ADW")
+			(docs "https://www.ti.com/lit/gpn/sn74cbtlv3245a")
+			(footprints
+				(fp "DW20")
+				(fp "DW20-M")
+				(fp "DW20-L")
+			)
+			(fields
+				(field
+					(name "Reference") "U")
+				(field
+					(name "Value") "SN74CBTLV3245ADW")
+				(field
+					(name "Footprint") "DW20")
+				(field
+					(name "Datasheet") "https://www.ti.com/lit/gpn/sn74cbtlv3245a")
+				(field
+					(name "Description")
+				)
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "NC")
+					(type "unspecified")
+				)
+				(pin
+					(num "2")
+					(name "A1")
+					(type "bidirectional")
+				)
+				(pin
+					(num "3")
+					(name "A2")
+					(type "bidirectional")
+				)
+				(pin
+					(num "4")
+					(name "A3")
+					(type "bidirectional")
+				)
+				(pin
+					(num "5")
+					(name "A4")
+					(type "bidirectional")
+				)
+				(pin
+					(num "6")
+					(name "A5")
+					(type "bidirectional")
+				)
+				(pin
+					(num "7")
+					(name "A6")
+					(type "bidirectional")
+				)
+				(pin
+					(num "8")
+					(name "A7")
+					(type "bidirectional")
+				)
+				(pin
+					(num "9")
+					(name "A8")
+					(type "bidirectional")
+				)
+				(pin
+					(num "10")
+					(name "GND")
+					(type "power_in")
+				)
+				(pin
+					(num "11")
+					(name "B8")
+					(type "bidirectional")
+				)
+				(pin
+					(num "12")
+					(name "B7")
+					(type "bidirectional")
+				)
+				(pin
+					(num "13")
+					(name "B6")
+					(type "bidirectional")
+				)
+				(pin
+					(num "14")
+					(name "B5")
+					(type "bidirectional")
+				)
+				(pin
+					(num "15")
+					(name "B4")
+					(type "bidirectional")
+				)
+				(pin
+					(num "16")
+					(name "B3")
+					(type "bidirectional")
+				)
+				(pin
+					(num "17")
+					(name "B2")
+					(type "bidirectional")
+				)
+				(pin
+					(num "18")
+					(name "B1")
+					(type "bidirectional")
+				)
+				(pin
+					(num "19")
+					(name "*OE")
+					(type "input")
+				)
+				(pin
+					(num "20")
+					(name "VCC")
+					(type "power_in")
+				)
+			)
+		)
+		(libpart
+			(lib "Connector")
+			(part "Conn_01x02_Pin")
+			(description "Generic connector, single row, 01x02, script generated")
+			(footprints
+				(fp "Connector*:*_1x??_*")
+			)
+			(fields
+				(field
+					(name "Reference") "J")
+				(field
+					(name "Value") "Conn_01x02_Pin")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Generic connector, single row, 01x02, script generated")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "Pin_1")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "Pin_2")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Device")
+			(part "C_US")
+			(description "capacitor, US symbol")
+			(footprints
+				(fp "C_*")
+			)
+			(fields
+				(field
+					(name "Reference") "C")
+				(field
+					(name "Value") "C_US")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "capacitor, US symbol")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Device")
+			(part "LED")
+			(description "Light emitting diode")
+			(footprints
+				(fp "LED*")
+				(fp "LED_SMD:*")
+				(fp "LED_THT:*")
+			)
+			(fields
+				(field
+					(name "Reference") "D")
+				(field
+					(name "Value") "LED")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Light emitting diode")
+				(field
+					(name "Sim.Pins") "1=K 2=A")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "K")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "A")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Device")
+			(part "R")
+			(description "Resistor")
+			(footprints
+				(fp "R_*")
+			)
+			(fields
+				(field
+					(name "Reference") "R")
+				(field
+					(name "Value") "R")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "MCU_Module")
+			(part "RaspberryPi_Pico")
+			(description "Versatile and inexpensive microcontroller module powered by RP2040 dual-core Arm Cortex-M0+ processor up to 133 MHz, 264kB SRAM, 2MB QSPI flash; also supports Raspberry Pi Pico 2")
+			(docs "https://datasheets.raspberrypi.com/pico/pico-datasheet.pdf")
+			(footprints
+				(fp "RaspberryPi?Pico?Common*")
+				(fp "RaspberryPi?Pico?SMD*")
+			)
+			(fields
+				(field
+					(name "Reference") "A")
+				(field
+					(name "Value") "RaspberryPi_Pico")
+				(field
+					(name "Footprint") "Module:RaspberryPi_Pico_Common_Unspecified")
+				(field
+					(name "Datasheet") "https://datasheets.raspberrypi.com/pico/pico-datasheet.pdf")
+				(field
+					(name "Description") "Versatile and inexpensive microcontroller module powered by RP2040 dual-core Arm Cortex-M0+ processor up to 133 MHz, 264kB SRAM, 2MB QSPI flash; also supports Raspberry Pi Pico 2")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "GPIO0")
+					(type "bidirectional")
+				)
+				(pin
+					(num "2")
+					(name "GPIO1")
+					(type "bidirectional")
+				)
+				(pin
+					(num "3")
+					(name "GND")
+					(type "power_out")
+				)
+				(pin
+					(num "4")
+					(name "GPIO2")
+					(type "bidirectional")
+				)
+				(pin
+					(num "5")
+					(name "GPIO3")
+					(type "bidirectional")
+				)
+				(pin
+					(num "6")
+					(name "GPIO4")
+					(type "bidirectional")
+				)
+				(pin
+					(num "7")
+					(name "GPIO5")
+					(type "bidirectional")
+				)
+				(pin
+					(num "8")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "9")
+					(name "GPIO6")
+					(type "bidirectional")
+				)
+				(pin
+					(num "10")
+					(name "GPIO7")
+					(type "bidirectional")
+				)
+				(pin
+					(num "11")
+					(name "GPIO8")
+					(type "bidirectional")
+				)
+				(pin
+					(num "12")
+					(name "GPIO9")
+					(type "bidirectional")
+				)
+				(pin
+					(num "13")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "14")
+					(name "GPIO10")
+					(type "bidirectional")
+				)
+				(pin
+					(num "15")
+					(name "GPIO11")
+					(type "bidirectional")
+				)
+				(pin
+					(num "16")
+					(name "GPIO12")
+					(type "bidirectional")
+				)
+				(pin
+					(num "17")
+					(name "GPIO13")
+					(type "bidirectional")
+				)
+				(pin
+					(num "18")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "19")
+					(name "GPIO14")
+					(type "bidirectional")
+				)
+				(pin
+					(num "20")
+					(name "GPIO15")
+					(type "bidirectional")
+				)
+				(pin
+					(num "21")
+					(name "GPIO16")
+					(type "bidirectional")
+				)
+				(pin
+					(num "22")
+					(name "GPIO17")
+					(type "bidirectional")
+				)
+				(pin
+					(num "23")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "24")
+					(name "GPIO18")
+					(type "bidirectional")
+				)
+				(pin
+					(num "25")
+					(name "GPIO19")
+					(type "bidirectional")
+				)
+				(pin
+					(num "26")
+					(name "GPIO20")
+					(type "bidirectional")
+				)
+				(pin
+					(num "27")
+					(name "GPIO21")
+					(type "bidirectional")
+				)
+				(pin
+					(num "28")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "29")
+					(name "GPIO22")
+					(type "bidirectional")
+				)
+				(pin
+					(num "30")
+					(name "RUN")
+					(type "passive")
+				)
+				(pin
+					(num "31")
+					(name "GPIO26_ADC0")
+					(type "bidirectional")
+				)
+				(pin
+					(num "32")
+					(name "GPIO27_ADC1")
+					(type "bidirectional")
+				)
+				(pin
+					(num "33")
+					(name "AGND")
+					(type "power_out")
+				)
+				(pin
+					(num "34")
+					(name "GPIO28_ADC2")
+					(type "bidirectional")
+				)
+				(pin
+					(num "35")
+					(name "ADC_VREF")
+					(type "power_in")
+				)
+				(pin
+					(num "36")
+					(name "3V3")
+					(type "power_out")
+				)
+				(pin
+					(num "37")
+					(name "3V3_EN")
+					(type "passive")
+				)
+				(pin
+					(num "38")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "39")
+					(name "VSYS")
+					(type "power_in")
+				)
+				(pin
+					(num "40")
+					(name "VBUS")
+					(type "power_out")
+				)
+			)
+		)
+		(libpart
+			(lib "Switch")
+			(part "SW_SPDT")
+			(description "Switch, single pole double throw")
+			(fields
+				(field
+					(name "Reference") "SW")
+				(field
+					(name "Value") "SW_SPDT")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Switch, single pole double throw")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "A")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "B")
+					(type "passive")
+				)
+				(pin
+					(num "3")
+					(name "C")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "n64")
+			(part "cartridge_connector")
+			(fields
+				(field
+					(name "Reference") "U")
+				(field
+					(name "Value")
+				)
+				(field
+					(name "Footprint") "n64_library:N64_cartridge_connecter_2.5mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "GND")
+					(type "bidirectional")
+				)
+				(pin
+					(num "2")
+					(name "GND")
+					(type "bidirectional")
+				)
+				(pin
+					(num "3")
+					(name "AD15")
+					(type "bidirectional")
+				)
+				(pin
+					(num "4")
+					(name "AD14")
+					(type "bidirectional")
+				)
+				(pin
+					(num "5")
+					(name "AD13")
+					(type "bidirectional")
+				)
+				(pin
+					(num "6")
+					(name "GND")
+					(type "bidirectional")
+				)
+				(pin
+					(num "7")
+					(name "AD12")
+					(type "bidirectional")
+				)
+				(pin
+					(num "8")
+					(name "WRITE")
+					(type "bidirectional")
+				)
+				(pin
+					(num "9")
+					(name "VCC")
+					(type "bidirectional")
+				)
+				(pin
+					(num "10")
+					(name "READ")
+					(type "bidirectional")
+				)
+				(pin
+					(num "11")
+					(name "AD11")
+					(type "bidirectional")
+				)
+				(pin
+					(num "12")
+					(name "AD10")
+					(type "bidirectional")
+				)
+				(pin
+					(num "13")
+					(name "NC")
+					(type "bidirectional")
+				)
+				(pin
+					(num "14")
+					(name "NC")
+					(type "bidirectional")
+				)
+				(pin
+					(num "15")
+					(name "AD9")
+					(type "bidirectional")
+				)
+				(pin
+					(num "16")
+					(name "AD8")
+					(type "bidirectional")
+				)
+				(pin
+					(num "17")
+					(name "VCC")
+					(type "bidirectional")
+				)
+				(pin
+					(num "18")
+					(name "CIC_PIF")
+					(type "bidirectional")
+				)
+				(pin
+					(num "19")
+					(name "CLK_PIF")
+					(type "bidirectional")
+				)
+				(pin
+					(num "20")
+					(name "COLD_RST")
+					(type "bidirectional")
+				)
+				(pin
+					(num "21")
+					(name "S_DAT")
+					(type "bidirectional")
+				)
+				(pin
+					(num "22")
+					(name "GND")
+					(type "bidirectional")
+				)
+				(pin
+					(num "23")
+					(name "GND")
+					(type "bidirectional")
+				)
+				(pin
+					(num "24")
+					(name "LAUDIO")
+					(type "bidirectional")
+				)
+				(pin
+					(num "25")
+					(name "GND")
+					(type "bidirectional")
+				)
+				(pin
+					(num "26")
+					(name "GND")
+					(type "bidirectional")
+				)
+				(pin
+					(num "27")
+					(name "GND")
+					(type "bidirectional")
+				)
+				(pin
+					(num "28")
+					(name "AD0")
+					(type "bidirectional")
+				)
+				(pin
+					(num "29")
+					(name "AD1")
+					(type "bidirectional")
+				)
+				(pin
+					(num "30")
+					(name "AD2")
+					(type "bidirectional")
+				)
+				(pin
+					(num "31")
+					(name "GND")
+					(type "bidirectional")
+				)
+				(pin
+					(num "32")
+					(name "AD3")
+					(type "bidirectional")
+				)
+				(pin
+					(num "33")
+					(name "ALE_L")
+					(type "bidirectional")
+				)
+				(pin
+					(num "34")
+					(name "VCC")
+					(type "bidirectional")
+				)
+				(pin
+					(num "35")
+					(name "ALE_H")
+					(type "bidirectional")
+				)
+				(pin
+					(num "36")
+					(name "AD4")
+					(type "bidirectional")
+				)
+				(pin
+					(num "37")
+					(name "AD5")
+					(type "bidirectional")
+				)
+				(pin
+					(num "38")
+					(name "NC")
+					(type "bidirectional")
+				)
+				(pin
+					(num "39")
+					(name "NC")
+					(type "bidirectional")
+				)
+				(pin
+					(num "40")
+					(name "AD6")
+					(type "bidirectional")
+				)
+				(pin
+					(num "41")
+					(name "AD7")
+					(type "bidirectional")
+				)
+				(pin
+					(num "42")
+					(name "VCC")
+					(type "bidirectional")
+				)
+				(pin
+					(num "43")
+					(name "PIF_CIC")
+					(type "bidirectional")
+				)
+				(pin
+					(num "44")
+					(name "JTAG_CLK")
+					(type "bidirectional")
+				)
+				(pin
+					(num "45")
+					(name "NMI_R4300")
+					(type "bidirectional")
+				)
+				(pin
+					(num "46")
+					(name "VIDEO_CLK")
+					(type "bidirectional")
+				)
+				(pin
+					(num "47")
+					(name "GND")
+					(type "bidirectional")
+				)
+				(pin
+					(num "48")
+					(name "GND")
+					(type "bidirectional")
+				)
+				(pin
+					(num "49")
+					(name "R_AUDIO")
+					(type "bidirectional")
+				)
+				(pin
+					(num "50")
+					(name "GND")
+					(type "bidirectional")
+				)
+			)
+		)
+		(libpart
+			(lib "n64")
+			(part "console_connector")
+			(fields
+				(field
+					(name "Reference") "U")
+				(field
+					(name "Value")
+				)
+				(field
+					(name "Footprint") "n64_library:N64_cartridge_pins_2.5mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "GND")
+					(type "bidirectional")
+				)
+				(pin
+					(num "2")
+					(name "GND")
+					(type "bidirectional")
+				)
+				(pin
+					(num "3")
+					(name "AD15")
+					(type "bidirectional")
+				)
+				(pin
+					(num "4")
+					(name "AD14")
+					(type "bidirectional")
+				)
+				(pin
+					(num "5")
+					(name "AD13")
+					(type "bidirectional")
+				)
+				(pin
+					(num "6")
+					(name "GND")
+					(type "bidirectional")
+				)
+				(pin
+					(num "7")
+					(name "AD12")
+					(type "bidirectional")
+				)
+				(pin
+					(num "8")
+					(name "WRITE")
+					(type "bidirectional")
+				)
+				(pin
+					(num "9")
+					(name "VCC")
+					(type "bidirectional")
+				)
+				(pin
+					(num "10")
+					(name "READ")
+					(type "bidirectional")
+				)
+				(pin
+					(num "11")
+					(name "AD11")
+					(type "bidirectional")
+				)
+				(pin
+					(num "12")
+					(name "AD10")
+					(type "bidirectional")
+				)
+				(pin
+					(num "13")
+					(name "NC")
+					(type "bidirectional")
+				)
+				(pin
+					(num "14")
+					(name "NC")
+					(type "bidirectional")
+				)
+				(pin
+					(num "15")
+					(name "AD9")
+					(type "bidirectional")
+				)
+				(pin
+					(num "16")
+					(name "AD8")
+					(type "bidirectional")
+				)
+				(pin
+					(num "17")
+					(name "VCC")
+					(type "bidirectional")
+				)
+				(pin
+					(num "18")
+					(name "CIC_PIF")
+					(type "bidirectional")
+				)
+				(pin
+					(num "19")
+					(name "CLK_PIF")
+					(type "bidirectional")
+				)
+				(pin
+					(num "20")
+					(name "COLD_RST")
+					(type "bidirectional")
+				)
+				(pin
+					(num "21")
+					(name "S_DAT")
+					(type "bidirectional")
+				)
+				(pin
+					(num "22")
+					(name "GND")
+					(type "bidirectional")
+				)
+				(pin
+					(num "23")
+					(name "GND")
+					(type "bidirectional")
+				)
+				(pin
+					(num "24")
+					(name "LAUDIO")
+					(type "bidirectional")
+				)
+				(pin
+					(num "25")
+					(name "GND")
+					(type "bidirectional")
+				)
+				(pin
+					(num "26")
+					(name "GND")
+					(type "bidirectional")
+				)
+				(pin
+					(num "27")
+					(name "GND")
+					(type "bidirectional")
+				)
+				(pin
+					(num "28")
+					(name "AD0")
+					(type "bidirectional")
+				)
+				(pin
+					(num "29")
+					(name "AD1")
+					(type "bidirectional")
+				)
+				(pin
+					(num "30")
+					(name "AD2")
+					(type "bidirectional")
+				)
+				(pin
+					(num "31")
+					(name "GND")
+					(type "bidirectional")
+				)
+				(pin
+					(num "32")
+					(name "AD3")
+					(type "bidirectional")
+				)
+				(pin
+					(num "33")
+					(name "ALE_L")
+					(type "bidirectional")
+				)
+				(pin
+					(num "34")
+					(name "VCC")
+					(type "bidirectional")
+				)
+				(pin
+					(num "35")
+					(name "ALE_H")
+					(type "bidirectional")
+				)
+				(pin
+					(num "36")
+					(name "AD4")
+					(type "bidirectional")
+				)
+				(pin
+					(num "37")
+					(name "AD5")
+					(type "bidirectional")
+				)
+				(pin
+					(num "38")
+					(name "NC")
+					(type "bidirectional")
+				)
+				(pin
+					(num "39")
+					(name "NC")
+					(type "bidirectional")
+				)
+				(pin
+					(num "40")
+					(name "AD6")
+					(type "bidirectional")
+				)
+				(pin
+					(num "41")
+					(name "AD7")
+					(type "bidirectional")
+				)
+				(pin
+					(num "42")
+					(name "VCC")
+					(type "bidirectional")
+				)
+				(pin
+					(num "43")
+					(name "PIF_CIC")
+					(type "bidirectional")
+				)
+				(pin
+					(num "44")
+					(name "JTAG_CLK")
+					(type "bidirectional")
+				)
+				(pin
+					(num "45")
+					(name "NMI_R4300")
+					(type "bidirectional")
+				)
+				(pin
+					(num "46")
+					(name "VIDEO_CLK")
+					(type "bidirectional")
+				)
+				(pin
+					(num "47")
+					(name "GND")
+					(type "bidirectional")
+				)
+				(pin
+					(num "48")
+					(name "GND")
+					(type "bidirectional")
+				)
+				(pin
+					(num "49")
+					(name "R_AUDIO")
+					(type "bidirectional")
+				)
+				(pin
+					(num "50")
+					(name "GND")
+					(type "bidirectional")
+				)
+			)
+		)
+	)
+	(libraries
+		(library
+			(logical "2026-04-17_18-55-28")
+			(uri "/Users/andrew/Development/n64_gamecat/n64_gamecat_rp2350b/Library.pretty/SN74CBTLV3245ADW/2026-04-17_18-55-28.kicad_sym")
+		)
+		(library
+			(logical "Connector")
+			(uri "${KICAD10_SYMBOL_DIR}/Connector.kicad_sym")
+		)
+		(library
+			(logical "Device")
+			(uri "${KICAD10_SYMBOL_DIR}/Device.kicad_sym")
+		)
+		(library
+			(logical "MCU_Module")
+			(uri "${KICAD10_SYMBOL_DIR}/MCU_Module.kicad_sym")
+		)
+		(library
+			(logical "Switch")
+			(uri "${KICAD10_SYMBOL_DIR}/Switch.kicad_sym")
+		)
+		(library
+			(logical "n64")
+			(uri "${KIPRJMOD}/n64.kicad_sym")
+		)
+	)
+	(nets
+		(net
+			(code "1")
+			(name "3V3_CART")
+			(class "Default")
+			(node
+				(ref "C1")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "SW1")
+				(pin "1")
+				(pinfunction "A_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "17")
+				(pinfunction "VCC_17")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U1")
+				(pin "34")
+				(pinfunction "VCC_34")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U1")
+				(pin "42")
+				(pinfunction "VCC_42")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U1")
+				(pin "9")
+				(pinfunction "VCC_9")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "17")
+				(pinfunction "VCC_17")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "34")
+				(pinfunction "VCC_34")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "42")
+				(pinfunction "VCC_42")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "9")
+				(pinfunction "VCC_9")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "2")
+			(name "3V3_OUT")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "36")
+				(pinfunction "3V3_36")
+				(pintype "power_out")
+			)
+			(node
+				(ref "C2")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C3")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C4")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R2")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "20")
+				(pinfunction "VCC_20")
+				(pintype "power_in")
+			)
+			(node
+				(ref "U4")
+				(pin "20")
+				(pinfunction "VCC_20")
+				(pintype "power_in")
+			)
+		)
+		(net
+			(code "3")
+			(name "AD0")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "1")
+				(pinfunction "GPIO0_1")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "28")
+				(pinfunction "AD0_28")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U3")
+				(pin "2")
+				(pinfunction "A1_2")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "4")
+			(name "AD1")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "2")
+				(pinfunction "GPIO1_2")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "29")
+				(pinfunction "AD1_29")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U3")
+				(pin "3")
+				(pinfunction "A2_3")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "5")
+			(name "AD2")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "4")
+				(pinfunction "GPIO2_4")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "30")
+				(pinfunction "AD2_30")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U3")
+				(pin "4")
+				(pinfunction "A3_4")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "6")
+			(name "AD3")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "5")
+				(pinfunction "GPIO3_5")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "32")
+				(pinfunction "AD3_32")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U3")
+				(pin "5")
+				(pinfunction "A4_5")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "7")
+			(name "AD4")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "6")
+				(pinfunction "GPIO4_6")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "36")
+				(pinfunction "AD4_36")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U3")
+				(pin "6")
+				(pinfunction "A5_6")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "8")
+			(name "AD5")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "7")
+				(pinfunction "GPIO5_7")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "37")
+				(pinfunction "AD5_37")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U3")
+				(pin "7")
+				(pinfunction "A6_7")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "9")
+			(name "AD6")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "9")
+				(pinfunction "GPIO6_9")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "40")
+				(pinfunction "AD6_40")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U3")
+				(pin "8")
+				(pinfunction "A7_8")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "10")
+			(name "AD7")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "10")
+				(pinfunction "GPIO7_10")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "41")
+				(pinfunction "AD7_41")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U3")
+				(pin "9")
+				(pinfunction "A8_9")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "11")
+			(name "AD8")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "11")
+				(pinfunction "GPIO8_11")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "16")
+				(pinfunction "AD8_16")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U4")
+				(pin "2")
+				(pinfunction "A1_2")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "12")
+			(name "AD9")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "12")
+				(pinfunction "GPIO9_12")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "15")
+				(pinfunction "AD9_15")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U4")
+				(pin "3")
+				(pinfunction "A2_3")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "13")
+			(name "AD10")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "14")
+				(pinfunction "GPIO10_14")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "12")
+				(pinfunction "AD10_12")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U4")
+				(pin "4")
+				(pinfunction "A3_4")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "14")
+			(name "AD11")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "15")
+				(pinfunction "GPIO11_15")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "11")
+				(pinfunction "AD11_11")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U4")
+				(pin "5")
+				(pinfunction "A4_5")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "15")
+			(name "AD12")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "16")
+				(pinfunction "GPIO12_16")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "7")
+				(pinfunction "AD12_7")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U4")
+				(pin "6")
+				(pinfunction "A5_6")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "16")
+			(name "AD13")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "17")
+				(pinfunction "GPIO13_17")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "5")
+				(pinfunction "AD13_5")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U4")
+				(pin "7")
+				(pinfunction "A6_7")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "17")
+			(name "AD14")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "19")
+				(pinfunction "GPIO14_19")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "4")
+				(pinfunction "AD14_4")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U4")
+				(pin "8")
+				(pinfunction "A7_8")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "18")
+			(name "AD15")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "20")
+				(pinfunction "GPIO15_20")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "3")
+				(pinfunction "AD15_3")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U4")
+				(pin "9")
+				(pinfunction "A8_9")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "19")
+			(name "ALE_H")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "22")
+				(pinfunction "GPIO17_22")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "R4")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "35")
+				(pinfunction "ALE_H_35")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "35")
+				(pinfunction "ALE_H_35")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "20")
+			(name "ALE_L")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "21")
+				(pinfunction "GPIO16_21")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "R3")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "33")
+				(pinfunction "ALE_L_33")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "33")
+				(pinfunction "ALE_L_33")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "21")
+			(name "CART_EN")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "26")
+				(pinfunction "GPIO20_26")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "R1")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "19")
+				(pinfunction "*OE_19")
+				(pintype "input")
+			)
+			(node
+				(ref "U4")
+				(pin "19")
+				(pinfunction "*OE_19")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "22")
+			(name "CA_AD0")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "28")
+				(pinfunction "AD0_28")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U3")
+				(pin "18")
+				(pinfunction "B1_18")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "23")
+			(name "CA_AD1")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "29")
+				(pinfunction "AD1_29")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U3")
+				(pin "17")
+				(pinfunction "B2_17")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "24")
+			(name "CA_AD2")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "30")
+				(pinfunction "AD2_30")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U3")
+				(pin "16")
+				(pinfunction "B3_16")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "25")
+			(name "CA_AD3")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "32")
+				(pinfunction "AD3_32")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U3")
+				(pin "15")
+				(pinfunction "B4_15")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "26")
+			(name "CA_AD4")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "36")
+				(pinfunction "AD4_36")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U3")
+				(pin "14")
+				(pinfunction "B5_14")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "27")
+			(name "CA_AD5")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "37")
+				(pinfunction "AD5_37")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U3")
+				(pin "13")
+				(pinfunction "B6_13")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "28")
+			(name "CA_AD6")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "40")
+				(pinfunction "AD6_40")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U3")
+				(pin "12")
+				(pinfunction "B7_12")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "29")
+			(name "CA_AD7")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "41")
+				(pinfunction "AD7_41")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U3")
+				(pin "11")
+				(pinfunction "B8_11")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "30")
+			(name "CA_AD8")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "16")
+				(pinfunction "AD8_16")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U4")
+				(pin "18")
+				(pinfunction "B1_18")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "31")
+			(name "CA_AD9")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "15")
+				(pinfunction "AD9_15")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U4")
+				(pin "17")
+				(pinfunction "B2_17")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "32")
+			(name "CA_AD10")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "12")
+				(pinfunction "AD10_12")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U4")
+				(pin "16")
+				(pinfunction "B3_16")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "33")
+			(name "CA_AD11")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "11")
+				(pinfunction "AD11_11")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U4")
+				(pin "15")
+				(pinfunction "B4_15")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "34")
+			(name "CA_AD12")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "7")
+				(pinfunction "AD12_7")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U4")
+				(pin "14")
+				(pinfunction "B5_14")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "35")
+			(name "CA_AD13")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "5")
+				(pinfunction "AD13_5")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U4")
+				(pin "13")
+				(pinfunction "B6_13")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "36")
+			(name "CA_AD14")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "4")
+				(pinfunction "AD14_4")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U4")
+				(pin "12")
+				(pinfunction "B7_12")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "37")
+			(name "CA_AD15")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "3")
+				(pinfunction "AD15_3")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U4")
+				(pin "11")
+				(pinfunction "B8_11")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "38")
+			(name "CIC_PIF")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "18")
+				(pinfunction "CIC_PIF_18")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "18")
+				(pinfunction "CIC_PIF_18")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "39")
+			(name "CLK_PIF")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "19")
+				(pinfunction "CLK_PIF_19")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "19")
+				(pinfunction "CLK_PIF_19")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "40")
+			(name "COLD_RST")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "20")
+				(pinfunction "COLD_RST_20")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "20")
+				(pinfunction "COLD_RST_20")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "41")
+			(name "GND")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "13")
+				(pinfunction "GND_13")
+				(pintype "passive")
+			)
+			(node
+				(ref "A1")
+				(pin "18")
+				(pinfunction "GND_18")
+				(pintype "passive")
+			)
+			(node
+				(ref "A1")
+				(pin "23")
+				(pinfunction "GND_23")
+				(pintype "passive")
+			)
+			(node
+				(ref "A1")
+				(pin "28")
+				(pinfunction "GND_28")
+				(pintype "passive")
+			)
+			(node
+				(ref "A1")
+				(pin "3")
+				(pinfunction "GND_3")
+				(pintype "power_out")
+			)
+			(node
+				(ref "A1")
+				(pin "33")
+				(pinfunction "AGND_33")
+				(pintype "power_out")
+			)
+			(node
+				(ref "A1")
+				(pin "38")
+				(pinfunction "GND_38")
+				(pintype "passive")
+			)
+			(node
+				(ref "A1")
+				(pin "8")
+				(pinfunction "GND_8")
+				(pintype "passive")
+			)
+			(node
+				(ref "C1")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C2")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C3")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C4")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C5")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "D1")
+				(pin "1")
+				(pinfunction "K_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "J4")
+				(pin "2")
+				(pinfunction "Pin_2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R1")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R3")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R4")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "1")
+				(pinfunction "GND_1")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U1")
+				(pin "2")
+				(pinfunction "GND_2")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U1")
+				(pin "22")
+				(pinfunction "GND_22")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U1")
+				(pin "23")
+				(pinfunction "GND_23")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U1")
+				(pin "25")
+				(pinfunction "GND_25")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U1")
+				(pin "26")
+				(pinfunction "GND_26")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U1")
+				(pin "27")
+				(pinfunction "GND_27")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U1")
+				(pin "31")
+				(pinfunction "GND_31")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U1")
+				(pin "47")
+				(pinfunction "GND_47")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U1")
+				(pin "48")
+				(pinfunction "GND_48")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U1")
+				(pin "50")
+				(pinfunction "GND_50")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U1")
+				(pin "6")
+				(pinfunction "GND_6")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "1")
+				(pinfunction "GND_1")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "2")
+				(pinfunction "GND_2")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "22")
+				(pinfunction "GND_22")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "23")
+				(pinfunction "GND_23")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "25")
+				(pinfunction "GND_25")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "26")
+				(pinfunction "GND_26")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "27")
+				(pinfunction "GND_27")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "31")
+				(pinfunction "GND_31")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "47")
+				(pinfunction "GND_47")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "48")
+				(pinfunction "GND_48")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "50")
+				(pinfunction "GND_50")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "6")
+				(pinfunction "GND_6")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U3")
+				(pin "10")
+				(pinfunction "GND_10")
+				(pintype "power_in")
+			)
+			(node
+				(ref "U4")
+				(pin "10")
+				(pinfunction "GND_10")
+				(pintype "power_in")
+			)
+		)
+		(net
+			(code "42")
+			(name "JTAG_CLK")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "44")
+				(pinfunction "JTAG_CLK_44")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "44")
+				(pinfunction "JTAG_CLK_44")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "43")
+			(name "KILL")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "27")
+				(pinfunction "GPIO21_27")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "J4")
+				(pin "1")
+				(pinfunction "Pin_1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R2")
+				(pin "2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "44")
+			(name "LAUDIO")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "24")
+				(pinfunction "LAUDIO_24")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "24")
+				(pinfunction "LAUDIO_24")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "45")
+			(name "NC")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "13")
+				(pinfunction "NC_13")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U1")
+				(pin "14")
+				(pinfunction "NC_14")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U1")
+				(pin "38")
+				(pinfunction "NC_38")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U1")
+				(pin "39")
+				(pinfunction "NC_39")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "13")
+				(pinfunction "NC_13")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "14")
+				(pinfunction "NC_14")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "38")
+				(pinfunction "NC_38")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "39")
+				(pinfunction "NC_39")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U3")
+				(pin "1")
+				(pinfunction "NC_1")
+				(pintype "unspecified")
+			)
+			(node
+				(ref "U4")
+				(pin "1")
+				(pinfunction "NC_1")
+				(pintype "unspecified")
+			)
+		)
+		(net
+			(code "46")
+			(name "NMI_R4300")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "45")
+				(pinfunction "NMI_R4300_45")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "45")
+				(pinfunction "NMI_R4300_45")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "47")
+			(name "Net-(D1-A)")
+			(class "Default")
+			(node
+				(ref "D1")
+				(pin "2")
+				(pinfunction "A_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R5")
+				(pin "1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "48")
+			(name "PIF_CIC")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "43")
+				(pinfunction "PIF_CIC_43")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "43")
+				(pinfunction "PIF_CIC_43")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "49")
+			(name "READ")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "24")
+				(pinfunction "GPIO18_24")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U1")
+				(pin "10")
+				(pinfunction "READ_10")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "10")
+				(pinfunction "READ_10")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "50")
+			(name "R_AUDIO")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "49")
+				(pinfunction "R_AUDIO_49")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "49")
+				(pinfunction "R_AUDIO_49")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "51")
+			(name "STATUS_LED")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "29")
+				(pinfunction "GPIO22_29")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "R5")
+				(pin "2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "52")
+			(name "S_DAT")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "21")
+				(pinfunction "S_DAT_21")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "21")
+				(pinfunction "S_DAT_21")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "53")
+			(name "VIDEO_CLK")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "46")
+				(pinfunction "VIDEO_CLK_46")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "46")
+				(pinfunction "VIDEO_CLK_46")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "54")
+			(name "VSYS")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "39")
+				(pinfunction "VSYS_39")
+				(pintype "power_in")
+			)
+			(node
+				(ref "C5")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "SW1")
+				(pin "2")
+				(pinfunction "B_2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "55")
+			(name "WRITE")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "25")
+				(pinfunction "GPIO19_25")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U1")
+				(pin "8")
+				(pinfunction "WRITE_8")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U2")
+				(pin "8")
+				(pinfunction "WRITE_8")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "56")
+			(name "unconnected-(A1-3V3_EN-Pad37)")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "37")
+				(pinfunction "3V3_EN_37")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "57")
+			(name "unconnected-(A1-ADC_VREF-Pad35)")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "35")
+				(pinfunction "ADC_VREF_35")
+				(pintype "power_in")
+			)
+		)
+		(net
+			(code "58")
+			(name "unconnected-(A1-GPIO26_ADC0-Pad31)")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "31")
+				(pinfunction "GPIO26_ADC0_31")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "59")
+			(name "unconnected-(A1-GPIO27_ADC1-Pad32)")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "32")
+				(pinfunction "GPIO27_ADC1_32")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "60")
+			(name "unconnected-(A1-GPIO28_ADC2-Pad34)")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "34")
+				(pinfunction "GPIO28_ADC2_34")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "61")
+			(name "unconnected-(A1-RUN-Pad30)")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "30")
+				(pinfunction "RUN_30")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "62")
+			(name "unconnected-(A1-VBUS-Pad40)")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "40")
+				(pinfunction "VBUS_40")
+				(pintype "power_out")
+			)
+		)
+		(net
+			(code "63")
+			(name "unconnected-(SW1-C-Pad3)")
+			(class "Default")
+			(node
+				(ref "SW1")
+				(pin "3")
+				(pinfunction "C_3")
+				(pintype "passive+no_connect")
+			)
+		)
+	)
+)

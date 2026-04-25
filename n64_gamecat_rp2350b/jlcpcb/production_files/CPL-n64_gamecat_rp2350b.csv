@@ -1,0 +1,19 @@
+Designator,Val,Package,Mid X,Mid Y,Rotation,Layer
+A1,RaspberryPi_Pico,RaspberryPi_Pico_Common_Unspecified,158.605,-93.61,90.0,top
+C1,10uF,C_0805_2012Metric,148.0,-125.0,-90.0,top
+C2,100nF,C_0402_1005Metric,134.5,-62.5,0.0,top
+C3,100nF,C_0402_1005Metric,172.0,-63.0,0.0,top
+C4,100nF,C_0402_1005Metric,142.98,-80.0,0.0,top
+C5,100nF,C_0402_1005Metric,138.5,-80.5,180.0,top
+D1,LED,LED_0402_1005Metric,183.01,-79.0,0.0,top
+J4,Conn_01x02_Pin,PinHeader_1x02_P2.54mm_Vertical,156.5,-68.995,0.0,top
+R1,10K,R_0402_1005Metric,170.0,-80.0,-90.0,top
+R2,10K,R_0402_1005Metric,145.51,-80.0,180.0,top
+R3,10K,R_0402_1005Metric,151.99,-112.5,-90.0,top
+R4,10K,R_0402_1005Metric,147.5,-112.5,-90.0,top
+R5,1K,R_0402_1005Metric,180.0,-79.0,0.0,top
+SW1,SW_SPDT,PinSocket_1x03_P2.54mm_Vertical,161.5,-67.765,0.0,top
+U1,~,N64_cartridge_connecter_2.5mm,157.5,-47.0,0.0,top
+U2,~,N64_cartridge_pins_2.5mm,157.5,-136.5,0.0,top
+U3,SN74CBTLV3245ADW,DW20,180.0,-67.5,90.0,top
+U4,SN74CBTLV3245ADW,DW20,142.5,-67.5,90.0,top

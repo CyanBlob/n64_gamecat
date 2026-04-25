@@ -20,13 +20,75 @@
 #define READ_N_GPIO     (AD_BASE + READ_N_PIN_REL)
 #define WRITE_N_GPIO    (AD_BASE + WRITE_N_PIN_REL)
 
+/* ========= Bootcode CRC bypass =========
+ *
+ * The N64 bootcode (running from cart ROM after CIC validation) computes a
+ * CRC over ROM offsets 0x1000..0x101000 (cart-bus 0x10001000..0x10101000)
+ * and checks it against CRC1/CRC2 in the header. Any patch we make inside
+ * that window changes the computed CRC, and the console refuses to start.
+ *
+ * Per the en64 wiki ("Bypassing bad checksum"), NOPing two specific BNE
+ * instructions in the bootcode makes the CRC mismatch branch a no-op, so
+ * any subsequent patch — anywhere in ROM — is fine. The two ROM offsets
+ * depend on the CIC chip; the bootcode itself lives at 0x40..0x1000 which
+ * is *outside* the CRC window, so NOPing those two words doesn't itself
+ * change the CRC.
+ *
+ * To enable, set N64_CIC_TYPE to your cart's CIC family below (or via a
+ * -DN64_CIC_TYPE=NNNN compile flag in CMakeLists.txt). Setting it wrong
+ * for the inserted cart will NOP unrelated bootcode instructions and the
+ * game won't boot — match this to the actual cart. Common pairings:
+ *
+ *   N64_CIC_TYPE=0      No bypass (use if all patches are outside CRC window)
+ *   N64_CIC_TYPE=6101   Star Fox 64 only
+ *   N64_CIC_TYPE=6102   "Standard" NTSC: SM64, Mario Kart 64, Banjo-Kazooie,
+ *                       most NTSC games        (PAL equivalent: 7101)
+ *   N64_CIC_TYPE=6103   Paper Mario, etc.       (PAL equivalent: 7103)
+ *   N64_CIC_TYPE=6105   Zelda OoT, Majora's Mask (PAL equivalent: 7105)
+ *   N64_CIC_TYPE=6106   Yoshi's Story, F-Zero X — bypass offsets not yet
+ *                       documented in the en64 wiki; leave at 0 and patch
+ *                       outside the CRC window for these games.
+ */
+#ifndef N64_CIC_TYPE
+#define N64_CIC_TYPE 6105
+#endif
+
+#if N64_CIC_TYPE == 0
+    #define CIC_BYPASS_RULES /* none */
+#elif N64_CIC_TYPE == 6101
+    #define CIC_BYPASS_RULES \
+        { 0xFFFFFFFCu, 0x10000670u, 0x00000000u, true }, \
+        { 0xFFFFFFFCu, 0x1000067Cu, 0x00000000u, true },
+#elif N64_CIC_TYPE == 6102 || N64_CIC_TYPE == 7101
+    #define CIC_BYPASS_RULES \
+        { 0xFFFFFFFCu, 0x1000066Cu, 0x00000000u, true }, \
+        { 0xFFFFFFFCu, 0x10000678u, 0x00000000u, true },
+#elif N64_CIC_TYPE == 6103 || N64_CIC_TYPE == 7103
+    #define CIC_BYPASS_RULES \
+        { 0xFFFFFFFCu, 0x1000063Cu, 0x00000000u, true }, \
+        { 0xFFFFFFFCu, 0x10000648u, 0x00000000u, true },
+#elif N64_CIC_TYPE == 6105 || N64_CIC_TYPE == 7105
+    #define CIC_BYPASS_RULES \
+        { 0xFFFFFFFCu, 0x1000077Cu, 0x00000000u, true }, \
+        { 0xFFFFFFFCu, 0x10000788u, 0x00000000u, true },
+#else
+    #error "Unsupported N64_CIC_TYPE: must be 0, 6101, 6102/7101, 6103/7103, or 6105/7105"
+#endif
+
 /* ========= Cheats =========
  * mask / match compare at 32-bit word granularity.
  * resp32 is the value served for matched words.
  */
 typedef struct { uint32_t mask, match, resp32; bool enable; } rule_t;
 
+
+// NOTE: 0x10001000–0x10101000 (first 1MB of cart address space) is CRCed
+// sim/check_rules.py checks this
 static const rule_t rules[] = {
+    // Bootcode CRC bypass (gated by N64_CIC_TYPE above; expands to nothing
+    // when N64_CIC_TYPE == 0).
+    CIC_BYPASS_RULES
+
     // Inject PI bus-timing override 0x8037FF40 as the first header word.
     // (Wiki: setting this value slows all bus activity — useful for debugging.)
     { 0xFFFFFFFCu, 0x10000000u, 0x8037FF40u, false },

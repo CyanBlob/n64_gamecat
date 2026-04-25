@@ -1,0 +1,2 @@
+make setup VERSION=ntsc-1.2 LLD=0 LD=ld -j
+make VERSION=ntsc-1.2 -j
