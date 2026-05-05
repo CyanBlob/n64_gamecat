@@ -1,0 +1,20 @@
+[
+  {
+    "type":    "text",
+    "search":  "THE LEGEND OF ZELDA",
+    "replace": "THE LEGEND OF HACKS",
+    "comment": "title screen text"
+  },
+  {
+    "type":    "text",
+    "search":  "ZELDA",
+    "replace": "HACKS!",
+    "comment": "short title"
+  },
+  {
+    "type":    "hex",
+    "search":  "DEADBEEF",
+    "replace": "CAFEBABE",
+    "comment": "example hex patch"
+  }
+]
