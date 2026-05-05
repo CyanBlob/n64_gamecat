@@ -1,5 +1,7 @@
 .pio/
 tags
+__pycache__/
+*.pyc
 *.bak
 *.swp
 */*.log
