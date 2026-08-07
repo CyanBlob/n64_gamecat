@@ -1,0 +1,23 @@
+; n64_snoop.pio
+; DEBUG ONLY. Passively captures whatever is on AD[15:0], regardless of who's
+; driving (cart in pass-through, or the Pico during an override). Independent
+; of n64_capture / n64_respond_tokens so it can't affect their behavior.
+;
+; Sampling point: the responder SM (n64_respond_tokens.pio) drives override
+; data starting at /READ falling and holds it all the way to /READ rising,
+; which only makes sense if the console actually latches near the *rising*
+; edge — the falling edge just marks "cart output starts settling here" (and
+; through the CBT switch, that settling isn't instant). Sampling at the
+; falling edge caught transitional/unsettled values; sample at rising instead.
+;
+; Config (done in C):
+;   - IN_BASE = AD_BASE   (so /READ is pin index 18, same as the other SMs)
+;   - shift_left, autopush off, threshold doesn't matter (explicit push)
+
+.program n64_snoop
+
+wrap_target:
+    wait 0 pin 18          ; /READ falling: pulse begins
+    wait 1 pin 18          ; /READ rising: data now settled, console latches here
+    in   pins, 16
+    push block

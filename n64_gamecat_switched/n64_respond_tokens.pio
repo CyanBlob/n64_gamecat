@@ -16,6 +16,15 @@
 ;   side 0 = /OE low  = cart connected (pass-through)
 ;   side 1 = /OE high = cart isolated (we drive AD)
 ;
+; NOTE: two attempts at avoiding the reconnect-between-back-to-back-drives
+; gap (a blocking peek, and a non-blocking `pull noblock` peek) both froze
+; the console in testing. Reverted to this simplest, most-tested design.
+; Multi-halfword overrides (any word, or adjacent words like the "fairy"
+; patch) still show character-order garbling under this design — root
+; cause not yet confirmed; a logic analyzer capture on /READ + CART_EN +
+; some AD bits, triggered on CART_EN's first rising edge, is the next step
+; before trying another PIO change blind.
+;
 ; Config (done in C):
 ;   - OUT_BASE   = AD_BASE, OUT_COUNT = 16  (used for `out pins`/`out pindirs`)
 ;   - IN_BASE    = AD_BASE                   (so /READ is pin index 18)
@@ -29,24 +38,24 @@
 
 wrap_target:
     pull block              side 0     ; wait for next token; cart connected
-    out  x, 16              side 0     ; X = SKIP
-    out  y, 16              side 0     ; Y = DATA
+    out  x, 16               side 0    ; X = SKIP
+    out  y, 16               side 0    ; Y = DATA
 
-    jmp  !x drive_now       side 0     ; SKIP == 0: drive the very next /READ
-    jmp  x-- skip_loop      side 0     ; pre-decrement so body runs exactly SKIP times
+    jmp  !x drive_now        side 0    ; SKIP == 0: drive the very next /READ
+    jmp  x-- skip_loop       side 0    ; pre-decrement so body runs exactly SKIP times
 
 skip_loop:
-    wait 0 pin 18           side 0     ; /READ falling (cart answers this one)
-    wait 1 pin 18           side 0     ; /READ rising
-    jmp  x-- skip_loop      side 0
+    wait 0 pin 18            side 0    ; /READ falling (cart answers this one)
+    wait 1 pin 18            side 0    ; /READ rising
+    jmp  x-- skip_loop       side 0
 
 drive_now:
-    wait 0 pin 18           side 1     ; /READ falling: isolate cart
-    mov  osr, !null         side 1     ; OSR = 0xFFFFFFFF
-    out  pindirs, 16        side 1     ; AD[0..15] -> outputs
-    mov  osr, y             side 1     ; OSR = DATA (low 16)
-    out  pins, 16           side 1     ; drive DATA on AD
-    wait 1 pin 18           side 1     ; hold until /READ rises
-    mov  osr, null          side 1
-    out  pindirs, 16        side 1     ; AD[0..15] -> inputs (release bus)
-    nop                     side 0     ; reconnect cart for subsequent reads
+    wait 0 pin 18            side 1    ; /READ falling: isolate cart
+    mov  osr, !null          side 1    ; OSR = 0xFFFFFFFF
+    out  pindirs, 16         side 1    ; AD[0..15] -> outputs
+    mov  osr, y               side 1   ; OSR = DATA
+    out  pins, 16            side 1    ; drive DATA on AD
+    wait 1 pin 18            side 1    ; hold until /READ rises
+    mov  osr, null           side 1
+    out  pindirs, 16         side 1    ; AD[0..15] -> inputs (release bus)
+    nop                      side 0    ; reconnect cart for subsequent reads

@@ -47,10 +47,11 @@ pico_set_binary_type(n64_gamecat_switched copy_to_ram)
 # Generate PIO header
 pico_generate_pio_header(n64_gamecat_switched ${CMAKE_CURRENT_LIST_DIR}/n64_capture.pio)
 pico_generate_pio_header(n64_gamecat_switched ${CMAKE_CURRENT_LIST_DIR}/n64_respond_tokens.pio)
+pico_generate_pio_header(n64_gamecat_switched ${CMAKE_CURRENT_LIST_DIR}/n64_snoop.pio)
 
 # Modify the below lines to enable/disable output over UART/USB
-pico_enable_stdio_uart(n64_gamecat_switched 1)
-pico_enable_stdio_usb(n64_gamecat_switched 0)
+pico_enable_stdio_uart(n64_gamecat_switched 0)
+pico_enable_stdio_usb(n64_gamecat_switched 1)
 
 # Add the standard library to the build
 target_link_libraries(n64_gamecat_switched

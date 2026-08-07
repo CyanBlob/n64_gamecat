@@ -1,37 +1,14 @@
 
-(rules PCB n64_gamecat_rp2350b
+(rules PCB n64_gamecat_rp2350b.dsn
   (snap_angle 
     fortyfive_degree
-  )
-  (autoroute_settings
-    (fanout on)
-    (autoroute on)
-    (postroute on)
-    (vias on)
-    (via_costs 50)
-    (plane_via_costs 5)
-    (start_ripup_costs 100)
-    (start_pass_no 32221)
-    (layer_rule F.Cu
-      (active on)
-      (preferred_direction vertical)
-      (preferred_direction_trace_costs 1.0)
-      (against_preferred_direction_trace_costs 2.4)
-    )
-    (layer_rule B.Cu
-      (active on)
-      (preferred_direction horizontal)
-      (preferred_direction_trace_costs 1.0)
-      (against_preferred_direction_trace_costs 1.7)
-    )
   )
   (rule
     (width 200.0)
     (clearance 200.0)
     (clearance 100.0 (type smd_to_turn_gap))
-    (clearance 200.0 (type smd))
+    (clearance 50.0 (type smd))
     (clearance 200.0 (type "kicad_default"))
-    (clearance 200.0 (type kicad))
   )
   (padstack "Via[0-1]_600:300_um"
     (shape
@@ -65,16 +42,14 @@
     )
   )
   (class "kicad_default"
-    "Net-(U2-PIF_CIC)" "Net-(U2-NC-Pad14)" "CA_AD8" GND "Net-(U2-NC-Pad38)" "Net-(U2-NC-Pad13)" +3V3 "CA_AD0"
-    READ "Net-(U2-LAUDIO)" "Net-(U2-R_AUDIO)" "Net-(U2-COLD_RST)" "CA_AD7" "ALE_H" "CA_AD3" "Net-(U2-CLK_PIF)"
-    "Net-(U2-JTAG_CLK)" "ALE_L" "CA_AD2" "CA_AD5" "CA_AD11" "Net-(U2-NC-Pad39)" "CA_AD1" "CA_AD4"
-    "Net-(U2-CIC_PIF)" "Net-(U2-NMI_R4300)" "CA_AD9" "Net-(U2-VIDEO_CLK)" "CA_AD6" "Net-(U2-S_DAT)" "CA_AD10" "CO_AD1"
-    "CO_AD7" "CO_AD2" "CO_AD9" "CO_AD4" "CO_AD10" "CO_AD8" "CO_AD11" "CO_AD0"
-    "CO_AD5" "CO_AD6" "CO_AD3" "CO_AD12" "CA_AD14" "CO_AD13" "CA_AD15" "CO_AD14"
-    "CO_AD15" "CA_AD12" "CA_AD13" WRITE "unconnected-(U4-GPIO59-Pad60)" "unconnected-(U4-GPIO58-Pad59)" "unconnected-(U4-GPIO38-Pad39)" "unconnected-(U4-GPIO39-Pad40)"
-    "unconnected-(U4-GPIO51-Pad52)" "unconnected-(U4-GPIO48-Pad49)" "unconnected-(U4-GPIO35-Pad36)" "unconnected-(U4-GPIO49-Pad50)" "unconnected-(U4-GPIO37-Pad38)" "unconnected-(U4-GPIO47-Pad48)" "unconnected-(U4-GPIO46-Pad47)" "unconnected-(U4-GPIO34-Pad35)"
-    "unconnected-(U4-GPIO53-Pad54)" SWCLK SWDIO RX0 TX0 "USB D+" "USB D-" 5V
-    "unconnected-(J3-Pin_4-Pad4)" "unconnected-(U4-GPIO36-Pad37)" "unconnected-(U4-GPIO16-Pad17)" "unconnected-(U4-GPIO17-Pad18)"
+    GND "3V3_CART" AD15 AD14 AD13 AD12 WRITE READ
+    AD11 AD10 NC AD9 AD8 "CIC_PIF" "CLK_PIF" "COLD_RST"
+    "S_DAT" LAUDIO AD0 AD1 AD2 AD3 "ALE_L" "ALE_H"
+    AD4 AD5 AD6 AD7 "PIF_CIC" "JTAG_CLK" "NMI_R4300" "VIDEO_CLK"
+    "R_AUDIO" "Net-(D1-A)" KILL "CA_AD15" "CA_AD14" "CA_AD13" "CA_AD12" "CA_AD11"
+    "CA_AD10" "CA_AD9" "CA_AD8" "CART_EN" "3V3_OUT" "STATUS_LED" "CA_AD0" "CA_AD1"
+    "CA_AD2" "CA_AD3" "CA_AD4" "CA_AD5" "CA_AD6" "CA_AD7" VSYS "unconnected-(A1-RUN-Pad30)"
+    "unconnected-(A1-GPIO26_ADC0-Pad31)" "unconnected-(A1-GPIO27_ADC1-Pad32)" "unconnected-(A1-GPIO28_ADC2-Pad34)" "unconnected-(A1-ADC_VREF-Pad35)" "unconnected-(A1-3V3_EN-Pad37)" "unconnected-(A1-VBUS-Pad40)"
     (clearance_class "kicad_default")
     (via_rule "kicad_default")
     (rule
